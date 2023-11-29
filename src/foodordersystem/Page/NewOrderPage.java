@@ -132,8 +132,8 @@ public class NewOrderPage implements ActionListener{
                 quantityField.setText("");
 
             } else if (event.getSource() == cancelBtn) {
+                FoodOrderSystem.customerOrderPage.getOrderPage().setVisible(true);
                 newOrderPage.setVisible(false);
-                FoodOrderSystem.orderPage.getOrderPage().setVisible(true);
 
             } else if (event.getSource() == continueBtn) {
                 // newOrderPage.setVisible(false);

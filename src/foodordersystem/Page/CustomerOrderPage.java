@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import foodordersystem.FoodOrderSystem;
 
 public class CustomerOrderPage extends OrderPage {
     private JButton newBtn, viewBtn;
@@ -29,7 +30,13 @@ public class CustomerOrderPage extends OrderPage {
     public void actionPerformed (ActionEvent event) {
         super.actionPerformed(event);
         try {
-            if (event.getSource() == backBtn) {
+            if (event.getSource() == newBtn) {
+                FoodOrderSystem.newOrderPage.getNewOrderPage().setVisible(true);
+                orderPage.setVisible(false);
+
+            } else if (event.getSource() == viewBtn) {
+
+            } else if (event.getSource() == backBtn) {
                 CustomerDashboardPage.getCustomerDashboardPageObj().getCustomerDashboardPage().setVisible(true);
                 orderPage.setVisible(false);
             }

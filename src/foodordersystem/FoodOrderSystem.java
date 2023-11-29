@@ -1,6 +1,7 @@
 package foodordersystem;
 
 import foodordersystem.Model.DataIO;
+import foodordersystem.Page.CustomerOrderPage;
 import foodordersystem.Page.LoginPage;
 import foodordersystem.Page.NewOrderPage;
 import foodordersystem.Page.OrderCartPage;
@@ -18,6 +19,7 @@ public class FoodOrderSystem {
 	// public static RunnerDashboardPage runnerDashboardPage;
 
 	public static OrderPage orderPage;
+	public static CustomerOrderPage customerOrderPage;
 	public static NewOrderPage newOrderPage;
 	public static OrderCartPage orderCartPage;
 	public static void main(String[] args) {
@@ -26,6 +28,7 @@ public class FoodOrderSystem {
 		loginPage = new LoginPage();
 		registerUserPage = new RegisterUserPage();
 
+		customerOrderPage = new CustomerOrderPage();
 		newOrderPage = new NewOrderPage();
 		orderCartPage = new OrderCartPage();
 		
