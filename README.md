@@ -2,7 +2,7 @@
 
 This is the assignment project based on the [JAVA-Tutorial](https://github.com/zhenchai00/java-tutorial)
 
-#License
+# License
 
 MIT by zhenchai
 
