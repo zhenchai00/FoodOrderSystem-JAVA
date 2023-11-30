@@ -48,7 +48,7 @@ public class UserManager {
     }
 
     public static void showErrorMessage(String message) {
-        System.out.println("Error2: " + message);
+        System.out.println("Error: " + message);
         JOptionPane.showMessageDialog(null, "Error: " + message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
