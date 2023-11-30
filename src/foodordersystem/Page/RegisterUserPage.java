@@ -1,7 +1,6 @@
 package foodordersystem.Page;
 
 import java.awt.event.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -19,8 +18,7 @@ import foodordersystem.Model.UserRole;
 
 public class RegisterUserPage implements ActionListener {
     private static JFrame registerUserPage;
-    private JButton newCustBtn, newVendBtn, newAdminBtn, newRunnerBtn, backBtn;
-    private JButton newBtn, editBtn, deleteBtn;
+    private JButton newBtn, editBtn, deleteBtn, backBtn;
     private JTable userTable;
     private DefaultTableModel userTableModel;
 

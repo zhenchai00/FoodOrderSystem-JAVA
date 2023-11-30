@@ -2,10 +2,7 @@ package foodordersystem.Manager;
 
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 
 import foodordersystem.Model.DataIO;
 import foodordersystem.Model.User;
@@ -39,7 +36,6 @@ public class UserManager {
         String inputUserPassString = JOptionPane.showInputDialog(null, "Enter user's password: ");
 
         UserRole[] values = {UserRole.USER, UserRole.ADMIN, UserRole.CUSTOMER, UserRole.RUNNER, UserRole.VENDOR};
-
         Object userRole = JOptionPane.showInputDialog(null, "Select user's role: ", "User Role", JOptionPane.QUESTION_MESSAGE, null, values, values[0]);
 
         if (
@@ -61,19 +57,6 @@ public class UserManager {
     public static void showErrorMessage(String message) {
         System.out.println("Error: " + message);
         JOptionPane.showMessageDialog(null, "Error: " + message, "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-    public JPanel userRoleOptions () {
-        JPanel panel = new JPanel();
-        JRadioButton adminRadioButton = new JRadioButton(UserRole.ADMIN.toString());
-        JRadioButton customerRadioButton = new JRadioButton(UserRole.CUSTOMER.toString());
-        JRadioButton runnerRadioButton = new JRadioButton(UserRole.RUNNER.toString());
-        JRadioButton vendorRadioButton = new JRadioButton(UserRole.VENDOR.toString());
-        panel.add(adminRadioButton);
-        panel.add(customerRadioButton);
-        panel.add(runnerRadioButton);
-        panel.add(vendorRadioButton);
-        return panel;
     }
 
     public static ArrayList<User> getAllUsers () {
