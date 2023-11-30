@@ -25,10 +25,12 @@ public class DataIO {
         try {
             Scanner sc = new Scanner(new File(USER_FILE_PATH));
             while (sc.hasNext()) {
+                int id  = Integer.parseInt(sc.nextLine());
                 String username  = sc.nextLine();
                 int password  = Integer.parseInt(sc.nextLine());
                 UserRole role  = UserRole.valueOf(sc.nextLine().toUpperCase());
                 allUsers.add(new User(
+                    id,
                     username,
                     password,
                     role
@@ -44,6 +46,7 @@ public class DataIO {
         try {
             PrintWriter pw = new PrintWriter(USER_FILE_PATH);
             for (User user : allUsers) {
+                pw.println(user.getId());
                 pw.println(user.getUsername());
                 pw.println(user.getPassword());
                 pw.println(user.getRole());
@@ -66,10 +69,8 @@ public class DataIO {
 
     public static void readOrder () {
         try {
-            // allOrders = (ArrayList<Order>) FileIO.readObject("order.dat");
             Scanner sc = new Scanner(new File(ORDER_FILE_PATH));
             while (sc.hasNext()) {
-		        // int id = sc.nextLine();
 		        int orderDetailId  = Integer.parseInt(sc.nextLine());
 		        int invoiceId  = Integer.parseInt(sc.nextLine());
 		        int customerId  = Integer.parseInt(sc.nextLine());
@@ -80,7 +81,6 @@ public class DataIO {
 		        OrderStatus status  = OrderStatus.valueOf(sc.nextLine());
                 sc.nextLine();
                 allOrders.add(new Order(
-                    // id,
                     orderDetailId,
                     invoiceId,
                     customerId,

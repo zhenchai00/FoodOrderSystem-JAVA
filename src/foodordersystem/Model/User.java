@@ -1,11 +1,13 @@
 package foodordersystem.Model;
 
 public class User {
+    private int id;
     private String username;
     private int password;
     private UserRole role = UserRole.USER;
 
-    public User (String username, int password, UserRole role) {
+    public User (int id, String username, int password, UserRole role) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.role = role;
@@ -25,6 +27,14 @@ public class User {
 
     public void setPassword (int password) {
         this.password = password;
+    }
+
+    public void setId (int id) {
+        this.id = id;
+    }
+
+    public int getId () {
+        return id;
     }
 
     public UserRole getRole () {

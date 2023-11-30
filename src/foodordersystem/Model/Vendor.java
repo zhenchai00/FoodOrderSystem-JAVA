@@ -1,7 +1,7 @@
 package foodordersystem.Model;
 
 public class Vendor extends User {
-    public Vendor (String username, int password) {
-        super(username, password, UserRole.VENDOR);
+    public Vendor (int number, String username, int password) {
+        super(number, username, password, UserRole.VENDOR);
     }
 }

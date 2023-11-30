@@ -1,43 +1,53 @@
 package foodordersystem.Page;
 
 import java.awt.event.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import foodordersystem.Manager.UserManager;
+import foodordersystem.Model.User;
 import foodordersystem.Model.UserRole;
 
 public class RegisterUserPage implements ActionListener {
     private static JFrame registerUserPage;
     private JButton newCustBtn, newVendBtn, newAdminBtn, newRunnerBtn, backBtn;
+    private JButton newBtn, editBtn, deleteBtn;
+    private JTable userTable;
+    private DefaultTableModel userTableModel;
 
     public RegisterUserPage () {
         registerUserPage = new JFrame("Register User Page");
         registerUserPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        registerUserPage.setLayout(new BoxLayout(registerUserPage.getContentPane(), BoxLayout.Y_AXIS));
 
-        newCustBtn = new JButton("New Customer");
-        newVendBtn = new JButton("New Vendor");
-        newAdminBtn = new JButton("New Admin");
-        newRunnerBtn = new JButton("New Runner");
+        userTableModel = new DefaultTableModel(new Object[]{"Id", "Username", "Password", "Role"}, 0);
+        userTable = new JTable(userTableModel);
+        JScrollPane scrollPanel = new JScrollPane(userTable);
+        for (User user : UserManager.getAllUsers()) {
+            addRowToTable(user);
+        }
+
+        newBtn = new JButton("New");
+        editBtn = new JButton("Edit");
+        deleteBtn = new JButton("Delete");
         backBtn = new JButton("Back");
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(newCustBtn);
-        buttonPanel.add(newVendBtn);
-        buttonPanel.add(newAdminBtn);
-        buttonPanel.add(newRunnerBtn);
-        buttonPanel.add(backBtn);
-
-        newAdminBtn.addActionListener(this);
-        newVendBtn.addActionListener(this);
-        newCustBtn.addActionListener(this);
-        newRunnerBtn.addActionListener(this);
+        newBtn.addActionListener(this);
+        editBtn.addActionListener(this);
+        deleteBtn.addActionListener(this);
         backBtn.addActionListener(this);
 
+        JPanel buttonPanel = new JPanel();
+
+        registerUserPage.add(scrollPanel);
         registerUserPage.add(buttonPanel);
 
         registerUserPage.pack();
@@ -47,26 +57,16 @@ public class RegisterUserPage implements ActionListener {
 
     public void actionPerformed (ActionEvent event) {
         try {
-            if (event.getSource() == newCustBtn) {
+            if (event.getSource() == newBtn) {
                 ArrayList<Object> credentials = UserManager.getUserCredentials();
                 if (!credentials.isEmpty()) {
-                    UserManager.registerUser(credentials.get(0).toString(), Integer.parseInt(credentials.get(1).toString()), UserRole.CUSTOMER);
+                    UserManager.registerUser(credentials.get(0).toString(), Integer.parseInt(credentials.get(1).toString()), UserRole.valueOf(credentials.get(2).toString()));
+
                 }
-            } else if (event.getSource() == newVendBtn) {
-                ArrayList<Object> credentials = UserManager.getUserCredentials();
-                if (!credentials.isEmpty()) {
-                    UserManager.registerUser(credentials.get(0).toString(), Integer.parseInt(credentials.get(1).toString()), UserRole.VENDOR);
-                }
-            } else if (event.getSource() == newAdminBtn) {
-                ArrayList<Object> credentials = UserManager.getUserCredentials();
-                if (!credentials.isEmpty()) {
-                    UserManager.registerUser(credentials.get(0).toString(), Integer.parseInt(credentials.get(1).toString()), UserRole.ADMIN);
-                }
-            } else if (event.getSource() == newRunnerBtn) {
-                ArrayList<Object> credentials = UserManager.getUserCredentials();
-                if (!credentials.isEmpty()) {
-                    UserManager.registerUser(credentials.get(0).toString(), Integer.parseInt(credentials.get(1).toString()), UserRole.RUNNER);
-                }
+            } else if (event.getSource() == editBtn) {
+
+            } else if (event.getSource() == deleteBtn) {
+
             } else if (event.getSource() == backBtn) {
                 AdminDashboardPage.getAdminDashboardPageObj().getAdminDashboardPage().setVisible(true);
                 // FoodOrderSystem.loginPage.getLoginPage().setVisible(true);
@@ -80,5 +80,9 @@ public class RegisterUserPage implements ActionListener {
 
     public static JFrame getRegisterUserPage () {
         return registerUserPage;
+    }
+
+    public void addRowToTable (User user) {
+        userTableModel.addRow(new Object[]{user.getId(), user.getUsername(), user.getPassword(), user.getRole()});
     }
 }

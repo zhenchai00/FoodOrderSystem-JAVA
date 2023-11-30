@@ -2,7 +2,10 @@ package foodordersystem.Manager;
 
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 import foodordersystem.Model.DataIO;
 import foodordersystem.Model.User;
@@ -24,7 +27,8 @@ public class UserManager {
             throw new Exception("Username already exists");
         }
 
-        User newUser = new User(username, password, role);
+        int number = DataIO.allUsers.size() + 1;
+        User newUser = new User(number, username, password, role);
         DataIO.allUsers.add(newUser);
         DataIO.writeUser();
     }
@@ -34,15 +38,22 @@ public class UserManager {
         String inputUsername = JOptionPane.showInputDialog(null, "Enter user's username: ");
         String inputUserPassString = JOptionPane.showInputDialog(null, "Enter user's password: ");
 
+        UserRole[] values = {UserRole.USER, UserRole.ADMIN, UserRole.CUSTOMER, UserRole.RUNNER, UserRole.VENDOR};
+
+        Object userRole = JOptionPane.showInputDialog(null, "Select user's role: ", "User Role", JOptionPane.QUESTION_MESSAGE, null, values, values[0]);
+
         if (
             inputUsername != null
             && !inputUsername.isEmpty()
             && inputUserPassString != null
             && !inputUserPassString.isEmpty()
+            && userRole != null
+            && !userRole.toString().isEmpty()
         ) {
             int inputUserPass = Integer.parseInt(inputUserPassString);
             userCredentials.add(inputUsername);
             userCredentials.add(inputUserPass);
+            userCredentials.add(userRole);
         }
         return userCredentials;
     }
@@ -50,5 +61,22 @@ public class UserManager {
     public static void showErrorMessage(String message) {
         System.out.println("Error: " + message);
         JOptionPane.showMessageDialog(null, "Error: " + message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public JPanel userRoleOptions () {
+        JPanel panel = new JPanel();
+        JRadioButton adminRadioButton = new JRadioButton(UserRole.ADMIN.toString());
+        JRadioButton customerRadioButton = new JRadioButton(UserRole.CUSTOMER.toString());
+        JRadioButton runnerRadioButton = new JRadioButton(UserRole.RUNNER.toString());
+        JRadioButton vendorRadioButton = new JRadioButton(UserRole.VENDOR.toString());
+        panel.add(adminRadioButton);
+        panel.add(customerRadioButton);
+        panel.add(runnerRadioButton);
+        panel.add(vendorRadioButton);
+        return panel;
+    }
+
+    public static ArrayList<User> getAllUsers () {
+        return DataIO.allUsers;
     }
 }

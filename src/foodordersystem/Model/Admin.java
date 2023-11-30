@@ -1,7 +1,7 @@
 package foodordersystem.Model;
 
 public class Admin extends User {
-    public Admin (String username, int password) {
-        super(username, password, UserRole.ADMIN);
+    public Admin (int number, String username, int password) {
+        super(number, username, password, UserRole.ADMIN);
     }
 }

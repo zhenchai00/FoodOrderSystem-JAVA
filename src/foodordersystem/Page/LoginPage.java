@@ -100,7 +100,7 @@ public class LoginPage implements ActionListener {
                     throw new Exception("Wrong admin pass code");
                 }
 
-                // RegisterUserPage.getRegisterUserPage().setVisible(true);
+                RegisterUserPage.getRegisterUserPage().setVisible(true);
                 loginPage.setVisible(false);
             } else if (event.getSource() == quitBtn) {
                 System.out.println("Quit");
