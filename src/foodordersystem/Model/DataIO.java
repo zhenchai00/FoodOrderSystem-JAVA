@@ -5,17 +5,26 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import foodordersystem.Enum.MenuCategory;
+import foodordersystem.Enum.OrderStatus;
+import foodordersystem.Enum.OrderType;
+import foodordersystem.Enum.RefundStatus;
+import foodordersystem.Enum.UserRole;
+
 public class DataIO {
     private static final String USER_FILE_PATH = "user.txt";
     private static final String ORDER_FILE_PATH = "order.txt";
+    private static final String MENU_FILE_PATH = "menu.txt";
 
     public static ArrayList<Order> allOrders = new ArrayList<Order>();
     public static ArrayList<User> allUsers = new ArrayList<User>();
+    public static ArrayList<Menu> allMenus = new ArrayList<Menu>();
 
     public static void readData () {
         try {
             readUser();
             readOrder();
+            readMenu();
         } catch (Exception e) {
             System.out.println("Error reading data: " + e.getMessage());
         }
@@ -65,6 +74,43 @@ public class DataIO {
             }
         }
         return null;
+    }
+
+    public static void readMenu () {
+        try {
+            Scanner sc = new Scanner(new File(MENU_FILE_PATH));
+            while (sc.hasNext()) {
+                int id  = Integer.parseInt(sc.nextLine());
+                String name  = sc.nextLine();
+                double price  = Double.parseDouble(sc.nextLine());
+                MenuCategory category  = MenuCategory.valueOf(sc.nextLine().toUpperCase());
+                allMenus.add(new Menu(
+                    id,
+                    name,
+                    price,
+                    category
+                ));
+                sc.nextLine();
+            }
+        } catch (Exception e) {
+            System.out.println("Error reading " + MENU_FILE_PATH + ": " + e);
+        }
+    }
+
+    public static void writeMenu () {
+        try {
+            PrintWriter pw = new PrintWriter(MENU_FILE_PATH);
+            for (Menu menu : allMenus) {
+                pw.println(menu.getId());
+                pw.println(menu.getName());
+                pw.println(menu.getPrice());
+                pw.println(menu.getCategory());
+                pw.println();
+            }
+            pw.close();
+        } catch (Exception e) {
+            System.out.println("Error writing " + MENU_FILE_PATH + ": " + e);
+        }
     }
 
     public static void readOrder () {

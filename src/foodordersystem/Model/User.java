@@ -1,5 +1,7 @@
 package foodordersystem.Model;
 
+import foodordersystem.Enum.UserRole;
+
 public class User {
     private int id;
     private String username;

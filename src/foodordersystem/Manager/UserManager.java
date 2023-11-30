@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import foodordersystem.FoodOrderSystem;
+import foodordersystem.Enum.UserRole;
 import foodordersystem.Model.DataIO;
 import foodordersystem.Model.User;
-import foodordersystem.Model.UserRole;
 
 public class UserManager {
     public static User loginUser (String username, int password) throws Exception {

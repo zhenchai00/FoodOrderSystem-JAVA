@@ -12,9 +12,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import foodordersystem.Enum.UserRole;
 import foodordersystem.Manager.UserManager;
 import foodordersystem.Model.User;
-import foodordersystem.Model.UserRole;
 
 public class RegisterUserPage implements ActionListener {
     private static JFrame registerUserPage;

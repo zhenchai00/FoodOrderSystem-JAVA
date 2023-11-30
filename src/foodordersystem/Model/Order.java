@@ -1,5 +1,9 @@
 package foodordersystem.Model;
 
+import foodordersystem.Enum.OrderStatus;
+import foodordersystem.Enum.OrderType;
+import foodordersystem.Enum.RefundStatus;
+
 public class Order {
 	private int id;
 	private int orderDetailId;

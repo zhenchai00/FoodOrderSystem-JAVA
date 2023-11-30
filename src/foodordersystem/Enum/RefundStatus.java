@@ -1,4 +1,4 @@
-package foodordersystem.Model;
+package foodordersystem.Enum;
 
 public enum RefundStatus {
     REFUNDED,
