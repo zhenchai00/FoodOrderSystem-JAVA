@@ -44,6 +44,10 @@ public class RegisterUserPage implements ActionListener {
         backBtn.addActionListener(this);
 
         JPanel buttonPanel = new JPanel();
+        buttonPanel.add(newBtn);
+        buttonPanel.add(editBtn);
+        buttonPanel.add(deleteBtn);
+        buttonPanel.add(backBtn);
 
         registerUserPage.add(scrollPanel);
         registerUserPage.add(buttonPanel);
@@ -59,12 +63,17 @@ public class RegisterUserPage implements ActionListener {
                 ArrayList<Object> credentials = UserManager.getUserCredentials();
                 if (!credentials.isEmpty()) {
                     UserManager.registerUser(credentials.get(0).toString(), Integer.parseInt(credentials.get(1).toString()), UserRole.valueOf(credentials.get(2).toString()));
-
                 }
             } else if (event.getSource() == editBtn) {
-
+                ArrayList<Object> credentials = UserManager.getEditUserCredentials();
+                if (!credentials.isEmpty()) {
+                    UserManager.editUser(Integer.parseInt(credentials.get(0).toString()), credentials.get(1).toString(), Integer.parseInt(credentials.get(2).toString()), UserRole.valueOf(credentials.get(3).toString()));
+                }
             } else if (event.getSource() == deleteBtn) {
-
+                ArrayList<Object> credentials = UserManager.getDeleteUserCredentials();
+                if (!credentials.isEmpty()) {
+                    UserManager.deleteUser(Integer.parseInt(credentials.get(0).toString()));
+                }
             } else if (event.getSource() == backBtn) {
                 AdminDashboardPage.getAdminDashboardPageObj().getAdminDashboardPage().setVisible(true);
                 // FoodOrderSystem.loginPage.getLoginPage().setVisible(true);
@@ -82,5 +91,15 @@ public class RegisterUserPage implements ActionListener {
 
     public void addRowToTable (User user) {
         userTableModel.addRow(new Object[]{user.getId(), user.getUsername(), user.getPassword(), user.getRole()});
+    }
+    
+    public void updateUserTable () {
+        int rows = userTableModel.getRowCount();
+        for (int i = rows - 1; i >= 0; i--) {
+            userTableModel.removeRow(i);
+        }
+        for (User user : UserManager.getAllUsers()) {
+            addRowToTable(user);
+        }
     }
 }

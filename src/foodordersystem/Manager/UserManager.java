@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import foodordersystem.FoodOrderSystem;
 import foodordersystem.Model.DataIO;
 import foodordersystem.Model.User;
 import foodordersystem.Model.UserRole;
@@ -28,6 +29,36 @@ public class UserManager {
         User newUser = new User(number, username, password, role);
         DataIO.allUsers.add(newUser);
         DataIO.writeUser();
+        FoodOrderSystem.registerUserPage.updateUserTable();
+    }
+
+    public static void editUser(int id, String username, int password, UserRole role) throws Exception {
+        User user = DataIO.checkUsername(username);
+        if (user != null && user.getId() != id) {
+            throw new Exception("Username already exists");
+        }
+
+        for (User u : DataIO.allUsers) {
+            if (u.getId() == id) {
+                u.setUsername(username);
+                u.setPassword(password);
+                u.setRole(role);
+                break;
+            }
+        }
+        DataIO.writeUser();
+        FoodOrderSystem.registerUserPage.updateUserTable();
+    }
+
+    public static void deleteUser(int id) throws Exception {
+        for (User u : DataIO.allUsers) {
+            if (u.getId() == id) {
+                DataIO.allUsers.remove(u);
+                break;
+            }
+        }
+        DataIO.writeUser();
+        FoodOrderSystem.registerUserPage.updateUserTable();
     }
 
     public static ArrayList<Object> getUserCredentials() {
@@ -50,6 +81,47 @@ public class UserManager {
             userCredentials.add(inputUsername);
             userCredentials.add(inputUserPass);
             userCredentials.add(userRole);
+        }
+        return userCredentials;
+    }
+
+    public static ArrayList<Object> getEditUserCredentials() {
+        ArrayList<Object> userCredentials = new ArrayList<>();
+        String inputIdString = JOptionPane.showInputDialog(null, "Enter user's id: ");
+        String inputUsername = JOptionPane.showInputDialog(null, "Enter user's username: ");
+        String inputUserPassString = JOptionPane.showInputDialog(null, "Enter user's password: ");
+
+        UserRole[] values = {UserRole.USER, UserRole.ADMIN, UserRole.CUSTOMER, UserRole.RUNNER, UserRole.VENDOR};
+        Object userRole = JOptionPane.showInputDialog(null, "Select user's role: ", "User Role", JOptionPane.QUESTION_MESSAGE, null, values, values[0]);
+
+        if (
+            inputIdString != null
+            && !inputIdString.isEmpty()
+            && inputUsername != null
+            && !inputUsername.isEmpty()
+            && inputUserPassString != null
+            && !inputUserPassString.isEmpty()
+            && userRole != null
+            && !userRole.toString().isEmpty()
+        ) {
+            int inputId = Integer.parseInt(inputIdString);
+            int inputUserPass = Integer.parseInt(inputUserPassString);
+            userCredentials.add(inputId);
+            userCredentials.add(inputUsername);
+            userCredentials.add(inputUserPass);
+            userCredentials.add(userRole);
+        }
+        return userCredentials;
+    }
+
+    public static ArrayList<Object> getDeleteUserCredentials() {
+        ArrayList<Object> userCredentials = new ArrayList<>();
+        String inputIdString = JOptionPane.showInputDialog(null, "Enter user's id: ");
+
+
+        if (inputIdString != null && !inputIdString.isEmpty()) {
+            int inputId = Integer.parseInt(inputIdString);
+            userCredentials.add(inputId);
         }
         return userCredentials;
     }

@@ -40,4 +40,8 @@ public class User {
     public UserRole getRole () {
         return role;
     }
+
+    public UserRole setRole (UserRole role) {
+        return this.role = role;
+    }
 }
