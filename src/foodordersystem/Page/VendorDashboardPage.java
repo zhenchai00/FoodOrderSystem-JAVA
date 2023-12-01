@@ -73,7 +73,7 @@ public class VendorDashboardPage implements DashboardPage, ActionListener {
             } else if (event.getSource() == orderBtn) {
 
             } else if (event.getSource() == revenueBtn) {
-
+                VendorRevenueReportPage.getVendorRevenueReportPageObj().getVendorRevenueReportPage().setVisible(true);
             } else if (event.getSource() == reviewBtn) {
 
             } else if (event.getSource() == logoutBtn) {
