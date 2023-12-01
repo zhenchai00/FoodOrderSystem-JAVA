@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import foodordersystem.FoodOrderSystem;
 import foodordersystem.Enum.MenuCategory;
 import foodordersystem.Manager.MenuManager;
 import foodordersystem.Model.Menu;
@@ -91,7 +92,9 @@ public class VendorMenuPage extends MenuPage{
     }
 
     public void addRowToTable (Menu menu) {
-        menuTableModel.addRow(new Object[]{menu.getId(), menu.getName(), menu.getPrice()});
+        if (FoodOrderSystem.currentUser.getId() == menu.getVendorId()) {
+            menuTableModel.addRow(new Object[]{menu.getId(), menu.getName(), menu.getPrice()});
+        }
     }
 
     public void updateMenuTable () {
