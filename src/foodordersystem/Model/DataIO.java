@@ -84,11 +84,13 @@ public class DataIO {
                 String name  = sc.nextLine();
                 double price  = Double.parseDouble(sc.nextLine());
                 MenuCategory category  = MenuCategory.valueOf(sc.nextLine().toUpperCase());
+                String review  = sc.nextLine();
                 allMenus.add(new Menu(
                     id,
                     name,
                     price,
-                    category
+                    category,
+                    review
                 ));
                 sc.nextLine();
             }
@@ -105,12 +107,22 @@ public class DataIO {
                 pw.println(menu.getName());
                 pw.println(menu.getPrice());
                 pw.println(menu.getCategory());
+                pw.println(menu.getReview());
                 pw.println();
             }
             pw.close();
         } catch (Exception e) {
             System.out.println("Error writing " + MENU_FILE_PATH + ": " + e);
         }
+    }
+
+    public static Menu checkMenuName (String name) {
+        for (Menu menu : allMenus) {
+            if (menu.getName().equals(name)) {
+                return menu;
+            }
+        }
+        return null;
     }
 
     public static void readOrder () {

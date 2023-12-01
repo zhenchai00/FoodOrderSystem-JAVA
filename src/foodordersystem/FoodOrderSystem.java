@@ -7,6 +7,7 @@ import foodordersystem.Page.NewOrderPage;
 import foodordersystem.Page.OrderCartPage;
 import foodordersystem.Page.OrderPage;
 import foodordersystem.Page.RegisterUserPage;
+import foodordersystem.Page.VendorMenuPage;
 
 public class FoodOrderSystem {
 	public static LoginPage loginPage;
@@ -18,6 +19,7 @@ public class FoodOrderSystem {
 	// public static VendorDashboardPage vendorDashboardPage;
 	// public static RunnerDashboardPage runnerDashboardPage;
 
+	public static VendorMenuPage vendorMenuPage;
 	public static OrderPage orderPage;
 	public static CustomerOrderPage customerOrderPage;
 	public static NewOrderPage newOrderPage;
@@ -27,6 +29,8 @@ public class FoodOrderSystem {
 
 		loginPage = new LoginPage();
 		registerUserPage = new RegisterUserPage();
+
+		vendorMenuPage = new VendorMenuPage();
 
 		customerOrderPage = new CustomerOrderPage();
 		newOrderPage = new NewOrderPage();

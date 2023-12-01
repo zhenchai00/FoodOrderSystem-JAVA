@@ -72,7 +72,9 @@ public class CustomerDashboardPage implements DashboardPage, ActionListener {
                 customerOrderPage.getOrderPage().setVisible(true);
                 customerDashboardPage.setVisible(false);
             } else if (event.getSource() == menuBtn) {
-
+                CustomerMenuPage customerMenuPage = new CustomerMenuPage();
+                customerMenuPage.getMenuPage().setVisible(true);
+                customerDashboardPage.setVisible(false);
             } else if (event.getSource() == logoutBtn) {
                 logout();
             }

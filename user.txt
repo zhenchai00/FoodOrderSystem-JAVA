@@ -23,8 +23,3 @@ qqq
 123
 ADMIN
 
-6
-ven2
-123
-VENDOR
-
