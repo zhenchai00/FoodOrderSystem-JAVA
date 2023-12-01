@@ -8,13 +8,15 @@ public class Menu {
     private double price;
     private MenuCategory category;
     private String review;
+    private int vendorId;
 
-    public Menu (int id, String name, double price, MenuCategory category, String review) {
+    public Menu (int id, String name, double price, MenuCategory category, String review, int vendorId) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
         this.review = review;
+        this.vendorId = vendorId;
     }
 
     public int getId () {
@@ -55,5 +57,13 @@ public class Menu {
 
     public String getReview () {
         return review;
+    }
+
+    public void setVendorId (int vendorId) {
+        this.vendorId = vendorId;
+    }
+
+    public int getVendorId () {
+        return vendorId;
     }
 }

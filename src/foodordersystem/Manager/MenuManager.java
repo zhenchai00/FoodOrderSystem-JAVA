@@ -16,27 +16,26 @@ public class MenuManager {
         }
 
         int number = DataIO.allMenus.size() + 1;
-        Menu newMenu = new Menu(number, name, price, category, "-");
+        Menu newMenu = new Menu(number, name, price, category, "-", FoodOrderSystem.currentUser.getId());
         DataIO.allMenus.add(newMenu);
         DataIO.writeMenu();
-        FoodOrderSystem.vendorMenuPage.addRowToTable(newMenu);
     }
 
     public static void editMenu (int id, String name, double price) throws Exception {
-        Menu menu = DataIO.checkMenuName(name);
-        if (menu != null && menu.getId() != id) {
+        Menu menu = getMenuById(id);
+        if (menu == null) {
+            throw new Exception("Menu not found");
+        }
+
+        Menu existingMenu = DataIO.checkMenuName(name);
+        if (existingMenu != null && existingMenu.getId() != id) {
             throw new Exception("Menu name already exists");
         }
 
-        for (Menu m : DataIO.allMenus) {
-            if (m.getId() == id) {
-                m.setName(name);
-                m.setPrice(price);
-                break;
-            }
-        }
+        menu.setName(name);
+        menu.setPrice(price);
+
         DataIO.writeMenu();
-        FoodOrderSystem.vendorMenuPage.updateMenuTable();
     }
 
     public static void deleteMenu (int id) throws Exception {
@@ -47,7 +46,6 @@ public class MenuManager {
             }
         }
         DataIO.writeMenu();
-        FoodOrderSystem.vendorMenuPage.updateMenuTable();
     }
 
     public static ArrayList<Menu> getAllMenus () {
@@ -112,5 +110,14 @@ public class MenuManager {
         }
 
         return menuDetails;
+    }
+
+    public static Menu getMenuById (int id) {
+        for (Menu menu : DataIO.allMenus) {
+            if (menu.getId() == id) {
+                return menu;
+            }
+        }
+        return null;
     }
 }

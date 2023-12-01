@@ -85,12 +85,14 @@ public class DataIO {
                 double price  = Double.parseDouble(sc.nextLine());
                 MenuCategory category  = MenuCategory.valueOf(sc.nextLine().toUpperCase());
                 String review  = sc.nextLine();
+                int vendor = Integer.parseInt(sc.nextLine());
                 allMenus.add(new Menu(
                     id,
                     name,
                     price,
                     category,
-                    review
+                    review,
+                    vendor
                 ));
                 sc.nextLine();
             }
@@ -108,6 +110,7 @@ public class DataIO {
                 pw.println(menu.getPrice());
                 pw.println(menu.getCategory());
                 pw.println(menu.getReview());
+                pw.println(menu.getVendorId());
                 pw.println();
             }
             pw.close();

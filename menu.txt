@@ -1,5 +1,42 @@
 1
-Chicken Rice
-9.5
+chicken
+12.0
 CHINESE
+-
+4
+
+2
+123
+22.0
+MALAY
+-
+4
+
+3
+nasi lemak
+22.0
+MALAY
+-
+4
+
+4
+hhh
+23.0
+CHINESE
+-
+4
+
+5
+het
+2.0
+CHINESE
+-
+4
+
+6
+noice
+222.0
+INDIAN
+-
+4
 

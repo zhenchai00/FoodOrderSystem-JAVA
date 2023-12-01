@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import foodordersystem.FoodOrderSystem;
 import foodordersystem.Manager.UserManager;
-import foodordersystem.Model.User;
 
 public class LoginPage implements ActionListener {
     public JFrame loginPage;
@@ -14,7 +14,6 @@ public class LoginPage implements ActionListener {
     private JPasswordField passwordField;
     private JLabel usernameLabel, passwordLabel;
     private JButton loginBtn, newUserBtn, quitBtn;
-    public static User user;
 
     public LoginPage () {
         loginPage = new JFrame("Login Page");
@@ -61,9 +60,9 @@ public class LoginPage implements ActionListener {
                 int password = Integer.parseInt(String.valueOf(passwordField.getPassword()));
 
                 System.out.println("Login " + username + " " + password);
-                user = UserManager.loginUser(username, password);
+                FoodOrderSystem.currentUser = UserManager.loginUser(username, password);
 
-                switch (user.getRole()) {
+                switch (FoodOrderSystem.currentUser.getRole()) {
                     case CUSTOMER:
                         System.out.println("Customer");
                         CustomerDashboardPage.getCustomerDashboardPageObj().getCustomerDashboardPage().setVisible(true);
@@ -115,9 +114,5 @@ public class LoginPage implements ActionListener {
 
     public JFrame getLoginPage() {
         return loginPage;
-    }
-
-    public static User getUser() {
-        return user;
     }
 }

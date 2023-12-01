@@ -23,16 +23,16 @@ public class CustomerDashboardPage implements DashboardPage, ActionListener {
     private static CustomerDashboardPage instance;
 
     private CustomerDashboardPage() {
-        if (LoginPage.getUser() == null) {
+        if (FoodOrderSystem.currentUser == null) {
             throw new NullPointerException("User is null at CustomerDashboardPage");
         }
         customerDashboardPage = new JFrame("Customer Dashboard");
         customerDashboardPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         customerDashboardPage.setLayout(new BoxLayout(customerDashboardPage.getContentPane(), BoxLayout.Y_AXIS));
-        System.out.println("cusomter dashboard page: " + LoginPage.getUser().getUsername());
+        System.out.println("cusomter dashboard page: " + FoodOrderSystem.currentUser.getUsername());
 
         JPanel headerPanel = new JPanel();
-        welcomeLabel = new JLabel("Welcome, " + LoginPage.getUser().getUsername().toUpperCase() + "!");
+        welcomeLabel = new JLabel("Welcome, " + FoodOrderSystem.currentUser.getUsername().toUpperCase() + "!");
         welcomeLabel.setFont(new Font(null, Font.BOLD, 20));
         headerPanel.add(welcomeLabel);
 

@@ -27,7 +27,7 @@ public class AdminDashboardPage implements DashboardPage, ActionListener {
         adminDashboardPage.setLayout(new BoxLayout(adminDashboardPage.getContentPane(), BoxLayout.Y_AXIS));
 
         JPanel headerPanel = new JPanel();
-        welcomeLabel = new JLabel("Welcome, " + LoginPage.getUser().getUsername().toUpperCase() + "!");
+        welcomeLabel = new JLabel("Welcome, " + FoodOrderSystem.currentUser.getUsername().toUpperCase() + "!");
         welcomeLabel.setFont(new Font(null, Font.BOLD, 20));
         headerPanel.add(welcomeLabel);
 

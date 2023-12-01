@@ -59,19 +59,23 @@ public class VendorMenuPage extends MenuPage{
                 if (menuDetails != null && !menuDetails.isEmpty()) {
                     MenuManager.addMenu(menuDetails.get(0).toString(), (double) menuDetails.get(1), MenuCategory.valueOf(menuDetails.get(2).toString()));
                 }
+                updateMenuTable();
             } else if (event.getSource() == editBtn) {
                 System.out.println("edit menu");
                 ArrayList<Object> menuDetails = MenuManager.getEditMenuDetails();
                 if (menuDetails != null && !menuDetails.isEmpty()) {
                     MenuManager.editMenu((int) menuDetails.get(0), menuDetails.get(1).toString(), (double) menuDetails.get(2));
                 }
+                updateMenuTable();
             } else if (event.getSource() == deleteBtn) {
                 System.out.println("delete menu");
                 ArrayList<Object> menuDetails = MenuManager.getDeleteMenuDetails();
                 if (menuDetails != null && !menuDetails.isEmpty()) {
                     MenuManager.deleteMenu((int) menuDetails.get(0));
                 }
+                updateMenuTable();
             } else if (event.getSource() == backBtn) {
+                updateMenuTable();
                 VendorDashboardPage.getVendorDashboardPageObj().getVendorDashboardPage().setVisible(true);
                 menuPage.setVisible(false);
             }
@@ -91,8 +95,8 @@ public class VendorMenuPage extends MenuPage{
     }
 
     public void updateMenuTable () {
-        menuTableModel.setRowCount(0);
-        for (int i = 0; i < menuTableModel.getRowCount(); i++) {
+        int rows = menuTableModel.getRowCount();
+        for (int i = rows - 1; i >= 0; i--) {
             menuTableModel.removeRow(i);
         }
         for (Menu menu : MenuManager.getAllMenus()) {

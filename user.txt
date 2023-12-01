@@ -18,8 +18,3 @@ ven
 123
 VENDOR
 
-5
-qqq
-123
-ADMIN
-

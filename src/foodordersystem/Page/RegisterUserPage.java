@@ -64,20 +64,24 @@ public class RegisterUserPage implements ActionListener {
                 if (!credentials.isEmpty()) {
                     UserManager.registerUser(credentials.get(0).toString(), Integer.parseInt(credentials.get(1).toString()), UserRole.valueOf(credentials.get(2).toString()));
                 }
+                updateUserTable();
             } else if (event.getSource() == editBtn) {
                 ArrayList<Object> credentials = UserManager.getEditUserCredentials();
                 if (!credentials.isEmpty()) {
                     UserManager.editUser(Integer.parseInt(credentials.get(0).toString()), credentials.get(1).toString(), Integer.parseInt(credentials.get(2).toString()), UserRole.valueOf(credentials.get(3).toString()));
                 }
+                updateUserTable();
             } else if (event.getSource() == deleteBtn) {
                 ArrayList<Object> credentials = UserManager.getDeleteUserCredentials();
                 if (!credentials.isEmpty()) {
                     UserManager.deleteUser(Integer.parseInt(credentials.get(0).toString()));
                 }
+                updateUserTable();
             } else if (event.getSource() == backBtn) {
                 AdminDashboardPage.getAdminDashboardPageObj().getAdminDashboardPage().setVisible(true);
                 // FoodOrderSystem.loginPage.getLoginPage().setVisible(true);
                 registerUserPage.setVisible(false);
+                updateUserTable();
             }
         } catch (Exception e) {
             System.out.println("Error" + e);

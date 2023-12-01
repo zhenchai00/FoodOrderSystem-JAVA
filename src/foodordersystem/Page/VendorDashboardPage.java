@@ -27,7 +27,7 @@ public class VendorDashboardPage implements DashboardPage, ActionListener {
         vendorDashboardPage.setLayout(new BoxLayout(vendorDashboardPage.getContentPane(), BoxLayout.Y_AXIS));
 
         JPanel headerPanel = new JPanel();
-        welcomeLabel = new JLabel("Welcome, " + LoginPage.getUser().getUsername().toUpperCase() + "!");
+        welcomeLabel = new JLabel("Welcome, " + FoodOrderSystem.currentUser.getUsername().toUpperCase() + "!");
         welcomeLabel.setFont(new Font(null, Font.BOLD, 20));
         headerPanel.add(welcomeLabel);
 
