@@ -24,14 +24,14 @@ public class NewOrderPage implements ActionListener{
     private ButtonGroup orderTypeGroup;
 
     private JLabel itemIdLabel, quantityLabel;
-    private JTextField itemNameField;
+    private JTextField itemIdField;
     private JFormattedTextField quantityField;
     private Integer quantityValue;
 
     private JTable orderTable;
     private DefaultTableModel orderTableModel;
 
-    private ArrayList<Menu> orderMenuList = new ArrayList<Menu>();
+    private ArrayList<Object[]> orderMenuList = new ArrayList<>();
 
     /**
      * Constructor of NewOrderPage by creating the frame and its content
@@ -43,7 +43,7 @@ public class NewOrderPage implements ActionListener{
 
         // add text field for menu item id
         itemIdLabel = new JLabel("Item ID:");
-        itemNameField = new JTextField(10);
+        itemIdField = new JTextField(10);
 
         // add text field for quantity
         quantityLabel = new JLabel("Quantity:");
@@ -91,7 +91,7 @@ public class NewOrderPage implements ActionListener{
 
         // add relevant components to panel
         formPanel.add(itemIdLabel);
-        formPanel.add(itemNameField);
+        formPanel.add(itemIdField);
         formPanel.add(quantityLabel);
         formPanel.add(quantityField);
 
@@ -124,21 +124,21 @@ public class NewOrderPage implements ActionListener{
     public void actionPerformed (ActionEvent event) {
         try {
             if (event.getSource() == addBtn) {
-                String itemNameValue = itemNameField.getText();
+                String itemIdValue = itemIdField.getText();
                 quantityValue = (Integer) quantityField.getValue();
                 if (quantityValue == null || quantityValue <= 0) {
                     throw new Exception("Quantity must be greater than 0");
                 }
 
-                Menu menu = MenuManager.getMenuById(Integer.parseInt(itemNameValue));
+                Menu menu = MenuManager.getMenuById(Integer.parseInt(itemIdValue));
                 if (menu == null) {
                     throw new Exception("Menu not found");
                 }
 
-                orderMenuList.add(menu);
-                addRowToTable(menu);
+                // orderMenuList.add(menu);
+                addRowToTable(menu, quantityValue);
 
-                itemNameField.setText("");
+                itemIdField.setText("");
                 quantityField.setText("");
             } else if (event.getSource() == editBtn) {
                 System.out.println("Edit button clicked");
@@ -164,34 +164,33 @@ public class NewOrderPage implements ActionListener{
         }
     }
 
-    public void addRowToTable (Menu menu) {
+    public void addRowToTable (Menu menu, int quantity) {
         int menuId = menu.getId();
-        int quantity = (Integer) quantityField.getValue();
 
-        // Check if the menu item with the same ID already exists in the table
-        for (int i = 0; i < orderTableModel.getRowCount(); i++) {
-            if ((int) orderTableModel.getValueAt(i, 0) == menuId) {
-                // If exists, update quantity and price
+        boolean menuItemExists = false;
+        for (int i = 0; i < orderMenuList.size(); i++) {
+            Object[] existingMenu = orderMenuList.get(i);
+            Menu existingMenuObject = (Menu) existingMenu[0];
+            if (existingMenuObject.getId() == menuId) {
                 int currentQuantity = (int) orderTableModel.getValueAt(i, 2);
                 double price = menu.getPrice() * (quantity + currentQuantity);
 
                 orderTableModel.setValueAt(quantity + currentQuantity, i, 2);
                 orderTableModel.setValueAt(price, i, 3);
 
-                // Update the orderMenuList as well
-                orderMenuList.removeIf(m -> m.getId() == menuId);
-                orderMenuList.add(menu);
-                return;
+                orderMenuList.get(i)[1] = quantity + currentQuantity;
+
+                menuItemExists = true;
+                break;
             }
         }
-        System.out.println("Menu ID: " + orderMenuList.get(0).getPrice() + " " +  quantity);
 
-        // If not exists, add a new row
-        double price = menu.getPrice() * quantity;
-        orderTableModel.addRow(new Object[]{menuId, menu.getName(), quantity, price});
-
-        // Add the menu to the orderMenuList
-        orderMenuList.add(menu);
+        if (!menuItemExists) {
+            double price = menu.getPrice() * quantity;
+            orderTableModel.addRow(new Object[]{menuId, menu.getName(), quantity, price});
+            Object[] row = {menu, quantity, price};
+            orderMenuList.add(row);
+        }
     }
     
     public OrderType getOrderType () {
