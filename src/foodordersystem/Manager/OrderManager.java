@@ -14,7 +14,7 @@ import foodordersystem.Model.Order;
 import foodordersystem.Model.OrderItem;
 
 public class OrderManager {
-    public static ArrayList<OrderItem> orderItems = new ArrayList<>();
+    private ArrayList<OrderItem> orderItems = new ArrayList<>();
     public static int newOrderId = 900 + DataIO.allOrders.size() + 1;
 
     public void addOrder (String address, OrderType orderType) throws Exception {
@@ -39,17 +39,19 @@ public class OrderManager {
         DataIO.writeOrderItem();
     }
 
-    public void storeOrderItems(ArrayList<Menu> orderMenuList) {
-        for (Menu menu : orderMenuList) {
+    public void storeOrderItems(ArrayList<Object[]> orderMenuList) {
+        orderItems.clear();
+        for (int i = 0; i < orderMenuList.size(); i++) {
+            Object[] itemDetails = orderMenuList.get(i);
+            Menu menu = (Menu) itemDetails[0];
             int menuId = menu.getId();
-            String itemName = menu.getName();
-            int quantity = getExistingOrderItemMenuId(menuId);
+            int quantity = (int) itemDetails[1];
             double price = menu.getPrice() * quantity;
 
             OrderItem orderItem = new OrderItem(
                 newOrderId,
                 menuId,
-                itemName,
+                menu.getName(),
                 quantity,
                 price
             );
@@ -57,17 +59,7 @@ public class OrderManager {
         }
     }
 
-    private int getExistingOrderItemMenuId(int menuId) {
-        int totalQuantity = 0;
-        for (OrderItem orderItem : orderItems) {
-            if (orderItem.getMenuId() == menuId) {
-                totalQuantity += orderItem.getQuantity();
-            }
-        }
-        return totalQuantity;
-    }
-
-    public static ArrayList<OrderItem> getOrderItems() {
+    public ArrayList<OrderItem> getOrderItems() {
         return orderItems;
     }
 }
