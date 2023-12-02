@@ -1,44 +1,34 @@
 package foodordersystem.Model;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 import foodordersystem.Enum.OrderStatus;
 import foodordersystem.Enum.OrderType;
 import foodordersystem.Enum.RefundStatus;
 
 public class Order {
 	private int id;
-	private int orderDetailId;
 	private int invoiceId;
 	private int customerId;
 	private String address;
-	private String date;
+	private LocalDateTime date;
 	private OrderType type;
 	private RefundStatus refund;
 	private OrderStatus status;
+	private ArrayList<OrderItem> orderItems = new ArrayList<OrderItem>();
 
-	/**
-	 * Constructor
-	 * @param id
-	 * @param invoiceId
-	 * @param orderDetailId
-	 * @param customerId
-	 * @param address
-	 * @param date
-	 * @param type
-	 * @param refund
-	 * @param status 
-	 */
 	public Order(
-		// int id,
-		int orderDetailId,
+		int id,
 		int invoiceId,
 		int customerId,
 		String address,
-		String date,
+		LocalDateTime date,
 		OrderType type,
 		RefundStatus refund,
 		OrderStatus status
 	) {
-		this.orderDetailId = orderDetailId;
+		this.id = id;
 		this.invoiceId = invoiceId;
 		this.customerId = customerId;
 		this.address = address;
@@ -58,14 +48,6 @@ public class Order {
 	
 	public int getId() {
 		return id;
-	}
-
-	public void setOrderDetailId(int orderDetailId) {
-		this.orderDetailId = orderDetailId;
-	}
-	
-	public int getOrderDetailId() {
-		return orderDetailId;
 	}
 
 	public void setInvoiceId(int invoiceId) {
@@ -92,11 +74,11 @@ public class Order {
 		return address;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public LocalDateTime setDate(LocalDateTime date) {
+		return this.date = date;
 	}
 
-	public String getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 	public void setOrderType(OrderType type) {

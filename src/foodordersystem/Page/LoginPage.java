@@ -7,6 +7,10 @@ import javax.swing.*;
 
 import foodordersystem.FoodOrderSystem;
 import foodordersystem.Manager.UserManager;
+import foodordersystem.Model.Admin;
+import foodordersystem.Model.Customer;
+import foodordersystem.Model.Runner;
+import foodordersystem.Model.Vendor;
 
 public class LoginPage implements ActionListener {
     public JFrame loginPage;
@@ -35,13 +39,13 @@ public class LoginPage implements ActionListener {
 
         JPanel buttonPanel = new JPanel();
         loginBtn = new JButton("Login");
-         newUserBtn = new JButton("New User");
+        // newUserBtn = new JButton("New User");
         quitBtn = new JButton("Quit");
         buttonPanel.add(loginBtn);
-         buttonPanel.add(newUserBtn);
+        // buttonPanel.add(newUserBtn);
         buttonPanel.add(quitBtn);
         loginBtn.addActionListener(this);
-         newUserBtn.addActionListener(this);
+        // newUserBtn.addActionListener(this);
         quitBtn.addActionListener(this);
 
         loginPage.add(usernamePanel);
@@ -65,24 +69,44 @@ public class LoginPage implements ActionListener {
                 switch (FoodOrderSystem.currentUser.getRole()) {
                     case CUSTOMER:
                         System.out.println("Customer");
+                        FoodOrderSystem.currentUser = new Customer(
+                            FoodOrderSystem.currentUser.getId(),
+                            FoodOrderSystem.currentUser.getUsername(),
+                            FoodOrderSystem.currentUser.getPassword()
+                        );
                         CustomerDashboardPage.getCustomerDashboardPageObj().getCustomerDashboardPage().setVisible(true);
                         loginPage.setVisible(false);
                         break;
 
                     case VENDOR:
                         System.out.println("Vendor");
+                        FoodOrderSystem.currentUser = new Vendor(
+                            FoodOrderSystem.currentUser.getId(),
+                            FoodOrderSystem.currentUser.getUsername(),
+                            FoodOrderSystem.currentUser.getPassword()
+                        );
                         VendorDashboardPage.getVendorDashboardPageObj().getVendorDashboardPage().setVisible(true);
                         loginPage.setVisible(false);
                         break;
                 
                     case ADMIN:
                         System.out.println("Admin");
+                        FoodOrderSystem.currentUser = new Admin(
+                            FoodOrderSystem.currentUser.getId(),
+                            FoodOrderSystem.currentUser.getUsername(),
+                            FoodOrderSystem.currentUser.getPassword()
+                        );
                         AdminDashboardPage.getAdminDashboardPageObj().getAdminDashboardPage().setVisible(true);
                         loginPage.setVisible(false);
                         break;
                 
                     case RUNNER:
                         System.out.println("Runner");
+                        FoodOrderSystem.currentUser = new Runner(
+                            FoodOrderSystem.currentUser.getId(),
+                            FoodOrderSystem.currentUser.getUsername(),
+                            FoodOrderSystem.currentUser.getPassword()
+                        );
                         RunnerDashboardPage.getRunnerDashboardPageObj().getRunnerDashboardPage().setVisible(true);
                         loginPage.setVisible(false);
                         break;

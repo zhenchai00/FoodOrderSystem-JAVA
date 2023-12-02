@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import foodordersystem.FoodOrderSystem;
 import foodordersystem.Enum.UserRole;
 import foodordersystem.Model.DataIO;
 import foodordersystem.Model.User;
@@ -29,7 +28,6 @@ public class UserManager {
         User newUser = new User(number, username, password, role);
         DataIO.allUsers.add(newUser);
         DataIO.writeUser();
-        // FoodOrderSystem.registerUserPage.updateUserTable();
     }
 
     public static void editUser(int id, String username, int password, UserRole role) throws Exception {
@@ -47,7 +45,6 @@ public class UserManager {
             }
         }
         DataIO.writeUser();
-        // FoodOrderSystem.registerUserPage.updateUserTable();
     }
 
     public static void deleteUser(int id) throws Exception {
@@ -58,7 +55,6 @@ public class UserManager {
             }
         }
         DataIO.writeUser();
-        // FoodOrderSystem.registerUserPage.updateUserTable();
     }
 
     public static ArrayList<Object> getUserCredentials() {

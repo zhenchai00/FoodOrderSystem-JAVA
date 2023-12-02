@@ -2,6 +2,8 @@ package foodordersystem.Model;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,21 +12,27 @@ import foodordersystem.Enum.OrderStatus;
 import foodordersystem.Enum.OrderType;
 import foodordersystem.Enum.RefundStatus;
 import foodordersystem.Enum.UserRole;
+import foodordersystem.Manager.OrderManager;
 
 public class DataIO {
-    private static final String USER_FILE_PATH = "user.txt";
-    private static final String ORDER_FILE_PATH = "order.txt";
-    private static final String MENU_FILE_PATH = "menu.txt";
+    private static final String USER_FILE_PATH = "database/user.txt";
+    private static final String ORDER_FILE_PATH = "database/order.txt";
+    private static final String ORDERITEM_FILE_PATH = "database/orderitem.txt";
+    private static final String MENU_FILE_PATH = "database/menu.txt";
+    private static final String INVOICE_FILE_PATH = "database/invoice.txt";
 
     public static ArrayList<Order> allOrders = new ArrayList<Order>();
+    public static ArrayList<OrderItem> allOrderItems = new ArrayList<OrderItem>();
     public static ArrayList<User> allUsers = new ArrayList<User>();
     public static ArrayList<Menu> allMenus = new ArrayList<Menu>();
+    // public static ArrayList<Invoice> allInvoices = new ArrayList<Invoice>();
 
     public static void readData () {
         try {
             readUser();
             readOrder();
             readMenu();
+            readOrderItem();
         } catch (Exception e) {
             System.out.println("Error reading data: " + e.getMessage());
         }
@@ -132,21 +140,22 @@ public class DataIO {
         try {
             Scanner sc = new Scanner(new File(ORDER_FILE_PATH));
             while (sc.hasNext()) {
-		        int orderDetailId  = Integer.parseInt(sc.nextLine());
+                int orderId = Integer.parseInt(sc.nextLine());
 		        int invoiceId  = Integer.parseInt(sc.nextLine());
 		        int customerId  = Integer.parseInt(sc.nextLine());
 		        String address  = sc.nextLine();
-		        String date  = sc.nextLine();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime localDateTime = LocalDateTime.parse(sc.nextLine(), formatter);
 		        OrderType type  = OrderType.valueOf(sc.nextLine());
 		        RefundStatus refund  = RefundStatus.valueOf(sc.nextLine());
 		        OrderStatus status  = OrderStatus.valueOf(sc.nextLine());
                 sc.nextLine();
                 allOrders.add(new Order(
-                    orderDetailId,
+                    orderId,
                     invoiceId,
                     customerId,
                     address,
-                    date,
+                    localDateTime,
                     type,
                     refund,
                     status
@@ -161,11 +170,13 @@ public class DataIO {
         try {
             PrintWriter pw = new PrintWriter(ORDER_FILE_PATH);
             for (Order order : allOrders) {
-                pw.println(order.getOrderDetailId());
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                String formattedDateTime = order.getDate().format(formatter);
+                pw.println(order.getId());
                 pw.println(order.getInvoiceId());
                 pw.println(order.getCustomerId());
                 pw.println(order.getAddress());
-                pw.println(order.getDate());
+                pw.println(formattedDateTime);
                 pw.println(order.getOrderType());
                 pw.println(order.getRefundStatus());
                 pw.println(order.getOrderStatus());
@@ -174,6 +185,46 @@ public class DataIO {
             pw.close();
         } catch (Exception e) {
             System.out.println("Error writing " + ORDER_FILE_PATH + ": " + e);
+        }
+    }
+
+    public static void readOrderItem () {
+        try {
+            Scanner sc = new Scanner(new File(ORDERITEM_FILE_PATH));
+            while (sc.hasNext()) {
+                int orderId = Integer.parseInt(sc.nextLine());
+                int menuId  = Integer.parseInt(sc.nextLine());
+                String itemName  = sc.nextLine();
+                int quantity  = Integer.parseInt(sc.nextLine());
+                double price  = Double.parseDouble(sc.nextLine());
+                sc.nextLine();
+                allOrderItems.add(new OrderItem(
+                    orderId,
+                    menuId,
+                    itemName,
+                    quantity,
+                    price
+                ));
+            }
+        } catch (Exception e) {
+            System.out.println("Error reading " + ORDERITEM_FILE_PATH + ": " + e);
+        }
+    }
+
+    public static void writeOrderItem () {
+        try {
+            PrintWriter pw = new PrintWriter(ORDERITEM_FILE_PATH);
+            for (OrderItem orderItem : allOrderItems) {
+                pw.println(orderItem.getOrderId());
+                pw.println(orderItem.getMenuId());
+                pw.println(orderItem.getItemName());
+                pw.println(orderItem.getQuantity());
+                pw.println(orderItem.getPrice());
+                pw.println();
+            }
+            pw.close();
+        } catch (Exception e) {
+            System.out.println("Error writing " + ORDERITEM_FILE_PATH + ": " + e);
         }
     }
 }

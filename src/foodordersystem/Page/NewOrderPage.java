@@ -5,11 +5,15 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 
 import foodordersystem.FoodOrderSystem;
-import foodordersystem.Model.OrderItem;
+import foodordersystem.Enum.OrderType;
+import foodordersystem.Manager.MenuManager;
+import foodordersystem.Manager.OrderManager;
+import foodordersystem.Model.Menu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 
 public class NewOrderPage implements ActionListener{
     private JFrame newOrderPage;
@@ -22,9 +26,12 @@ public class NewOrderPage implements ActionListener{
     private JLabel itemIdLabel, quantityLabel;
     private JTextField itemNameField;
     private JFormattedTextField quantityField;
+    private Integer quantityValue;
 
-    private JTable ordercontinueTable;
-    private DefaultTableModel tableModel;
+    private JTable orderTable;
+    private DefaultTableModel orderTableModel;
+
+    private ArrayList<Menu> orderMenuList = new ArrayList<Menu>();
 
     /**
      * Constructor of NewOrderPage by creating the frame and its content
@@ -48,9 +55,9 @@ public class NewOrderPage implements ActionListener{
         quantityField.setColumns(10);
 
         // add table for order item listing
-        tableModel = new DefaultTableModel(new Object[]{"Item Name", "Quantity", "Price"}, 0);
-        ordercontinueTable = new JTable(tableModel);
-        JScrollPane scrollPanel = new JScrollPane(ordercontinueTable);
+        orderTableModel = new DefaultTableModel(new Object[]{"ID", "Item Name", "Quantity", "Price"}, 0);
+        orderTable = new JTable(orderTableModel);
+        JScrollPane scrollPanel = new JScrollPane(orderTable);
 
         // add radio button for order type
         dineInRadio = new JRadioButton("Dine In");
@@ -117,19 +124,27 @@ public class NewOrderPage implements ActionListener{
     public void actionPerformed (ActionEvent event) {
         try {
             if (event.getSource() == addBtn) {
-                System.out.println("Add button clicked");
                 String itemNameValue = itemNameField.getText();
-                Integer quantityValue = (Integer) quantityField.getValue();
+                quantityValue = (Integer) quantityField.getValue();
                 if (quantityValue == null || quantityValue <= 0) {
                     throw new Exception("Quantity must be greater than 0");
                 }
 
-                // TODO: get item price from list of menu item
-                addRowToTable(new OrderItem(Integer.parseInt(itemNameValue), quantityValue, 1.00));
-                JOptionPane.showMessageDialog(addBtn, "Item added to cart" + "\n" + "Item ID: " + itemNameValue + "\n" + "Quantity: " + quantityValue, "Success", JOptionPane.INFORMATION_MESSAGE);
+                Menu menu = MenuManager.getMenuById(Integer.parseInt(itemNameValue));
+                if (menu == null) {
+                    throw new Exception("Menu not found");
+                }
+
+                orderMenuList.add(menu);
+                addRowToTable(menu);
 
                 itemNameField.setText("");
                 quantityField.setText("");
+            } else if (event.getSource() == editBtn) {
+                System.out.println("Edit button clicked");
+
+            } else if (event.getSource() == deleteBtn) {
+                System.out.println("Delete button clicked");
 
             } else if (event.getSource() == cancelBtn) {
                 FoodOrderSystem.customerOrderPage.getOrderPage().setVisible(true);
@@ -139,27 +154,55 @@ public class NewOrderPage implements ActionListener{
                 // newOrderPage.setVisible(false);
                 // OrderCartPage.getOrderCartPage().setVisible(true);
                 System.out.println("Continue button clicked");
-
+                OrderManager orderManager = new OrderManager();
+                orderManager.storeOrderItems(orderMenuList);
+                orderManager.addOrder("test", getOrderType());
             }
         } catch (Exception e) {
             System.out.println("Error" + e);
-            JOptionPane.showMessageDialog(newOrderPage, "Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(newOrderPage, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public void addRowToTable (OrderItem orderItem) {
-        tableModel.addRow(new Object[]{orderItem.getItemName(), orderItem.getQuantity(), orderItem.getPrice()});
-    }
+    public void addRowToTable (Menu menu) {
+        int menuId = menu.getId();
+        int quantity = (Integer) quantityField.getValue();
 
-    // private OrderType getOrderType () {
-    //     if (dineInRadio.isSelected()) {
-    //         return OrderType.DINE_IN;
-    //     } else if (takeAwayRadio.isSelected()) {
-    //         return OrderType.TAKE_AWAY;
-    //     } else if (deliveryRadio.isSelected()) {
-    //         return OrderType.DELIVERY;
-    //     } else {
-    //         return null;
-    //     }
-    // }
+        // Check if the menu item with the same ID already exists in the table
+        for (int i = 0; i < orderTableModel.getRowCount(); i++) {
+            if ((int) orderTableModel.getValueAt(i, 0) == menuId) {
+                // If exists, update quantity and price
+                int currentQuantity = (int) orderTableModel.getValueAt(i, 2);
+                double price = menu.getPrice() * (quantity + currentQuantity);
+
+                orderTableModel.setValueAt(quantity + currentQuantity, i, 2);
+                orderTableModel.setValueAt(price, i, 3);
+
+                // Update the orderMenuList as well
+                orderMenuList.removeIf(m -> m.getId() == menuId);
+                orderMenuList.add(menu);
+                return;
+            }
+        }
+        System.out.println("Menu ID: " + orderMenuList.get(0).getPrice() + " " +  quantity);
+
+        // If not exists, add a new row
+        double price = menu.getPrice() * quantity;
+        orderTableModel.addRow(new Object[]{menuId, menu.getName(), quantity, price});
+
+        // Add the menu to the orderMenuList
+        orderMenuList.add(menu);
+    }
+    
+    public OrderType getOrderType () {
+        if (dineInRadio.isSelected()) {
+            return OrderType.DINE_IN;
+        } else if (takeAwayRadio.isSelected()) {
+            return OrderType.TAKE_AWAY;
+        } else if (deliveryRadio.isSelected()) {
+            return OrderType.DELIVERY;
+        } else {
+            return null;
+        }
+    }
 }
