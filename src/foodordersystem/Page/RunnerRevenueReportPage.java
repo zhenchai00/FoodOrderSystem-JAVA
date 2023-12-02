@@ -21,20 +21,18 @@ public class RunnerRevenueReportPage implements ActionListener {
         RunnerRevenueFrame.setSize(500, 300);
         RunnerRevenueFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         RunnerRevenueFrame.setLayout(new FlowLayout());
-        
-        String[] Column = {"Month", "Service", "TotalRevenue"};
-        String[][] data = {{"January", "Home cleaning", "RM1090"},
-                          {"Februari","Home Cleaning","RM 1000"}};
+
+        String[] Column = { "Month", "Service", "TotalRevenue" };
+        String[][] data = { { "January", "Home cleaning", "RM1090" },
+                { "Februari", "Home Cleaning", "RM 1000" } };
         RunnerRevenueTable = new JTable(data, Column);
         RunnerRevenueTable.setSize(500, 200);
         RunnerRevenueTable.setVisible(true);
- 
 
         Backbutton = new JButton("Back");
         Backbutton.setPreferredSize(new Dimension(50, 50));
         Backbutton.addActionListener(this);
 
-        
         RunnerRevenueFrame.setVisible(true);
         RunnerRevenueFrame.setLayout(new BorderLayout());
         RunnerRevenueFrame.add(RunnerRevenueTable.getTableHeader(), BorderLayout.NORTH);
@@ -54,8 +52,8 @@ public class RunnerRevenueReportPage implements ActionListener {
     public void actionPerformed(ActionEvent Event) {
         try {
             if (Event.getSource() == Backbutton) {
-               RunnerDashboardPage.getRunnerDashboardPageObj().getRunnerDashboardPage().setVisible(true);
-               RunnerRevenueFrame.setVisible(false);
+                RunnerDashboardPage.getRunnerDashboardPageObj().getRunnerDashboardPage().setVisible(true);
+                RunnerRevenueFrame.setVisible(false);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(RunnerRevenueFrame, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
