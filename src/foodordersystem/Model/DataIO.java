@@ -12,7 +12,6 @@ import foodordersystem.Enum.OrderStatus;
 import foodordersystem.Enum.OrderType;
 import foodordersystem.Enum.RefundStatus;
 import foodordersystem.Enum.UserRole;
-import foodordersystem.Manager.OrderManager;
 
 public class DataIO {
     private static final String USER_FILE_PATH = "database/user.txt";

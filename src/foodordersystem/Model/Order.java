@@ -1,7 +1,6 @@
 package foodordersystem.Model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 import foodordersystem.Enum.OrderStatus;
 import foodordersystem.Enum.OrderType;
@@ -16,7 +15,6 @@ public class Order {
 	private OrderType type;
 	private RefundStatus refund;
 	private OrderStatus status;
-	private ArrayList<OrderItem> orderItems = new ArrayList<OrderItem>();
 
 	public Order(
 		int id,

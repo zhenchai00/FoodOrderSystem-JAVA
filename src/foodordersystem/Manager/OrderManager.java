@@ -59,7 +59,11 @@ public class OrderManager {
         }
     }
 
-    public ArrayList<OrderItem> getOrderItems() {
-        return orderItems;
+    public static ArrayList<Order> getAllOrders () {
+        return DataIO.allOrders;
+    }
+    
+    public static ArrayList<OrderItem> getAllOrderItems () {
+        return DataIO.allOrderItems;
     }
 }
