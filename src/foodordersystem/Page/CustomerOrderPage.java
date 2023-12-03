@@ -35,7 +35,7 @@ public class CustomerOrderPage extends OrderPage {
                 orderPage.setVisible(false);
 
             } else if (event.getSource() == viewBtn) {
-                HistoryOrderPage historyOrderPage = new HistoryOrderPage();
+                CustomerHistoryOrderPage historyOrderPage = new CustomerHistoryOrderPage();
                 historyOrderPage.getHistoryOrderPage().setVisible(true);
                 orderPage.setVisible(false);
 

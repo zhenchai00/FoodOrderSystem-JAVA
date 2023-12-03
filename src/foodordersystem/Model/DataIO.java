@@ -142,6 +142,7 @@ public class DataIO {
                 int orderId = Integer.parseInt(sc.nextLine());
 		        int invoiceId  = Integer.parseInt(sc.nextLine());
 		        int customerId  = Integer.parseInt(sc.nextLine());
+		        int vendorId  = Integer.parseInt(sc.nextLine());
 		        String address  = sc.nextLine();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime localDateTime = LocalDateTime.parse(sc.nextLine(), formatter);
@@ -153,6 +154,7 @@ public class DataIO {
                     orderId,
                     invoiceId,
                     customerId,
+                    vendorId,
                     address,
                     localDateTime,
                     type,
@@ -174,6 +176,7 @@ public class DataIO {
                 pw.println(order.getId());
                 pw.println(order.getInvoiceId());
                 pw.println(order.getCustomerId());
+                pw.println(order.getVendorId());
                 pw.println(order.getAddress());
                 pw.println(formattedDateTime);
                 pw.println(order.getOrderType());
@@ -193,6 +196,7 @@ public class DataIO {
             while (sc.hasNext()) {
                 int orderId = Integer.parseInt(sc.nextLine());
                 int menuId  = Integer.parseInt(sc.nextLine());
+                int vendorId  = Integer.parseInt(sc.nextLine());
                 String itemName  = sc.nextLine();
                 int quantity  = Integer.parseInt(sc.nextLine());
                 double price  = Double.parseDouble(sc.nextLine());
@@ -200,6 +204,7 @@ public class DataIO {
                 allOrderItems.add(new OrderItem(
                     orderId,
                     menuId,
+                    vendorId,
                     itemName,
                     quantity,
                     price
@@ -216,6 +221,7 @@ public class DataIO {
             for (OrderItem orderItem : allOrderItems) {
                 pw.println(orderItem.getOrderId());
                 pw.println(orderItem.getMenuId());
+                pw.println(orderItem.getVendorId());
                 pw.println(orderItem.getItemName());
                 pw.println(orderItem.getQuantity());
                 pw.println(orderItem.getPrice());

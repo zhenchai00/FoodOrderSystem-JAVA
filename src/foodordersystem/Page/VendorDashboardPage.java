@@ -69,9 +69,10 @@ public class VendorDashboardPage implements DashboardPage, ActionListener {
                 VendorMenuPage vendorMenuPage = new VendorMenuPage();
                 vendorMenuPage.getMenuPage().setVisible(true);
                 vendorDashboardPage.setVisible(false);
-
             } else if (event.getSource() == orderBtn) {
-
+                VendorOrderPage vendorOrderPage = new VendorOrderPage();
+                vendorOrderPage.getOrderPage().setVisible(true);
+                vendorDashboardPage.setVisible(false);
             } else if (event.getSource() == revenueBtn) {
                 VendorRevenueReportPage.getVendorRevenueReportPageObj().getVendorRevenueReportPage().setVisible(true);
             } else if (event.getSource() == reviewBtn) {

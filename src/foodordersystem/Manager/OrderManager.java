@@ -15,7 +15,25 @@ import foodordersystem.Model.OrderItem;
 
 public class OrderManager {
     private ArrayList<OrderItem> orderItems = new ArrayList<>();
-    public static int newOrderId = 900 + DataIO.allOrders.size() + 1;
+    public int newOrderId = 900 + DataIO.allOrders.size() + 1;
+    public int firstVendorId;
+
+    public static ArrayList<Order> getAllOrders () {
+        return DataIO.allOrders;
+    }
+    
+    public static ArrayList<OrderItem> getAllOrderItems () {
+        return DataIO.allOrderItems;
+    }
+
+    public static Order getOrderById (int orderId) {
+        for (Order order : getAllOrders()) {
+            if (order.getId() == orderId) {
+                return order;
+            }
+        }
+        return null;
+    }
 
     public void addOrder (String address, OrderType orderType) throws Exception {
         Customer customer = (Customer) FoodOrderSystem.currentUser;
@@ -27,6 +45,7 @@ public class OrderManager {
             newOrderId,
             800 + DataIO.allOrders.size() + 1,
             customer.getId(),
+            firstVendorId,
             address,
             LocalDateTime.now(),
             type,
@@ -41,16 +60,26 @@ public class OrderManager {
 
     public void storeOrderItems(ArrayList<Object[]> orderMenuList) {
         orderItems.clear();
+        firstVendorId = -1;
+
         for (int i = 0; i < orderMenuList.size(); i++) {
             Object[] itemDetails = orderMenuList.get(i);
             Menu menu = (Menu) itemDetails[0];
             int menuId = menu.getId();
+            int vendorId = menu.getVendorId();
             int quantity = (int) itemDetails[1];
             double price = menu.getPrice() * quantity;
+
+            if (i == 0) {
+                firstVendorId = vendorId;
+            } else if (vendorId != firstVendorId) {
+                throw new IllegalArgumentException("You can only order from one vendor at a time.");
+            }
 
             OrderItem orderItem = new OrderItem(
                 newOrderId,
                 menuId,
+                vendorId,
                 menu.getName(),
                 quantity,
                 price
@@ -59,11 +88,24 @@ public class OrderManager {
         }
     }
 
-    public static ArrayList<Order> getAllOrders () {
-        return DataIO.allOrders;
+    public static void updateOrderStatus (int orderId, OrderStatus orderStatus) {
+        for (Order order : DataIO.allOrders) {
+            if (order.getId() == orderId) {
+                order.setOrderStatus(orderStatus);
+                // need to call the invoice manager to update the invoice status
+                if (orderStatus == OrderStatus.REJECT || orderStatus == OrderStatus.CANCELLED) {
+                    order.setRefundStatus(RefundStatus.YES);
+                }
+            }
+        }
+        DataIO.writeOrder();
     }
-    
-    public static ArrayList<OrderItem> getAllOrderItems () {
-        return DataIO.allOrderItems;
+
+    public void reOrder (Order existingOrder) throws Exception {
+        String address = existingOrder.getAddress();
+        OrderType orderType = existingOrder.getOrderType();
+
+        storeOrderItems(existingOrder.getOrderItemsWithMenuList());
+        addOrder(address, orderType);
     }
 }
