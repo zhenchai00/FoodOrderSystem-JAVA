@@ -10,6 +10,10 @@ import foodordersystem.Manager.MenuManager;
 import foodordersystem.Manager.OrderManager;
 import foodordersystem.Model.Menu;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
@@ -17,21 +21,18 @@ import java.util.ArrayList;
 
 public class NewOrderPage implements ActionListener{
     private JFrame newOrderPage;
-
     private JButton addBtn, editBtn, deleteBtn, cancelBtn, continueBtn;
-
     private JRadioButton dineInRadio, takeAwayRadio, deliveryRadio;
     private ButtonGroup orderTypeGroup;
-
-    private JLabel itemIdLabel, quantityLabel;
+    private JLabel itemIdLabel, quantityLabel, addressLabel;
     private JTextField itemIdField;
     private JFormattedTextField quantityField;
     private Integer quantityValue;
-
+    private JTextArea addressTextArea;
     private JTable orderTable;
     private DefaultTableModel orderTableModel;
-
     private ArrayList<Object[]> orderMenuList = new ArrayList<>();
+    private JPanel formPanel, formActionPanel, orderTypePanel, footerPanel, addressPanel;
 
     /**
      * Constructor of NewOrderPage by creating the frame and its content
@@ -63,8 +64,8 @@ public class NewOrderPage implements ActionListener{
         dineInRadio = new JRadioButton("Dine In");
         takeAwayRadio = new JRadioButton("Take Away");
         deliveryRadio = new JRadioButton("Delivery");
-        dineInRadio.addActionListener(this);
-        takeAwayRadio.addActionListener(this);
+        // dineInRadio.addActionListener(this);
+        // takeAwayRadio.addActionListener(this);
         deliveryRadio.addActionListener(this);
         orderTypeGroup = new ButtonGroup();
         orderTypeGroup.add(dineInRadio);
@@ -84,10 +85,33 @@ public class NewOrderPage implements ActionListener{
         continueBtn.addActionListener(this);
 
         // prepare panel for form field
-        JPanel formPanel = new JPanel();
-        JPanel formActionPanel = new JPanel();
-        JPanel orderTypePanel = new JPanel();
-        JPanel footerPanel = new JPanel();
+        formPanel = new JPanel();
+        formActionPanel = new JPanel();
+        orderTypePanel = new JPanel();
+        addressPanel = new JPanel();
+        footerPanel = new JPanel();
+
+        addressLabel = new JLabel("Address:");
+        addressTextArea = new JTextArea(5, 20);
+        addressTextArea.setLineWrap(true);
+        addressTextArea.setWrapStyleWord(true);
+        addressTextArea.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(Color.BLACK), 
+            BorderFactory.createEmptyBorder(10, 10, 10, 10)
+        ));
+
+        JPanel labelPanel = new JPanel();
+        JPanel textPanel = new JPanel();
+        labelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.LINE_AXIS));
+        textPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+
+        labelPanel.add(addressLabel);
+        textPanel.add(addressTextArea);
+
+        addressPanel.add(labelPanel);
+        addressPanel.add(textPanel);
+        addressPanel.setLayout(new BoxLayout(addressPanel, BoxLayout.PAGE_AXIS));
 
         // add relevant components to panel
         formPanel.add(itemIdLabel);
@@ -110,6 +134,7 @@ public class NewOrderPage implements ActionListener{
         newOrderPage.add(formActionPanel);
         newOrderPage.add(orderTypePanel);
         newOrderPage.add(scrollPanel);
+        newOrderPage.add(addressPanel);
         newOrderPage.add(footerPanel);
 
         newOrderPage.pack();
@@ -123,40 +148,62 @@ public class NewOrderPage implements ActionListener{
 
     public void actionPerformed (ActionEvent event) {
         try {
-            if (event.getSource() == addBtn) {
-                String itemIdValue = itemIdField.getText();
-                quantityValue = (Integer) quantityField.getValue();
+            String itemIdValue = itemIdField.getText();
+            quantityValue = (Integer) quantityField.getValue();
+
+            if (event.getSource() == addBtn || event.getSource() == editBtn) {
                 if (quantityValue == null || quantityValue <= 0) {
                     throw new Exception("Quantity must be greater than 0");
                 }
-
                 Menu menu = MenuManager.getMenuById(Integer.parseInt(itemIdValue));
                 if (menu == null) {
                     throw new Exception("Menu not found");
                 }
 
-                // orderMenuList.add(menu);
-                addRowToTable(menu, quantityValue);
-
+                if (event.getSource() == addBtn) {
+                    addRowToTable(menu, quantityValue);
+                } else if (event.getSource() == editBtn) {
+                    editRowToTable(menu, quantityValue);
+                }
                 itemIdField.setText("");
                 quantityField.setText("");
-            } else if (event.getSource() == editBtn) {
-                System.out.println("Edit button clicked");
+            }
 
-            } else if (event.getSource() == deleteBtn) {
-                System.out.println("Delete button clicked");
-
+            if (event.getSource() == deleteBtn) {
+                Menu menu = MenuManager.getMenuById(Integer.parseInt(itemIdValue));
+                if (menu == null) {
+                    throw new Exception("Menu not found");
+                }
+                deleteRowFromTable(menu.getId());
+                itemIdField.setText("");
+                quantityField.setText("");
             } else if (event.getSource() == cancelBtn) {
                 FoodOrderSystem.customerOrderPage.getOrderPage().setVisible(true);
                 newOrderPage.setVisible(false);
 
             } else if (event.getSource() == continueBtn) {
-                // newOrderPage.setVisible(false);
-                // OrderCartPage.getOrderCartPage().setVisible(true);
-                System.out.println("Continue button clicked");
+                String addressString = "";
+                if (orderMenuList.size() == 0) {
+                    throw new Exception("Order item is required");
+                }
+
+                if (getOrderType() == OrderType.DELIVERY) {
+                    if (addressTextArea.getText().isEmpty()) {
+                        throw new Exception("Address is required");
+                    }
+
+                    if (addressTextArea.getText().length() > 100) {
+                        throw new Exception("Address must be less than 100 characters");
+                    }
+                    addressString = addressTextArea.getText();
+                }
+
                 OrderManager orderManager = new OrderManager();
                 orderManager.storeOrderItems(orderMenuList);
-                orderManager.addOrder("test", getOrderType());
+                orderManager.addOrder(addressString, getOrderType());
+
+                addressTextArea.setText("");
+                resetRowFromTable();
             }
         } catch (Exception e) {
             System.out.println("Error" + e);
@@ -192,7 +239,55 @@ public class NewOrderPage implements ActionListener{
             orderMenuList.add(row);
         }
     }
+
+    public void editRowToTable (Menu menu, int quantity) throws Exception {
+        int menuId = menu.getId();
+
+        boolean menuItemExists = false;
+        for (int i = 0; i < orderMenuList.size(); i++) {
+            Object[] existingMenu = orderMenuList.get(i);
+            Menu existingMenuObject = (Menu) existingMenu[0];
+            if (existingMenuObject.getId() == menuId) {
+                double price = menu.getPrice() * quantity;
+
+                orderTableModel.setValueAt(quantity, i, 2);
+                orderTableModel.setValueAt(price, i, 3);
+
+                orderMenuList.get(i)[1] = quantity;
+
+                menuItemExists = true;
+                break;
+            }
+        }
+
+        if (!menuItemExists) {
+            throw new Exception("Menu item does not exist");
+        }
+    }
+
+    public void deleteRowFromTable (int menuId) throws Exception {
+        boolean menuItemExists = false;
+        for (int i = 0; i < orderMenuList.size(); i++) {
+            Object[] existingMenu = orderMenuList.get(i);
+            Menu existingMenuObject = (Menu) existingMenu[0];
+            if (existingMenuObject.getId() == menuId) {
+                orderTableModel.removeRow(i);
+                orderMenuList.remove(i);
+
+                menuItemExists = true;
+                break;
+            }
+        }
+
+        if (!menuItemExists) {
+            throw new Exception("Menu item does not exist");
+        }
+    }
     
+    public void resetRowFromTable () {
+        orderTableModel.setRowCount(0);
+        orderMenuList.clear();
+    }
     public OrderType getOrderType () {
         if (dineInRadio.isSelected()) {
             return OrderType.DINE_IN;
@@ -201,7 +296,7 @@ public class NewOrderPage implements ActionListener{
         } else if (deliveryRadio.isSelected()) {
             return OrderType.DELIVERY;
         } else {
-            return null;
+            return OrderType.DINE_IN;
         }
     }
 }
