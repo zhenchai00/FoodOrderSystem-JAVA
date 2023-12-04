@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import foodordersystem.Enum.MenuCategory;
+import foodordersystem.Enum.NotificationStatus;
 import foodordersystem.Enum.OrderStatus;
 import foodordersystem.Enum.OrderType;
 import foodordersystem.Enum.RefundStatus;
@@ -23,6 +24,7 @@ public class DataIO {
     private static final String RUNNER_AVAILABLE_FILE_PATH = "database/runneravailable.txt";
     //private static final String INVOICE_FILE_PATH = "database/invoice.txt";
     private static final String DWALLET_FILE_PATH = "database/dwallet.txt";
+    private static final String NOTIFICATION_FILE_PATH = "database/notification.txt";
 
     public static ArrayList<Order> allOrders = new ArrayList<Order>();
     public static ArrayList<OrderItem> allOrderItems = new ArrayList<OrderItem>();
@@ -32,6 +34,7 @@ public class DataIO {
     public static ArrayList<Task> allTasks = new ArrayList<Task>();
     public static ArrayList<Object[]> allRunners = new ArrayList<>();
     public static ArrayList<Dwallet> allDwallet = new ArrayList<Dwallet>();
+    public static ArrayList<Notification> allNotifications = new ArrayList<Notification>();
 
     public static void readData () {
         try {
@@ -42,6 +45,7 @@ public class DataIO {
             readTask();
             readRunnerAvailable();
             readDwallet();
+            readNotification();
         } catch (Exception e) {
             System.out.println("Error reading data: " + e.getMessage());
         }
@@ -358,6 +362,49 @@ public class DataIO {
             pw.close();
         } catch (Exception e) {
             System.out.println("Error writing " + DWALLET_FILE_PATH + ": " + e);
+        }
+    }
+
+    public static void readNotification () {
+        try {
+            Scanner sc = new Scanner(new File(NOTIFICATION_FILE_PATH));
+            while (sc.hasNext()) {
+                int id  = Integer.parseInt(sc.nextLine());
+                int userId  = Integer.parseInt(sc.nextLine());
+                String message  = sc.nextLine();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime localDateTime = LocalDateTime.parse(sc.nextLine(), formatter);
+                NotificationStatus status  = NotificationStatus.valueOf(sc.nextLine());
+                allNotifications.add(new Notification(
+                    id,
+                    userId,
+                    message,
+                    localDateTime,
+                    status
+                ));
+                sc.nextLine();
+            }
+        } catch (Exception e) {
+            System.out.println("Error reading " + NOTIFICATION_FILE_PATH + ": " + e);
+        }
+    }
+
+    public static void writeNotification () {
+        try {
+            PrintWriter pw = new PrintWriter(NOTIFICATION_FILE_PATH);
+            for (Notification notification : allNotifications) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                String formattedDateTime = notification.getDateTime().format(formatter);
+                pw.println(notification.getId());
+                pw.println(notification.getUserId());
+                pw.println(notification.getMessage());
+                pw.println(formattedDateTime);
+                pw.println(notification.getStatus());
+                pw.println();
+            }
+            pw.close();
+        } catch (Exception e) {
+            System.out.println("Error writing " + NOTIFICATION_FILE_PATH + ": " + e);
         }
     }
 }

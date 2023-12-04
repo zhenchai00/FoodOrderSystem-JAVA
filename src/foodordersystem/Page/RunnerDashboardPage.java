@@ -16,7 +16,7 @@ import foodordersystem.Interface.DashboardPage;
 
 public class RunnerDashboardPage implements DashboardPage, ActionListener {
     private JFrame runnerDashboardPage;
-    private JButton taskBtn, revenueBtn, reviewBtn, logoutBtn;
+    private JButton notifyBtn, taskBtn, revenueBtn, reviewBtn, logoutBtn;
     private JLabel welcomeLabel;
 
     private static RunnerDashboardPage instance;
@@ -32,6 +32,12 @@ public class RunnerDashboardPage implements DashboardPage, ActionListener {
         headerPanel.add(welcomeLabel);
 
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+
+        notifyBtn = new JButton("Notification");
+        notifyBtn.addActionListener(this);
+        buttonPanel.add(notifyBtn);
+
         taskBtn = new JButton("Task");
         taskBtn.addActionListener(this);
         buttonPanel.add(taskBtn);
@@ -65,7 +71,11 @@ public class RunnerDashboardPage implements DashboardPage, ActionListener {
 
     public void actionPerformed (ActionEvent event) {
         try {
-            if (event.getSource() == taskBtn) {
+            if (event.getSource() == notifyBtn) {
+                RunnerNotificationPage runnerNotificationPage = new RunnerNotificationPage();
+                runnerNotificationPage.getNotificationPage().setVisible(true);
+                runnerDashboardPage.setVisible(false);
+            } else if (event.getSource() == taskBtn) {
                 RunnerTaskPage runnerTaskPage = new RunnerTaskPage();
                 runnerTaskPage.getRunnerTaskPage().setVisible(true);
                 runnerDashboardPage.setVisible(false);

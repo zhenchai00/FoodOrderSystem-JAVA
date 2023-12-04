@@ -38,6 +38,7 @@ public class TaskManager {
                 );
                 DataIO.allTasks.add(task);
                 DataIO.writeTask();
+                NotificationManager.sendNotification((int) runnerAvailable.get(0), "You have a new task from Vendor");
                 return true;
             }
         }
@@ -50,6 +51,7 @@ public class TaskManager {
                 if (task.getStatus() == TaskStatus.PENDING && status == TaskStatus.ACCEPT) {
                     updateRunnerAvailable(task.getRunnerId(), false);
                     task.setStatus(status);
+                    NotificationManager.sendNotification(task.getCustomerId(), "Your order has been accepted by Runner.");
                 }
                 if (task.getStatus() == TaskStatus.PENDING && status == TaskStatus.REJECT) {
                     ArrayList<Object> runnerAvailable = getRunnerAvailable(task.getRunnerId());
@@ -59,6 +61,7 @@ public class TaskManager {
                     } else {
                         updateRunnerAvailable(task.getRunnerId(), true);
                         task.setStatus(status);
+                        NotificationManager.sendNotification(task.getCustomerId(), "Your order has been rejected by Runner. System trying to find another runner.");
                     }
                 }
                 if (task.getStatus() == TaskStatus.ACCEPT && status == TaskStatus.COMPLETED) {

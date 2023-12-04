@@ -56,6 +56,7 @@ public class OrderManager {
         DataIO.allOrderItems.addAll(orderItems);
         DataIO.writeOrder();
         DataIO.writeOrderItem();
+        NotificationManager.sendNotification(firstVendorId, "You have a new order from " + customer.getUsername() + ".");
     }
 
     public void storeOrderItems(ArrayList<Object[]> orderMenuList) {
@@ -93,6 +94,7 @@ public class OrderManager {
             if (order.getId() == orderId) {
                 // need to call the invoice manager to update the invoice status
                 if (orderStatus == OrderStatus.ACCEPT && order.getOrderStatus() == OrderStatus.PENDING) {
+                    NotificationManager.sendNotification(order.getCustomerId(), "Your order has been accepted by Vendor.");
                     order.setOrderStatus(orderStatus);
                 }
 
@@ -100,6 +102,12 @@ public class OrderManager {
                     (orderStatus == OrderStatus.REJECT || orderStatus == OrderStatus.CANCELLED)
                     && order.getOrderStatus() == OrderStatus.PENDING
                 ) {
+                    if (orderStatus == OrderStatus.REJECT) {
+                        NotificationManager.sendNotification(order.getCustomerId(), "Your order has been rejected by Vendor.");
+                    }
+                    if (orderStatus == OrderStatus.CANCELLED) {
+                        NotificationManager.sendNotification(order.getVendorId(), "Your order has been cancelled.");
+                    }
                     order.setRefundStatus(RefundStatus.YES);
                     order.setOrderStatus(orderStatus);
                 }
@@ -112,9 +120,9 @@ public class OrderManager {
                     System.out.println("Order id " + order.getId());
                     if (TaskManager.createTask(order.getId())) {
                         order.setOrderStatus(orderStatus);
+                        NotificationManager.sendNotification(order.getCustomerId(), "Your order is finding Runner.");
                     } else {
-                        // need to update the customer to change the order type to dine in or takeaway
-                        // by notify the customer
+                        NotificationManager.sendNotification(orderId, "Runner not available. Please change to dine in or takeaway.");
                         throw new Exception("Runner not available.");
                     }
                 }
