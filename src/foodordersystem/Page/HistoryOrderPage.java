@@ -12,8 +12,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import foodordersystem.FoodOrderSystem;
-
 public abstract class HistoryOrderPage implements ActionListener {
     protected JFrame historyOrderPage;
     protected JButton backBtn;
