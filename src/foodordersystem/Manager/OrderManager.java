@@ -88,13 +88,17 @@ public class OrderManager {
         }
     }
 
-    public static void updateOrderStatus (int orderId, OrderStatus orderStatus) {
+    public static void updateOrderStatus (int orderId, OrderStatus orderStatus) throws Exception {
         for (Order order : DataIO.allOrders) {
             if (order.getId() == orderId) {
                 order.setOrderStatus(orderStatus);
                 // need to call the invoice manager to update the invoice status
                 if (orderStatus == OrderStatus.REJECT || orderStatus == OrderStatus.CANCELLED) {
                     order.setRefundStatus(RefundStatus.YES);
+                }
+
+                if (orderStatus == OrderStatus.HANDOVER && order.getOrderType() == OrderType.DELIVERY) {
+                    TaskManager.createTask(order.getId());
                 }
             }
         }

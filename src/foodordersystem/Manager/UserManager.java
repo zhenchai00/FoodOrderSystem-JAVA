@@ -26,6 +26,16 @@ public class UserManager {
 
         int number = DataIO.allUsers.size() + 1;
         User newUser = new User(number, username, password, 0, role);
+
+        if (role == UserRole.RUNNER) {
+            DataIO.allRunners.add(new Object[] {
+                DataIO.allRunners.size() + 1,
+                newUser.getId(),
+                true
+            });
+            DataIO.writeRunnerAvailable();
+        }
+
         DataIO.allUsers.add(newUser);
         DataIO.writeUser();
     }

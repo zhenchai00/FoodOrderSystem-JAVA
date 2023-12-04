@@ -11,6 +11,7 @@ import foodordersystem.Enum.MenuCategory;
 import foodordersystem.Enum.OrderStatus;
 import foodordersystem.Enum.OrderType;
 import foodordersystem.Enum.RefundStatus;
+import foodordersystem.Enum.TaskStatus;
 import foodordersystem.Enum.UserRole;
 
 public class DataIO {
@@ -19,6 +20,7 @@ public class DataIO {
     private static final String ORDERITEM_FILE_PATH = "database/orderitem.txt";
     private static final String MENU_FILE_PATH = "database/menu.txt";
     private static final String TASK_FILE_PATH = "database/task.txt";
+    private static final String RUNNER_AVAILABLE_FILE_PATH = "database/runneravailable.txt";
     private static final String INVOICE_FILE_PATH = "database/invoice.txt";
 
     public static ArrayList<Order> allOrders = new ArrayList<Order>();
@@ -26,6 +28,8 @@ public class DataIO {
     public static ArrayList<User> allUsers = new ArrayList<User>();
     public static ArrayList<Menu> allMenus = new ArrayList<Menu>();
     // public static ArrayList<Invoice> allInvoices = new ArrayList<Invoice>();
+    public static ArrayList<Task> allTasks = new ArrayList<Task>();
+    public static ArrayList<Object[]> allRunners = new ArrayList<>();
 
     public static void readData () {
         try {
@@ -33,6 +37,8 @@ public class DataIO {
             readOrder();
             readMenu();
             readOrderItem();
+            readTask();
+            readRunnerAvailable();
         } catch (Exception e) {
             System.out.println("Error reading data: " + e.getMessage());
         }
@@ -234,6 +240,86 @@ public class DataIO {
             pw.close();
         } catch (Exception e) {
             System.out.println("Error writing " + ORDERITEM_FILE_PATH + ": " + e);
+        }
+    }
+
+    public static void readTask () {
+        try {
+            Scanner sc = new Scanner(new File(TASK_FILE_PATH));
+            while (sc.hasNext()) {
+                int id  = Integer.parseInt(sc.nextLine());
+                int orderId  = Integer.parseInt(sc.nextLine());
+                int customerId  = Integer.parseInt(sc.nextLine());
+                int vendorId  = Integer.parseInt(sc.nextLine());
+                int runnerId  = Integer.parseInt(sc.nextLine());
+                String address = sc.nextLine();
+                TaskStatus status  = TaskStatus.valueOf(sc.nextLine().toUpperCase());
+                String review  = sc.nextLine();
+                sc.nextLine();
+                allTasks.add(new Task(
+                    id,
+                    orderId,
+                    customerId,
+                    vendorId,
+                    runnerId,
+                    address,
+                    status,
+                    review
+                ));
+            }
+        } catch (Exception e) {
+            System.out.println("Error reading " + TASK_FILE_PATH + ": " + e);
+        }
+    }
+
+    public static void writeTask () {
+        try {
+            PrintWriter pw = new PrintWriter(TASK_FILE_PATH);
+            for (Task task : allTasks) {
+                pw.println(task.getId());
+                pw.println(task.getOrderId());
+                pw.println(task.getCustomerId());
+                pw.println(task.getVendorId());
+                pw.println(task.getRunnerId());
+                pw.println(task.getAddress());
+                pw.println(task.getStatus());
+                pw.println(task.getReview());
+                pw.println();
+            }
+            pw.close();
+        } catch (Exception e) {
+            System.out.println("Error writing " + TASK_FILE_PATH + ": " + e);
+        }
+    }
+
+    public static void readRunnerAvailable () {
+        try {
+            Scanner sc = new Scanner(new File(RUNNER_AVAILABLE_FILE_PATH));
+            while (sc.hasNext()) {
+                int runnerId  = Integer.parseInt(sc.nextLine());
+                boolean available = Boolean.parseBoolean(sc.nextLine().toString());
+                sc.nextLine();
+                allRunners.add(new Object[]{
+                    runnerId,
+                    available
+                });
+            }
+        } catch (Exception e) {
+            System.out.println("Error reading " + RUNNER_AVAILABLE_FILE_PATH + ": " + e);
+        }
+    }
+
+    public static void writeRunnerAvailable () {
+        try {
+            PrintWriter pw = new PrintWriter(RUNNER_AVAILABLE_FILE_PATH);
+            for (Object[] runner : allRunners) {
+                pw.println(runner[0]);
+                pw.println(runner[1].toString());
+                pw.println();
+            }
+            pw.close();
+        } catch (Exception e) {
+            System.out.println("Error writing " + RUNNER_AVAILABLE_FILE_PATH + ": " + e);
         }
     }
 }
