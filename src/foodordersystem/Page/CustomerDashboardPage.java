@@ -17,7 +17,7 @@ import foodordersystem.Interface.DashboardPage;
 public class CustomerDashboardPage implements DashboardPage, ActionListener {
     public CustomerOrderPage customerOrderPage;
     public static JFrame customerDashboardPage;
-    private JButton orderBtn, menuBtn, logoutBtn;
+    private JButton orderBtn, menuBtn, dwalletBtn, logoutBtn;
     private JLabel welcomeLabel;
 
     private static CustomerDashboardPage instance;
@@ -38,15 +38,18 @@ public class CustomerDashboardPage implements DashboardPage, ActionListener {
 
         orderBtn = new JButton("Order");
         menuBtn = new JButton("Menu");
+        dwalletBtn = new JButton("Digital Wallet");
         logoutBtn = new JButton("Logout");
 
         orderBtn.addActionListener(this);
         menuBtn.addActionListener(this);
+        dwalletBtn.addActionListener(this);
         logoutBtn.addActionListener(this);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(orderBtn);
         buttonPanel.add(menuBtn);
+        buttonPanel.add(dwalletBtn);
         buttonPanel.add(logoutBtn);
 
         
@@ -74,6 +77,10 @@ public class CustomerDashboardPage implements DashboardPage, ActionListener {
             } else if (event.getSource() == menuBtn) {
                 CustomerMenuPage customerMenuPage = new CustomerMenuPage();
                 customerMenuPage.getMenuPage().setVisible(true);
+                customerDashboardPage.setVisible(false);
+            } else if (event.getSource() == dwalletBtn) {
+                CustomerDwalletPage customerDwalletPage = new CustomerDwalletPage();
+                customerDwalletPage.getCustomerDwalletPage().setVisible(true);
                 customerDashboardPage.setVisible(false);
             } else if (event.getSource() == logoutBtn) {
                 logout();

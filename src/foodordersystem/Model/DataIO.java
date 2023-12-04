@@ -21,7 +21,8 @@ public class DataIO {
     private static final String MENU_FILE_PATH = "database/menu.txt";
     private static final String TASK_FILE_PATH = "database/task.txt";
     private static final String RUNNER_AVAILABLE_FILE_PATH = "database/runneravailable.txt";
-    private static final String INVOICE_FILE_PATH = "database/invoice.txt";
+    //private static final String INVOICE_FILE_PATH = "database/invoice.txt";
+    private static final String DWALLET_FILE_PATH = "database/dwallet.txt";
 
     public static ArrayList<Order> allOrders = new ArrayList<Order>();
     public static ArrayList<OrderItem> allOrderItems = new ArrayList<OrderItem>();
@@ -30,6 +31,7 @@ public class DataIO {
     // public static ArrayList<Invoice> allInvoices = new ArrayList<Invoice>();
     public static ArrayList<Task> allTasks = new ArrayList<Task>();
     public static ArrayList<Object[]> allRunners = new ArrayList<>();
+    public static ArrayList<Dwallet> allDwallet = new ArrayList<Dwallet>();
 
     public static void readData () {
         try {
@@ -321,6 +323,25 @@ public class DataIO {
             pw.close();
         } catch (Exception e) {
             System.out.println("Error writing " + RUNNER_AVAILABLE_FILE_PATH + ": " + e);
+        }
+    }
+    
+    public static void readDwallet () {
+        try {
+            Scanner sc = new Scanner(new File(DWALLET_FILE_PATH));
+            while (sc.hasNext()) {
+                int id  = Integer.parseInt(sc.nextLine());
+                String username  = sc.nextLine();
+                int credit  = Integer.parseInt(sc.nextLine());
+                allDwallet.add(new Dwallet(
+                    id,
+                    username,
+                    credit
+                ));
+                sc.nextLine();
+            }
+        } catch (Exception e) {
+            System.out.println("Error reading " + DWALLET_FILE_PATH + ": " + e);
         }
     }
 }
