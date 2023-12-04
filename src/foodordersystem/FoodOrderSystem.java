@@ -28,6 +28,7 @@ public class FoodOrderSystem {
 		registerUserPage = new RegisterUserPage();
 
 		customerOrderPage = new CustomerOrderPage();
-		
+	
+                
 	}
 }
