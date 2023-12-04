@@ -66,7 +66,9 @@ public class RunnerDashboardPage implements DashboardPage, ActionListener {
     public void actionPerformed (ActionEvent event) {
         try {
             if (event.getSource() == taskBtn) {
-              RunnerTaskPage.getRunnerTaskPageObj().getRunnerTaskPage().setVisible(true);
+                RunnerTaskPage runnerTaskPage = new RunnerTaskPage();
+                runnerTaskPage.getRunnerTaskPage().setVisible(true);
+                runnerDashboardPage.setVisible(false);
             } else if (event.getSource() == revenueBtn) {
               RunnerRevenueReportPage.getRunnerRevenueReportPageObj().getRunnerRevenueReportPage().setVisible(true);
             } else if (event.getSource() == reviewBtn) {

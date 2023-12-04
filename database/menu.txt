@@ -1,42 +1,35 @@
 1
-chicken
+nasi
 12.0
-CHINESE
+MALAY
 -
-4
+2
 
 2
-123
-22.0
-MALAY
+chicken
+15.0
+CHINESE
 -
-4
+2
 
 3
-nasi lemak
+noodle
+9.0
+WESTERN
+-
+2
+
+4
+haidilao
+90.0
+CHINESE
+-
+6
+
+5
+nasi goreng
 22.0
 MALAY
 -
-4
-
-4
-hhh
-23.0
-CHINESE
--
-4
-
-5
-het
-2.0
-CHINESE
--
-4
-
 6
-noice
-222.0
-INDIAN
--
-4
 

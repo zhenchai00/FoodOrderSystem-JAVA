@@ -1,7 +1,8 @@
 package foodordersystem.Manager;
 
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
 
+import foodordersystem.Enum.OrderStatus;
 import foodordersystem.Enum.OrderType;
 import foodordersystem.Enum.TaskStatus;
 import foodordersystem.Model.DataIO;
@@ -9,33 +10,91 @@ import foodordersystem.Model.Order;
 import foodordersystem.Model.Task;
 
 public class TaskManager {
-    public static void createTask (int orderId) throws Exception {
+    public static ArrayList<Task> getAllTasks () {
+        return DataIO.allTasks;
+    }
+    public static boolean createTask (int orderId) throws Exception {
         int number = DataIO.allTasks.size() + 1 + 600;
-        int runnerId = 0;
-        for (Object[] runner : DataIO.allRunners) {
-            if ((boolean) runner[1]) {
-                runnerId = (int) runner[0];
-                runner[1] = false;
-                DataIO.writeRunnerAvailable();
-                break;
-            } else {
-                throw new Exception("No available runner");
-            }
+        ArrayList<Object> runnerAvailable = getRunnerAvailable(0);
+        if (!(boolean) runnerAvailable.get(1)) {
+            throw new Exception("No runner available");
         }
+
         for (Order order : OrderManager.getAllOrders()) {
-            if (order.getId() == orderId && order.getOrderType() == OrderType.DELIVERY) {
+            if (
+                order.getId() == orderId
+                && order.getOrderType() == OrderType.DELIVERY
+                && runnerAvailable.get(1).equals(true)
+            ) {
                 Task task = new Task(
                     number,
                     order.getId(),
                     order.getCustomerId(),
                     order.getVendorId(),
-                    runnerId,
+                    (int) runnerAvailable.get(0),
                     order.getAddress(),
                     TaskStatus.PENDING,
                     ""
                 );
                 DataIO.allTasks.add(task);
                 DataIO.writeTask();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void updateTaskStatus (int orderId, TaskStatus status) throws Exception {
+        for (Task task : getAllTasks()) {
+            if (task.getOrderId() == orderId) {
+                if (task.getStatus() == TaskStatus.PENDING && status == TaskStatus.ACCEPT) {
+                    updateRunnerAvailable(task.getRunnerId(), false);
+                    task.setStatus(status);
+                }
+                if (task.getStatus() == TaskStatus.PENDING && status == TaskStatus.REJECT) {
+                    ArrayList<Object> runnerAvailable = getRunnerAvailable(task.getRunnerId());
+                    if (runnerAvailable.get(1).equals(true)) {
+                        task.setRunnerId((int) runnerAvailable.get(0));
+                        task.setStatus(TaskStatus.PENDING);
+                    } else {
+                        updateRunnerAvailable(task.getRunnerId(), true);
+                        task.setStatus(status);
+                    }
+                }
+                if (task.getStatus() == TaskStatus.ACCEPT && status == TaskStatus.COMPLETED) {
+                    updateRunnerAvailable(task.getRunnerId(), true);
+                    task.setStatus(status);
+                    OrderManager.updateOrderStatus(orderId, OrderStatus.COMPLETED);
+                }
+                DataIO.writeTask();
+                break;
+            }
+        }
+    }
+
+    public static ArrayList<Object> getRunnerAvailable (int excludeRunnerId) {
+        ArrayList<Object> runnerAvailable = new ArrayList<>();
+        boolean runnerFound = false;
+        int runnerId = 0;
+
+        for (Object[] runner : DataIO.allRunners) {
+            if ((boolean) runner[1] && (int) runner[0] != excludeRunnerId) {
+                runnerId = (int) runner[0];
+                runnerFound = true;
+                break;
+            }
+        }
+
+        runnerAvailable.add(runnerId);
+        runnerAvailable.add(runnerFound);
+        return runnerAvailable;
+    }
+
+    private static void updateRunnerAvailable (int runnerId, boolean available) throws Exception {
+        for (Object[] runner : DataIO.allRunners) {
+            if ((int) runner[0] == runnerId) {
+                runner[1] = available;
+                DataIO.writeRunnerAvailable();
                 break;
             }
         }

@@ -91,14 +91,36 @@ public class OrderManager {
     public static void updateOrderStatus (int orderId, OrderStatus orderStatus) throws Exception {
         for (Order order : DataIO.allOrders) {
             if (order.getId() == orderId) {
-                order.setOrderStatus(orderStatus);
                 // need to call the invoice manager to update the invoice status
-                if (orderStatus == OrderStatus.REJECT || orderStatus == OrderStatus.CANCELLED) {
-                    order.setRefundStatus(RefundStatus.YES);
+                if (orderStatus == OrderStatus.ACCEPT && order.getOrderStatus() == OrderStatus.PENDING) {
+                    order.setOrderStatus(orderStatus);
                 }
 
-                if (orderStatus == OrderStatus.HANDOVER && order.getOrderType() == OrderType.DELIVERY) {
-                    TaskManager.createTask(order.getId());
+                if (
+                    (orderStatus == OrderStatus.REJECT || orderStatus == OrderStatus.CANCELLED)
+                    && order.getOrderStatus() == OrderStatus.PENDING
+                ) {
+                    order.setRefundStatus(RefundStatus.YES);
+                    order.setOrderStatus(orderStatus);
+                }
+
+                if (
+                    orderStatus == OrderStatus.HANDOVER
+                    && order.getOrderType() == OrderType.DELIVERY
+                    && order.getOrderStatus() == OrderStatus.ACCEPT
+                ) {
+                    System.out.println("Order id " + order.getId());
+                    if (TaskManager.createTask(order.getId())) {
+                        order.setOrderStatus(orderStatus);
+                    } else {
+                        // need to update the customer to change the order type to dine in or takeaway
+                        // by notify the customer
+                        throw new Exception("Runner not available.");
+                    }
+                }
+
+                if (orderStatus == OrderStatus.COMPLETED && order.getOrderStatus() == OrderStatus.HANDOVER) {
+                    order.setOrderStatus(orderStatus);
                 }
             }
         }
