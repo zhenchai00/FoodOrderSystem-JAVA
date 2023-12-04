@@ -1,20 +1,24 @@
 1
 cus
 123
+350.5
 CUSTOMER
 
 2
 run
 123
+0.0
 RUNNER
 
 3
 admin
 123
+0.0
 ADMIN
 
 4
 ven
 123
+0.0
 VENDOR
 

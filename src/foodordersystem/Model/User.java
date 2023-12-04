@@ -7,11 +7,13 @@ public class User {
     private String username;
     private int password;
     private UserRole role = UserRole.USER;
+    private double balance;
 
-    public User (int id, String username, int password, UserRole role) {
+    public User (int id, String username, int password, double balance, UserRole role) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.balance = balance;
         this.role = role;
     }
 
@@ -45,5 +47,13 @@ public class User {
 
     public UserRole setRole (UserRole role) {
         return this.role = role;
+    }
+
+    public double getBalance () {
+        return balance;
+    }
+
+    public void setBalance (double balance) {
+        this.balance = balance;
     }
 }

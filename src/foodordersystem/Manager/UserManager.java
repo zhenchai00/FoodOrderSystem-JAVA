@@ -25,7 +25,7 @@ public class UserManager {
         }
 
         int number = DataIO.allUsers.size() + 1;
-        User newUser = new User(number, username, password, role);
+        User newUser = new User(number, username, password, 0, role);
         DataIO.allUsers.add(newUser);
         DataIO.writeUser();
     }

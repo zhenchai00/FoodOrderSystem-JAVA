@@ -16,7 +16,7 @@ import foodordersystem.Interface.DashboardPage;
 
 public class AdminDashboardPage implements DashboardPage, ActionListener {
     private JFrame adminDashboardPage;
-    private JButton registerUserBtn, topUpBtn, logoutBtn;
+    private JButton registerUserBtn, topUpBtn, generateReceiptBtn, logoutBtn;
     private JLabel welcomeLabel;
 
     private static AdminDashboardPage instance;
@@ -34,12 +34,15 @@ public class AdminDashboardPage implements DashboardPage, ActionListener {
         JPanel buttonPanel = new JPanel();
         registerUserBtn = new JButton("Register User");
         topUpBtn = new JButton("Top Up");
+        generateReceiptBtn = new JButton("Generate Receipt");
         logoutBtn = new JButton("Logout");
         registerUserBtn.addActionListener(this);
         topUpBtn.addActionListener(this);
+        generateReceiptBtn.addActionListener(this);
         logoutBtn.addActionListener(this);
         buttonPanel.add(registerUserBtn);
         buttonPanel.add(topUpBtn);
+        buttonPanel.add(generateReceiptBtn);
         buttonPanel.add(logoutBtn);
 
         adminDashboardPage.add(headerPanel);
@@ -63,7 +66,12 @@ public class AdminDashboardPage implements DashboardPage, ActionListener {
                 RegisterUserPage.getRegisterUserPage().setVisible(true);
                 adminDashboardPage.setVisible(false);
             } else if (event.getSource() == topUpBtn) {
-
+                TopUpPage topUpPage = new TopUpPage();
+                topUpPage.getTopUpPage().setVisible(true);
+                adminDashboardPage.setVisible(false);
+            } else if (event.getSource() == generateReceiptBtn) {
+                // GenerateReceiptPage.getGenerateReceiptPage().setVisible(true);
+                // adminDashboardPage.setVisible(false);
             } else if (event.getSource() == logoutBtn) {
                 logout();
             }

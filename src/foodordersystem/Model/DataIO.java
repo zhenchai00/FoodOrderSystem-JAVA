@@ -18,6 +18,7 @@ public class DataIO {
     private static final String ORDER_FILE_PATH = "database/order.txt";
     private static final String ORDERITEM_FILE_PATH = "database/orderitem.txt";
     private static final String MENU_FILE_PATH = "database/menu.txt";
+    private static final String TASK_FILE_PATH = "database/task.txt";
     private static final String INVOICE_FILE_PATH = "database/invoice.txt";
 
     public static ArrayList<Order> allOrders = new ArrayList<Order>();
@@ -44,11 +45,13 @@ public class DataIO {
                 int id  = Integer.parseInt(sc.nextLine());
                 String username  = sc.nextLine();
                 int password  = Integer.parseInt(sc.nextLine());
+                double balance  = Double.parseDouble(sc.nextLine());
                 UserRole role  = UserRole.valueOf(sc.nextLine().toUpperCase());
                 allUsers.add(new User(
                     id,
                     username,
                     password,
+                    balance,
                     role
                 ));
                 sc.nextLine();
@@ -65,6 +68,7 @@ public class DataIO {
                 pw.println(user.getId());
                 pw.println(user.getUsername());
                 pw.println(user.getPassword());
+                pw.println(user.getBalance());
                 pw.println(user.getRole());
                 pw.println();
             }
