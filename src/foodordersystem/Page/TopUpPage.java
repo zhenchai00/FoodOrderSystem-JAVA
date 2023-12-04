@@ -14,8 +14,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import foodordersystem.Manager.TopUpManager;
-import foodordersystem.Manager.UserManager;
-import foodordersystem.Model.User;
+import foodordersystem.Model.DataIO;
+import foodordersystem.Model.Dwallet;
 
 public class TopUpPage implements ActionListener {
     private JFrame topUpPage;
@@ -30,19 +30,11 @@ public class TopUpPage implements ActionListener {
         topUpPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         topUpPage.setLayout(new BoxLayout(topUpPage.getContentPane(), BoxLayout.Y_AXIS));
 
-        userTableModel = new DefaultTableModel(new Object[] {"ID", "Username", "Balance"}, 0);
+        userTableModel = new DefaultTableModel(new Object[] {"ID", "Username", "Credit"}, 0);
         userTable = new JTable(userTableModel);
         userScrollPane = new JScrollPane(userTable);
-
-        ArrayList<User> users = UserManager.getAllUsers();
-        for (User user : users) {
-            if (user.getRole().toString().equals("CUSTOMER")) {
-                userTableModel.addRow(new Object[] {
-                    user.getId(),
-                    user.getUsername(),
-                    user.getBalance()
-                });
-            }
+        for (Dwallet dwallet : TopUpManager.getAllCredits()) {
+            addRowToTable(dwallet);
         }
 
         creditBtn = new JButton("Credit");
@@ -71,15 +63,17 @@ public class TopUpPage implements ActionListener {
                 ArrayList<Object> creditDetails = TopUpManager.getCreditDetails();
                 if (!creditDetails.isEmpty()) {
                     TopUpManager.creditBalance(Integer.parseInt(creditDetails.get(0).toString()), Double.parseDouble(creditDetails.get(1).toString()));
-                    JOptionPane.showMessageDialog(topUpPage, "Successfully top up balance for user " + creditDetails.get(0).toString() + " with amount RM" + creditDetails.get(1).toString(), "Success", JOptionPane.INFORMATION_MESSAGE);
-                    updateUserTable();
+                    for (Dwallet dwallet : DataIO.allDwallet) {
+                        updateUserTable(dwallet);
+                    }
                 }
             } else if (event.getSource() == debitBtn) {
                 ArrayList<Object> debitDetails = TopUpManager.getDebitDetails();
                 if (!debitDetails.isEmpty()) {
                     TopUpManager.debitBalance(Integer.parseInt(debitDetails.get(0).toString()), Double.parseDouble(debitDetails.get(1).toString()));
-                    JOptionPane.showMessageDialog(topUpPage, "Successfully debit balance for user " + debitDetails.get(0).toString() + " with amount RM" + debitDetails.get(1).toString(), "Success", JOptionPane.INFORMATION_MESSAGE);
-                    updateUserTable();
+                    for (Dwallet dwallet : DataIO.allDwallet) {
+                        updateUserTable(dwallet);
+                    }
                 }
             } else if (event.getSource() == backBtn) {
                 AdminDashboardPage.getAdminDashboardPageObj().getAdminDashboardPage().setVisible(true);
@@ -94,18 +88,21 @@ public class TopUpPage implements ActionListener {
     public JFrame getTopUpPage () {
         return topUpPage;
     }
+    
+    public void addRowToTable (Dwallet dwallet) {
+        userTableModel.addRow(new Object[] {
+            dwallet.getId(),
+            dwallet.getUsername(),
+            dwallet.getCredit()
+        });
+    }
 
-    public void updateUserTable () {
+    public void updateUserTable (Dwallet dwallet) {
         userTableModel.setRowCount(0);
-        ArrayList<User> users = UserManager.getAllUsers();
-        for (User user : users) {
-            if (user.getRole().toString().equals("CUSTOMER")) {
-                userTableModel.addRow(new Object[] {
-                    user.getId(),
-                    user.getUsername(),
-                    user.getBalance()
-                });
-            }
-        }
+        userTableModel.addRow(new Object[] {
+            dwallet.getId(),
+            dwallet.getUsername(),
+            dwallet.getCredit()
+        });
     }
 }

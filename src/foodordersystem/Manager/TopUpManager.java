@@ -5,34 +5,45 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import foodordersystem.Model.DataIO;
+import foodordersystem.Model.Dwallet;
 import foodordersystem.Model.User;
 
 public class TopUpManager {
     public static void creditBalance (int id, double amount) {
-        for (User u : DataIO.allUsers) {
+        for (Dwallet u : DataIO.allDwallet) {
             if (u.getId() == id) {
-                u.setBalance(u.getBalance() + amount);
+                u.setCredit(u.getCredit() + amount);
+                DataIO.writeDwallet();
+                JOptionPane.showMessageDialog(null, "Successfully top up balance for user " + u.getId() + " with amount RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
                 break;
+            } else {
+                JOptionPane.showMessageDialog(null, "User Not Found!", "Failure", JOptionPane.WARNING_MESSAGE);
             }
         }
-        DataIO.writeUser();
     }
 
     public static void debitBalance (int id, double amount) {
-        for (User u : DataIO.allUsers) {
+        for (Dwallet u : DataIO.allDwallet) {
             if (u.getId() == id) {
-                u.setBalance(u.getBalance() - amount);
-                break;
+                if ((u.getCredit() - amount) >= 0.0) {
+                    u.setCredit(u.getCredit() - amount);
+                    DataIO.writeDwallet();
+                    JOptionPane.showMessageDialog(null, "Successfully debit balance for user " + u.getId() + " with amount RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
+                    break;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Not enough credit balance for debit!", "Failure", JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "User Not Found!", "Failure", JOptionPane.WARNING_MESSAGE);
             }
         }
-        DataIO.writeUser();
     }
 
     public static ArrayList<Object> getCreditDetails () {
         ArrayList<Object> creditDetails = new ArrayList<>();
         String inputUserId = JOptionPane.showInputDialog(null, "Enter user ID");
         String inputAmountString = JOptionPane.showInputDialog(null, "Enter amount to credit");
-
+        
         if (
             inputUserId != null 
             && !inputUserId.isEmpty() 
@@ -64,5 +75,9 @@ public class TopUpManager {
         }
 
         return debitDetails;
+    }
+    
+    public static ArrayList<Dwallet> getAllCredits () {
+        return DataIO.allDwallet;
     }
 }

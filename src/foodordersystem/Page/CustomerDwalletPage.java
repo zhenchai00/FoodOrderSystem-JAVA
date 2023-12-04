@@ -1,10 +1,14 @@
 package foodordersystem.Page;
 
-import foodordersystem.FoodOrderSystem;
-import foodordersystem.Page.CustomerDashboardPage;
 import java.awt.Font;
 import javax.swing.*;
 import java.awt.event.*;
+
+import foodordersystem.FoodOrderSystem;
+import foodordersystem.Manager.TopUpManager;
+//import foodordersystem.Page.CustomerDashboardPage;
+import foodordersystem.Model.Dwallet;
+import java.util.ArrayList;
 
 public class CustomerDwalletPage implements ActionListener {
     public JFrame customerDwalletPage;
@@ -18,7 +22,13 @@ public class CustomerDwalletPage implements ActionListener {
         customerDwalletPage.setLayout(new BoxLayout(customerDwalletPage.getContentPane(), BoxLayout.Y_AXIS));
 
         headerPanel = new JPanel();
-        creditLabel = new JLabel("Credit Balance: " + FoodOrderSystem.currentUser.getCredit());
+        creditLabel = new JLabel("Null");
+        ArrayList<Dwallet> allDwallet = TopUpManager.getAllCredits();
+        for (Dwallet dwallet : allDwallet) {
+            if (dwallet.getId() == FoodOrderSystem.currentUser.getId()) {
+                creditLabel = new JLabel("Credit Balance: " + dwallet.getCredit());
+            }
+        }
         creditLabel.setFont(new Font(null, Font.BOLD, 20));
         headerPanel.add(creditLabel);
         

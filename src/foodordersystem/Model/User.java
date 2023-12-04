@@ -8,7 +8,7 @@ public class User {
     private int password;
     private UserRole role = UserRole.USER;
     private double balance;
-    private int credit;
+    private double credit;
 
     public User (int id, String username, int password, double balance, UserRole role) {
         this.id = id;
@@ -18,7 +18,7 @@ public class User {
         this.role = role;
     }
     
-    public User (int id, String username, int credit) {
+    public User (int id, String username, double credit) {
         this.id = id;
         this.username = username;
         this.credit = credit;
@@ -64,11 +64,11 @@ public class User {
         this.balance = balance;
     }
     
-    public int getCredit () {
+    public double getCredit () {
         return credit;
     }
     
-    public void setCredit (int credit) {
+    public void setCredit (double credit) {
         this.credit = credit;
     }
 }

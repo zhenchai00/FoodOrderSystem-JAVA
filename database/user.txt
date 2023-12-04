@@ -13,7 +13,7 @@ VENDOR
 3
 cus
 123
-0.0
+3.0
 CUSTOMER
 
 4

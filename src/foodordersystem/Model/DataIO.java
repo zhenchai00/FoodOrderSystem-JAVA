@@ -41,6 +41,7 @@ public class DataIO {
             readOrderItem();
             readTask();
             readRunnerAvailable();
+            readDwallet();
         } catch (Exception e) {
             System.out.println("Error reading data: " + e.getMessage());
         }
@@ -332,7 +333,7 @@ public class DataIO {
             while (sc.hasNext()) {
                 int id  = Integer.parseInt(sc.nextLine());
                 String username  = sc.nextLine();
-                int credit  = Integer.parseInt(sc.nextLine());
+                double credit  = Double.parseDouble(sc.nextLine());
                 allDwallet.add(new Dwallet(
                     id,
                     username,
@@ -342,6 +343,21 @@ public class DataIO {
             }
         } catch (Exception e) {
             System.out.println("Error reading " + DWALLET_FILE_PATH + ": " + e);
+        }
+    }
+    
+    public static void writeDwallet () {
+        try {
+            PrintWriter pw = new PrintWriter(DWALLET_FILE_PATH);
+            for (Dwallet dwallet : allDwallet) {
+                pw.println(dwallet.getId());
+                pw.println(dwallet.getUsername());
+                pw.println(dwallet.getCredit());
+                pw.println();
+            }
+            pw.close();
+        } catch (Exception e) {
+            System.out.println("Error writing " + DWALLET_FILE_PATH + ": " + e);
         }
     }
 }
