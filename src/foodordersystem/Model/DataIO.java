@@ -313,6 +313,7 @@ public class DataIO {
         try {
             PrintWriter pw = new PrintWriter(RUNNER_AVAILABLE_FILE_PATH);
             for (Object[] runner : allRunners) {
+                System.out.println("Runner " + runner[0] + " is available: " + runner[1]);
                 pw.println(runner[0]);
                 pw.println(runner[1].toString());
                 pw.println();

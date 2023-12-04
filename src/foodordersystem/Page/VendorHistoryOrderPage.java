@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -60,6 +61,7 @@ public class VendorHistoryOrderPage extends HistoryOrderPage {
             }
         } catch (Exception e) {
             System.out.println("Error" + e);
+            JOptionPane.showMessageDialog(historyOrderPage, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

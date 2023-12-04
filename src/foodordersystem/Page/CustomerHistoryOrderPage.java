@@ -60,6 +60,7 @@ public class CustomerHistoryOrderPage extends HistoryOrderPage {
             }
         } catch (Exception e) {
             System.out.println("Error" + e);
+            JOptionPane.showMessageDialog(historyOrderPage, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

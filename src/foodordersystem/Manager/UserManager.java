@@ -29,7 +29,6 @@ public class UserManager {
 
         if (role == UserRole.RUNNER) {
             DataIO.allRunners.add(new Object[] {
-                DataIO.allRunners.size() + 1,
                 newUser.getId(),
                 true
             });
