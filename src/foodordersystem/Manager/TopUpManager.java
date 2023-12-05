@@ -6,7 +6,6 @@ import javax.swing.JOptionPane;
 
 import foodordersystem.Model.DataIO;
 import foodordersystem.Model.Dwallet;
-import foodordersystem.Model.User;
 
 public class TopUpManager {
     public static void creditBalance (int id, double amount) {
@@ -15,6 +14,7 @@ public class TopUpManager {
                 u.setCredit(u.getCredit() + amount);
                 DataIO.writeDwallet();
                 JOptionPane.showMessageDialog(null, "Successfully top up balance for user " + u.getId() + " with amount RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
+                NotificationManager.sendNotification(id, "Your balance has been topped up with amount RM" + amount + ". Current total balance is RM" + u.getCredit() + ".");
                 break;
             } else {
                 JOptionPane.showMessageDialog(null, "User Not Found!", "Failure", JOptionPane.WARNING_MESSAGE);
@@ -29,6 +29,7 @@ public class TopUpManager {
                     u.setCredit(u.getCredit() - amount);
                     DataIO.writeDwallet();
                     JOptionPane.showMessageDialog(null, "Successfully debit balance for user " + u.getId() + " with amount RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
+                    NotificationManager.sendNotification(id, "Your balance has been debited with amount RM" + amount + ". Current total balance is RM" + u.getCredit() + ".");
                     break;
                 } else {
                     JOptionPane.showMessageDialog(null, "Not enough credit balance for debit!", "Failure", JOptionPane.WARNING_MESSAGE);
