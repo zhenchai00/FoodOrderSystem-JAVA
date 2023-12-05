@@ -20,9 +20,19 @@ public class CustomerPaymentPage implements ActionListener {
     private DefaultTableModel paymentTableModel;
     private JPanel orderTypePanel, addressPanel, deliveryCostPanel, totalPanel, actionPanel;
     
+    private ArrayList<Object[]> orderMenuList = new ArrayList<>();
+    private String address;
+    private OrderType orderType;
+    private double deliveryCost;
     private double totalPayment;
     
-    public CustomerPaymentPage () {
+    public CustomerPaymentPage () {}
+    
+    public CustomerPaymentPage (ArrayList<Object[]> orderMenuList, String address, OrderType orderType) {
+        this.orderMenuList = orderMenuList;
+        this.address = address;
+        this.orderType = orderType;
+        
         customerPaymentPage = new JFrame("Payment Page");
         customerPaymentPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         customerPaymentPage.setLayout(new BoxLayout(customerPaymentPage.getContentPane(), BoxLayout.Y_AXIS));
@@ -34,6 +44,7 @@ public class CustomerPaymentPage implements ActionListener {
         
         // add label and button
         orderTypeTxLabel = new JLabel("Order Type: ");
+        orderTypeLabel = new JLabel(String.valueOf(orderType));
         addressTxLabel = new JLabel("Address: ");
         totalTxLabel = new JLabel("Total Payment: ");
         cancelBtn = new JButton("Cancel");
@@ -47,6 +58,7 @@ public class CustomerPaymentPage implements ActionListener {
         
         // add components and panels
         orderTypePanel.add(orderTypeTxLabel);
+        orderTypePanel.add(orderTypeLabel);
         addressPanel.add(addressTxLabel);
         totalPanel.add(totalTxLabel);
         actionPanel.add(cancelBtn);
@@ -54,6 +66,20 @@ public class CustomerPaymentPage implements ActionListener {
         customerPaymentPage.add(scrollPanel);
         customerPaymentPage.add(orderTypePanel);
         customerPaymentPage.add(addressPanel);
+        deliveryCostLabel = new JLabel("AB");
+        //Unknow Error//deliveryCostPanel.add(deliveryCostLabel);
+        //customerPaymentPage.add(deliveryCostPanel);
+        if (orderType.equals(OrderType.DELIVERY)) {
+            deliveryCost = 5;
+            addressLabel = new JLabel(address);
+            //deliveryCostLabel = new JLabel("cost");
+            addressPanel.add(addressLabel);
+            //deliveryCostPanel.add(deliveryCostLabel);
+        } else {
+            deliveryCost = 0;
+            this.address = "";
+            customerPaymentPage.remove(addressPanel);
+        }
         customerPaymentPage.add(totalPanel);
         customerPaymentPage.add(actionPanel);
         
@@ -73,45 +99,28 @@ public class CustomerPaymentPage implements ActionListener {
                 newOrderPage.getNewOrderPage().setVisible(true);
                 customerPaymentPage.setVisible(false);
             } else if (event.getSource() == payBtn) {
-                DwalletManager.paymentBalance(FoodOrderSystem.currentUser.getId(), this.totalPayment);
+                DwalletManager.paymentBalance(FoodOrderSystem.currentUser.getId(), this.totalPayment, orderMenuList, address, orderType, deliveryCost);
             }
         } catch (Exception e) {
             
         }
     }
     
-    public void addRowToTable (ArrayList<Object[]> orderMenuList, String address, OrderType orderType) {
+    public void addRowToTable () {
         double orderItemSum = 0;
-        double deliveryCost = 0;
         for (int i = 0; i < orderMenuList.size(); i++) {
             Object[] itemDetails = orderMenuList.get(i);
             Menu menu = (Menu) itemDetails[0];
             int menuId = menu.getId();
-            int vendorId = menu.getVendorId();
+            //int vendorId = menu.getVendorId();
             int quantity = (int) itemDetails[1];
             double price = menu.getPrice() * quantity;
             orderItemSum += price;
-            paymentTableModel.addRow(new Object[]{menuId, menu.getName(), vendorId, quantity, price});
+            paymentTableModel.addRow(new Object[]{menuId, menu.getName(), quantity, price});
         }
-        
-        orderTypeLabel = new JLabel(String.valueOf(orderType));
-        orderTypePanel.add(orderTypeLabel);
-        customerPaymentPage.add(orderTypePanel);
-        if (orderType.equals(OrderType.DELIVERY)) {
-            deliveryCost = 5;
-            addressLabel = new JLabel(address);
-            deliveryCostLabel = new JLabel(String.valueOf(deliveryCost));
-            addressPanel.add(addressLabel);
-            deliveryCostPanel.add(deliveryCostLabel);
-            customerPaymentPage.add(addressPanel);
-            customerPaymentPage.add(deliveryCostPanel);
-        } else {
-            customerPaymentPage.remove(addressPanel);
-        }
-        
+
         this.totalPayment = orderItemSum + deliveryCost;
         totalLabel = new JLabel(String.valueOf(totalPayment));
         totalPanel.add(totalLabel);
-        customerPaymentPage.add(totalPanel);
     }
 }

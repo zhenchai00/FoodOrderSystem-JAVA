@@ -15,6 +15,7 @@ public class Order {
 	private String address;
 	private LocalDateTime date;
 	private OrderType type;
+        private double deliveryCost;
 	private RefundStatus refund;
 	private OrderStatus status;
 
@@ -26,6 +27,7 @@ public class Order {
 		String address,
 		LocalDateTime date,
 		OrderType type,
+                double deliveryCost,
 		RefundStatus refund,
 		OrderStatus status
 	) {
@@ -36,6 +38,7 @@ public class Order {
 		this.address = address;
 		this.date = date;
 		this.type = type;
+                this.deliveryCost = deliveryCost;
 		this.refund = refund;
 		this.status = status;
 	}
@@ -97,6 +100,14 @@ public class Order {
 
 	public OrderType getOrderType() {
 		return type;
+	}
+        
+        public void setDeliveryCost(double deliveryCost) {
+		this.deliveryCost = deliveryCost;
+	}
+
+	public double getDeliveryCost() {
+		return deliveryCost;
 	}
 
 	public void setRefundStatus(RefundStatus refund) {

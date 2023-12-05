@@ -160,15 +160,16 @@ public class DataIO {
             Scanner sc = new Scanner(new File(ORDER_FILE_PATH));
             while (sc.hasNext()) {
                 int orderId = Integer.parseInt(sc.nextLine());
-		        int invoiceId  = Integer.parseInt(sc.nextLine());
-		        int customerId  = Integer.parseInt(sc.nextLine());
-		        int vendorId  = Integer.parseInt(sc.nextLine());
-		        String address  = sc.nextLine();
+		int invoiceId  = Integer.parseInt(sc.nextLine());
+		int customerId  = Integer.parseInt(sc.nextLine());
+		int vendorId  = Integer.parseInt(sc.nextLine());
+		String address  = sc.nextLine();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime localDateTime = LocalDateTime.parse(sc.nextLine(), formatter);
-		        OrderType type  = OrderType.valueOf(sc.nextLine());
-		        RefundStatus refund  = RefundStatus.valueOf(sc.nextLine());
-		        OrderStatus status  = OrderStatus.valueOf(sc.nextLine());
+		OrderType type  = OrderType.valueOf(sc.nextLine());
+                double deliveryCost = Double.parseDouble(sc.nextLine());
+		RefundStatus refund  = RefundStatus.valueOf(sc.nextLine());
+		OrderStatus status  = OrderStatus.valueOf(sc.nextLine());
                 sc.nextLine();
                 allOrders.add(new Order(
                     orderId,
@@ -178,6 +179,7 @@ public class DataIO {
                     address,
                     localDateTime,
                     type,
+                    deliveryCost,
                     refund,
                     status
                 ));
@@ -200,6 +202,7 @@ public class DataIO {
                 pw.println(order.getAddress());
                 pw.println(formattedDateTime);
                 pw.println(order.getOrderType());
+                pw.println(order.getDeliveryCost());
                 pw.println(order.getRefundStatus());
                 pw.println(order.getOrderStatus());
                 pw.println();

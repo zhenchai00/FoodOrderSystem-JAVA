@@ -18,6 +18,7 @@ import foodordersystem.Model.OrderItem;
 
 public class OrderManager {
     private ArrayList<OrderItem> orderItems = new ArrayList<>();
+    private double deliveryCost;
     public int newOrderId = 900 + DataIO.allOrders.size() + 1;
     public int firstVendorId;
 
@@ -38,7 +39,9 @@ public class OrderManager {
         return null;
     }
 
-    public void addOrder (String address, OrderType orderType) throws Exception {
+    public void addOrder (String address, OrderType orderType, double deliveryCost) throws Exception {
+        this.deliveryCost = deliveryCost;
+        
         Customer customer = (Customer) FoodOrderSystem.currentUser;
         OrderType type = orderType;
         RefundStatus refund = RefundStatus.NO;
@@ -52,6 +55,7 @@ public class OrderManager {
             address,
             LocalDateTime.now(),
             type,
+            deliveryCost,
             refund,
             status
         );
@@ -143,7 +147,7 @@ public class OrderManager {
         OrderType orderType = existingOrder.getOrderType();
 
         storeOrderItems(existingOrder.getOrderItemsWithMenuList());
-        addOrder(address, orderType);
+        addOrder(address, orderType, deliveryCost);
     }
 
     public static double calculateDailyRevenue (int vendorId, LocalDate date) {

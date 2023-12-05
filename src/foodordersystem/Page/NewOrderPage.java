@@ -196,12 +196,10 @@ public class NewOrderPage implements ActionListener {
                     addressString = addressTextArea.getText();
                 }
 
-                CustomerPaymentPage customerPaymentPage = new CustomerPaymentPage();
-                customerPaymentPage.addRowToTable(orderMenuList, addressString, getOrderType());
+                CustomerPaymentPage customerPaymentPage = new CustomerPaymentPage(orderMenuList, addressString, getOrderType());
+                customerPaymentPage.addRowToTable();
                 customerPaymentPage.getCustomerPaymentPage().setVisible(true);
-                OrderManager orderManager = new OrderManager();
-                orderManager.storeOrderItems(orderMenuList);
-                orderManager.addOrder(addressString, getOrderType());
+                getNewOrderPage().setVisible(false);
 
                 addressTextArea.setText("");
                 resetRowFromTable();
