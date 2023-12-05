@@ -29,7 +29,7 @@ public class RunnerTaskPage implements ActionListener {
     private JPanel actionBtnPanel;
 
     public RunnerTaskPage(){
-        RunnerTaskFrame = new JFrame();
+        RunnerTaskFrame = new JFrame("Runner Task Page");
         RunnerTaskFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         RunnerTaskFrame.setLayout(new BoxLayout(RunnerTaskFrame.getContentPane(), BoxLayout.Y_AXIS));
 

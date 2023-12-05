@@ -78,7 +78,9 @@ public class RunnerDashboardPage implements DashboardPage, ActionListener {
                 runnerTaskPage.getRunnerTaskPage().setVisible(true);
                 runnerDashboardPage.setVisible(false);
             } else if (event.getSource() == revenueBtn) {
-              RunnerRevenueReportPage.getRunnerRevenueReportPageObj().getRunnerRevenueReportPage().setVisible(true);
+                RunnerRevenueReportPage runnerRevenueReportPage = new RunnerRevenueReportPage();
+                runnerRevenueReportPage.getRunnerRevenueReportPage().setVisible(true);
+                runnerDashboardPage.setVisible(false);
             } else if (event.getSource() == reviewBtn) {
 
             } else if (event.getSource() == logoutBtn) {
