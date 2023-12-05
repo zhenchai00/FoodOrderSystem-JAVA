@@ -16,7 +16,7 @@ import foodordersystem.Interface.DashboardPage;
 
 public class VendorDashboardPage implements DashboardPage, ActionListener {
     private JFrame vendorDashboardPage;
-    private JButton menuBtn, orderBtn, revenueBtn, reviewBtn, logoutBtn;
+    private JButton notifyBtn, menuBtn, orderBtn, revenueBtn, reviewBtn, logoutBtn;
     private JLabel welcomeLabel;
 
     private static VendorDashboardPage instance;
@@ -32,16 +32,19 @@ public class VendorDashboardPage implements DashboardPage, ActionListener {
         headerPanel.add(welcomeLabel);
 
         JPanel buttonPanel = new JPanel();
+        notifyBtn = new JButton("Notification");
         menuBtn = new JButton("Menu");
         orderBtn = new JButton("Order");
         revenueBtn = new JButton("Revenue");
         reviewBtn = new JButton("Review");
         logoutBtn = new JButton("Logout");
+        notifyBtn.addActionListener(this);
         menuBtn.addActionListener(this);
         orderBtn.addActionListener(this);
         revenueBtn.addActionListener(this);
         revenueBtn.addActionListener(this);
         logoutBtn.addActionListener(this);
+        buttonPanel.add(notifyBtn);
         buttonPanel.add(menuBtn);
         buttonPanel.add(orderBtn);
         buttonPanel.add(revenueBtn);
@@ -65,7 +68,11 @@ public class VendorDashboardPage implements DashboardPage, ActionListener {
 
     public void actionPerformed (ActionEvent event) {
         try {
-            if (event.getSource() == menuBtn) {
+            if (event.getSource() == notifyBtn) {
+                VendorNotificationPage vendorNotificationPage = new VendorNotificationPage();
+                vendorNotificationPage.getNotificationPage().setVisible(true);
+                vendorDashboardPage.setVisible(false);
+            } else if (event.getSource() == menuBtn) {
                 VendorMenuPage vendorMenuPage = new VendorMenuPage();
                 vendorMenuPage.getMenuPage().setVisible(true);
                 vendorDashboardPage.setVisible(false);

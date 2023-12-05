@@ -32,8 +32,6 @@ public class RunnerDashboardPage implements DashboardPage, ActionListener {
         headerPanel.add(welcomeLabel);
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-
         notifyBtn = new JButton("Notification");
         notifyBtn.addActionListener(this);
         buttonPanel.add(notifyBtn);

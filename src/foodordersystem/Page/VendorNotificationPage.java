@@ -26,6 +26,10 @@ public class VendorNotificationPage extends NotificationPage {
         allReadBtn.addActionListener(this);
         allUnReadBtn.addActionListener(this);
 
+        actionBtnPanel.add(readBtn);
+        actionBtnPanel.add(unReadBtn);
+        actionBtnPanel.add(allReadBtn);
+        actionBtnPanel.add(allUnReadBtn);
         actionBtnPanel.add(backBtn);
 
         notificationPage.pack();
@@ -74,6 +78,7 @@ public class VendorNotificationPage extends NotificationPage {
                 });
             }
         }
+        resizeColumnWidth(notificationTable);
     }
 
     public void updateNotificationTable (NotificationStatus status) {

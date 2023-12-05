@@ -1,0 +1,12 @@
+1001
+2
+[OrderID - 907 ]You have a new order from cus.
+2023-12-05 08:14:23
+READ
+
+1002
+3
+OrderID - 907] Your order has been accepted by Vendor.
+2023-12-05 08:20:10
+UNREAD
+

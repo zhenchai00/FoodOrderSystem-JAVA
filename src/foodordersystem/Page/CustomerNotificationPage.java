@@ -26,6 +26,10 @@ public class CustomerNotificationPage extends NotificationPage {
         allReadBtn.addActionListener(this);
         allUnReadBtn.addActionListener(this);
 
+        actionBtnPanel.add(readBtn);
+        actionBtnPanel.add(unReadBtn);
+        actionBtnPanel.add(allReadBtn);
+        actionBtnPanel.add(allUnReadBtn);
         actionBtnPanel.add(backBtn);
 
         notificationPage.pack();
@@ -52,7 +56,7 @@ public class CustomerNotificationPage extends NotificationPage {
                 NotificationManager.unReadAllNotification();
                 updateNotificationTable(NotificationStatus.UNREAD);
             } else if (event.getSource() == backBtn) {
-                RunnerDashboardPage.getRunnerDashboardPageObj().getRunnerDashboardPage().setVisible(true);
+                CustomerDashboardPage.getCustomerDashboardPageObj().getCustomerDashboardPage().setVisible(true);
                 notificationPage.setVisible(false);
             }
             
@@ -74,6 +78,7 @@ public class CustomerNotificationPage extends NotificationPage {
                 });
             }
         }
+        resizeColumnWidth(notificationTable);
     }
 
     public void updateNotificationTable (NotificationStatus status) {

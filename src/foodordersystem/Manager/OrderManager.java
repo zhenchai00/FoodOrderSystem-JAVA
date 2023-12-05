@@ -56,7 +56,7 @@ public class OrderManager {
         DataIO.allOrderItems.addAll(orderItems);
         DataIO.writeOrder();
         DataIO.writeOrderItem();
-        NotificationManager.sendNotification(firstVendorId, "[OrderID - " + order.getId() + " ]You have a new order from " + customer.getUsername() + ".");
+        NotificationManager.sendNotification(firstVendorId, "[OrderID - " + order.getId() + " ] You have a new order from " + customer.getUsername() + ".");
     }
 
     public void storeOrderItems(ArrayList<Object[]> orderMenuList) {
@@ -94,7 +94,7 @@ public class OrderManager {
             if (order.getId() == orderId) {
                 // need to call the invoice manager to update the invoice status
                 if (orderStatus == OrderStatus.ACCEPT && order.getOrderStatus() == OrderStatus.PENDING) {
-                    NotificationManager.sendNotification(order.getCustomerId(), "OrderID - " + order.getId() + "] Your order has been accepted by Vendor.");
+                    NotificationManager.sendNotification(order.getCustomerId(), "[OrderID - " + order.getId() + "] Your order has been accepted by Vendor.");
                     order.setOrderStatus(orderStatus);
                 }
 
