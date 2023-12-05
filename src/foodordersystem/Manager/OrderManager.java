@@ -56,7 +56,7 @@ public class OrderManager {
         DataIO.allOrderItems.addAll(orderItems);
         DataIO.writeOrder();
         DataIO.writeOrderItem();
-        NotificationManager.sendNotification(firstVendorId, "You have a new order from " + customer.getUsername() + ".");
+        NotificationManager.sendNotification(firstVendorId, "[OrderID - " + order.getId() + " ]You have a new order from " + customer.getUsername() + ".");
     }
 
     public void storeOrderItems(ArrayList<Object[]> orderMenuList) {
@@ -94,7 +94,7 @@ public class OrderManager {
             if (order.getId() == orderId) {
                 // need to call the invoice manager to update the invoice status
                 if (orderStatus == OrderStatus.ACCEPT && order.getOrderStatus() == OrderStatus.PENDING) {
-                    NotificationManager.sendNotification(order.getCustomerId(), "Your order has been accepted by Vendor.");
+                    NotificationManager.sendNotification(order.getCustomerId(), "OrderID - " + order.getId() + "] Your order has been accepted by Vendor.");
                     order.setOrderStatus(orderStatus);
                 }
 
@@ -103,10 +103,10 @@ public class OrderManager {
                     && order.getOrderStatus() == OrderStatus.PENDING
                 ) {
                     if (orderStatus == OrderStatus.REJECT) {
-                        NotificationManager.sendNotification(order.getCustomerId(), "Your order has been rejected by Vendor.");
+                        NotificationManager.sendNotification(order.getCustomerId(), "[OrderID - " + order.getId() + "] Your order has been rejected by Vendor.");
                     }
                     if (orderStatus == OrderStatus.CANCELLED) {
-                        NotificationManager.sendNotification(order.getVendorId(), "Your order has been cancelled.");
+                        NotificationManager.sendNotification(order.getVendorId(), "[OrderID - " + order.getId() + "] Your order has been cancelled.");
                     }
                     order.setRefundStatus(RefundStatus.YES);
                     order.setOrderStatus(orderStatus);
@@ -120,9 +120,9 @@ public class OrderManager {
                     System.out.println("Order id " + order.getId());
                     if (TaskManager.createTask(order.getId())) {
                         order.setOrderStatus(orderStatus);
-                        NotificationManager.sendNotification(order.getCustomerId(), "Your order is finding Runner.");
+                        NotificationManager.sendNotification(order.getCustomerId(), "[OrderID - " + order.getId() + "] Your order is finding Runner.");
                     } else {
-                        NotificationManager.sendNotification(orderId, "Runner not available. Please change to dine in or takeaway.");
+                        NotificationManager.sendNotification(orderId, "[OrderID - " + order.getId() + "] Runner not available. Please change to dine in or takeaway.");
                         throw new Exception("Runner not available.");
                     }
                 }

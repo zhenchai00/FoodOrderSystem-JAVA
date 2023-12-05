@@ -38,7 +38,8 @@ public class TaskManager {
                 );
                 DataIO.allTasks.add(task);
                 DataIO.writeTask();
-                NotificationManager.sendNotification((int) runnerAvailable.get(0), "You have a new task from Vendor");
+                NotificationManager.sendNotification((int) runnerAvailable.get(0), "[TaskID - " + task.getId() + "] You have a new task from Vendor");
+                NotificationManager.sendNotification(order.getCustomerId(), "[OrderID - " + task.getOrderId() + "] You have been processed by Vendor");
                 return true;
             }
         }
@@ -51,23 +52,27 @@ public class TaskManager {
                 if (task.getStatus() == TaskStatus.PENDING && status == TaskStatus.ACCEPT) {
                     updateRunnerAvailable(task.getRunnerId(), false);
                     task.setStatus(status);
-                    NotificationManager.sendNotification(task.getCustomerId(), "Your order has been accepted by Runner.");
+                    NotificationManager.sendNotification(task.getCustomerId(), "[OrderID - " + task.getOrderId() + "] Your order has been accepted by Runner.");
+                    NotificationManager.sendNotification(task.getVendorId(), "[OrderID - " + task.getOrderId() + "] Your order has been accepted by Runner.");
                 }
                 if (task.getStatus() == TaskStatus.PENDING && status == TaskStatus.REJECT) {
                     ArrayList<Object> runnerAvailable = getRunnerAvailable(task.getRunnerId());
                     if (runnerAvailable.get(1).equals(true)) {
                         task.setRunnerId((int) runnerAvailable.get(0));
                         task.setStatus(TaskStatus.PENDING);
+                        NotificationManager.sendNotification(task.getVendorId(), "[OrderID - " + task.getOrderId() + "] Your order has been to a Runner.");
                     } else {
                         updateRunnerAvailable(task.getRunnerId(), true);
                         task.setStatus(status);
-                        NotificationManager.sendNotification(task.getCustomerId(), "Your order has been rejected by Runner. System trying to find another runner.");
+                        NotificationManager.sendNotification(task.getCustomerId(), "[OrderID - " + task.getOrderId() + "] Your order has been rejected by Runner. System trying to find another runner.");
                     }
                 }
                 if (task.getStatus() == TaskStatus.ACCEPT && status == TaskStatus.COMPLETED) {
                     updateRunnerAvailable(task.getRunnerId(), true);
                     task.setStatus(status);
                     OrderManager.updateOrderStatus(orderId, OrderStatus.COMPLETED);
+                        NotificationManager.sendNotification(task.getCustomerId(), "[OrderID - " + task.getOrderId() + "] Your order has been delivered by Runner.");
+                        NotificationManager.sendNotification(task.getVendorId(), "[OrderID - " + task.getOrderId() + "] Your order has been delivered by Runner.");
                 }
                 DataIO.writeTask();
                 break;
