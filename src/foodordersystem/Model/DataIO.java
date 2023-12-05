@@ -262,6 +262,8 @@ public class DataIO {
                 String address = sc.nextLine();
                 TaskStatus status  = TaskStatus.valueOf(sc.nextLine().toUpperCase());
                 String review  = sc.nextLine();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime localDateTime = LocalDateTime.parse(sc.nextLine(), formatter);
                 sc.nextLine();
                 allTasks.add(new Task(
                     id,
@@ -271,7 +273,8 @@ public class DataIO {
                     runnerId,
                     address,
                     status,
-                    review
+                    review,
+                    localDateTime
                 ));
             }
         } catch (Exception e) {
@@ -283,6 +286,9 @@ public class DataIO {
         try {
             PrintWriter pw = new PrintWriter(TASK_FILE_PATH);
             for (Task task : allTasks) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                String formattedDateTime = task.getDateTime().format(formatter);
+
                 pw.println(task.getId());
                 pw.println(task.getOrderId());
                 pw.println(task.getCustomerId());
@@ -291,6 +297,7 @@ public class DataIO {
                 pw.println(task.getAddress());
                 pw.println(task.getStatus());
                 pw.println(task.getReview());
+                pw.println(formattedDateTime);
                 pw.println();
             }
             pw.close();

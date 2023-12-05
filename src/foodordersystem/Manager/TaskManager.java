@@ -1,5 +1,6 @@
 package foodordersystem.Manager;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import foodordersystem.Enum.OrderStatus;
@@ -34,7 +35,8 @@ public class TaskManager {
                     (int) runnerAvailable.get(0),
                     order.getAddress(),
                     TaskStatus.PENDING,
-                    ""
+                    "",
+                    LocalDateTime.now()
                 );
                 DataIO.allTasks.add(task);
                 DataIO.writeTask();

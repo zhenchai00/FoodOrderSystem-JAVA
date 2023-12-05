@@ -1,5 +1,7 @@
 package foodordersystem.Model;
 
+import java.time.LocalDateTime;
+
 import foodordersystem.Enum.TaskStatus;
 
 public class Task {
@@ -11,6 +13,7 @@ public class Task {
     private String address;
     private TaskStatus status;
     private String review;
+    private LocalDateTime dateTime;
 
     public Task (
         int id,
@@ -20,7 +23,8 @@ public class Task {
         int runnerId,
         String address,
         TaskStatus status,
-        String review
+        String review,
+        LocalDateTime dateTime
     ) {
         this.id = id;
         this.orderId = orderId;
@@ -30,6 +34,7 @@ public class Task {
         this.address = address;
         this.status = status;
         this.review = review;
+        this.dateTime = dateTime;
     }
 
     public int getId () {
@@ -64,6 +69,10 @@ public class Task {
         return review;
     }
 
+    public LocalDateTime getDateTime () {
+        return dateTime;
+    }
+
     public void setId (int id) {
         this.id = id;
     }
@@ -94,5 +103,9 @@ public class Task {
 
     public void setReview (String review) {
         this.review = review;
+    }
+
+    public void setDateTime (LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 }
