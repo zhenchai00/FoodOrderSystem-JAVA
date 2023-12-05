@@ -17,7 +17,7 @@ import foodordersystem.Interface.DashboardPage;
 public class CustomerDashboardPage implements DashboardPage, ActionListener {
     public CustomerOrderPage customerOrderPage;
     public static JFrame customerDashboardPage;
-    private JButton orderBtn, menuBtn, dwalletBtn, logoutBtn;
+    private JButton notifyBtn, orderBtn, menuBtn, dwalletBtn, logoutBtn;
     private JLabel welcomeLabel;
 
     private static CustomerDashboardPage instance;
@@ -36,17 +36,20 @@ public class CustomerDashboardPage implements DashboardPage, ActionListener {
         welcomeLabel.setFont(new Font(null, Font.BOLD, 20));
         headerPanel.add(welcomeLabel);
 
+        notifyBtn = new JButton("Notification");
         orderBtn = new JButton("Order");
         menuBtn = new JButton("Menu");
         dwalletBtn = new JButton("Digital Wallet");
         logoutBtn = new JButton("Logout");
 
+        notifyBtn.addActionListener(this);
         orderBtn.addActionListener(this);
         menuBtn.addActionListener(this);
         dwalletBtn.addActionListener(this);
         logoutBtn.addActionListener(this);
 
         JPanel buttonPanel = new JPanel();
+        buttonPanel.add(notifyBtn);
         buttonPanel.add(orderBtn);
         buttonPanel.add(menuBtn);
         buttonPanel.add(dwalletBtn);
@@ -70,7 +73,11 @@ public class CustomerDashboardPage implements DashboardPage, ActionListener {
 
     public void actionPerformed (ActionEvent event) {
         try {
-            if (event.getSource() == orderBtn) {
+            if (event.getSource() == notifyBtn) {
+                CustomerNotificationPage customerNotificationPage = new CustomerNotificationPage();
+                customerNotificationPage.getNotificationPage().setVisible(true);
+                customerDashboardPage.setVisible(false);
+            } else if (event.getSource() == orderBtn) {
                 CustomerOrderPage customerOrderPage = new CustomerOrderPage();
                 customerOrderPage.getOrderPage().setVisible(true);
                 customerDashboardPage.setVisible(false);
