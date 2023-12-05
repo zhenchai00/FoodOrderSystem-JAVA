@@ -36,6 +36,7 @@ public class TaskManager {
                     order.getAddress(),
                     TaskStatus.PENDING,
                     "",
+                    0,
                     LocalDateTime.now()
                 );
                 DataIO.allTasks.add(task);

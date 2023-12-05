@@ -4,13 +4,15 @@ nasi
 MALAY
 -
 2
+0
 
 2
 chicken
 15.0
 CHINESE
--
+nonice
 2
+3
 
 3
 noodle
@@ -18,6 +20,7 @@ noodle
 WESTERN
 -
 2
+0
 
 4
 haidilao
@@ -25,6 +28,7 @@ haidilao
 CHINESE
 -
 6
+0
 
 5
 nasi goreng
@@ -32,4 +36,5 @@ nasi goreng
 MALAY
 -
 6
+0
 

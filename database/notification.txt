@@ -86,7 +86,7 @@ UNREAD
 3
 [OrderID - 908] Your order has been accepted by Vendor.
 2023-12-05 10:29:54
-UNREAD
+READ
 
 1016
 4
@@ -98,11 +98,35 @@ UNREAD
 3
 [OrderID - 908] You have been processed by Vendor
 2023-12-05 10:29:56
-UNREAD
+READ
 
 1018
 3
 [OrderID - 908] Your order is finding Runner.
 2023-12-05 10:29:56
+READ
+
+1019
+3
+[OrderID - 908] Your order has been accepted by Runner.
+2023-12-05 12:29:22
+READ
+
+1020
+2
+[OrderID - 908] Your order has been accepted by Runner.
+2023-12-05 12:29:22
+UNREAD
+
+1021
+3
+[OrderID - 908] Your order has been delivered by Runner.
+2023-12-05 12:29:24
+READ
+
+1022
+2
+[OrderID - 908] Your order has been delivered by Runner.
+2023-12-05 12:29:24
 UNREAD
 

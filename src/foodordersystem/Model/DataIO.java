@@ -110,13 +110,15 @@ public class DataIO {
                 MenuCategory category  = MenuCategory.valueOf(sc.nextLine().toUpperCase());
                 String review  = sc.nextLine();
                 int vendor = Integer.parseInt(sc.nextLine());
+                int reviewUserId = Integer.parseInt(sc.nextLine());
                 allMenus.add(new Menu(
                     id,
                     name,
                     price,
                     category,
                     review,
-                    vendor
+                    vendor,
+                    reviewUserId
                 ));
                 sc.nextLine();
             }
@@ -135,6 +137,7 @@ public class DataIO {
                 pw.println(menu.getCategory());
                 pw.println(menu.getReview());
                 pw.println(menu.getVendorId());
+                pw.println(menu.getReviewUserId());
                 pw.println();
             }
             pw.close();
@@ -262,6 +265,7 @@ public class DataIO {
                 String address = sc.nextLine();
                 TaskStatus status  = TaskStatus.valueOf(sc.nextLine().toUpperCase());
                 String review  = sc.nextLine();
+                int reviewUserId  = Integer.parseInt(sc.nextLine());
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime localDateTime = LocalDateTime.parse(sc.nextLine(), formatter);
                 sc.nextLine();
@@ -274,6 +278,7 @@ public class DataIO {
                     address,
                     status,
                     review,
+                    reviewUserId,
                     localDateTime
                 ));
             }
@@ -297,6 +302,7 @@ public class DataIO {
                 pw.println(task.getAddress());
                 pw.println(task.getStatus());
                 pw.println(task.getReview());
+                pw.println(task.getReviewUserId());
                 pw.println(formattedDateTime);
                 pw.println();
             }

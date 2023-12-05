@@ -16,7 +16,7 @@ public class MenuManager {
         }
 
         int number = DataIO.allMenus.size() + 1;
-        Menu newMenu = new Menu(number, name, price, category, "-", FoodOrderSystem.currentUser.getId());
+        Menu newMenu = new Menu(number, name, price, category, "-", FoodOrderSystem.currentUser.getId(), 0);
         DataIO.allMenus.add(newMenu);
         DataIO.writeMenu();
     }

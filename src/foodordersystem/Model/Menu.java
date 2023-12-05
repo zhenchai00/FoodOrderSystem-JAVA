@@ -9,14 +9,24 @@ public class Menu {
     private MenuCategory category;
     private String review;
     private int vendorId;
+    private int reviewUserId;
 
-    public Menu (int id, String name, double price, MenuCategory category, String review, int vendorId) {
+    public Menu (
+        int id,
+        String name,
+        double price,
+        MenuCategory category,
+        String review,
+        int vendorId,
+        int reviewUserId
+    ) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
         this.review = review;
         this.vendorId = vendorId;
+        this.reviewUserId = reviewUserId;
     }
 
     public int getId () {
@@ -65,5 +75,13 @@ public class Menu {
 
     public int getVendorId () {
         return vendorId;
+    }
+
+    public void setReviewUserId (int reviewUserId) {
+        this.reviewUserId = reviewUserId;
+    }
+
+    public int getReviewUserId () {
+        return reviewUserId;
     }
 }

@@ -13,6 +13,7 @@ public class Task {
     private String address;
     private TaskStatus status;
     private String review;
+    private int reviewUserId;
     private LocalDateTime dateTime;
 
     public Task (
@@ -24,6 +25,7 @@ public class Task {
         String address,
         TaskStatus status,
         String review,
+        int reviewUserId,
         LocalDateTime dateTime
     ) {
         this.id = id;
@@ -34,6 +36,7 @@ public class Task {
         this.address = address;
         this.status = status;
         this.review = review;
+        this.reviewUserId = reviewUserId;
         this.dateTime = dateTime;
     }
 
@@ -107,5 +110,13 @@ public class Task {
 
     public void setDateTime (LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public int getReviewUserId () {
+        return reviewUserId;
+    }
+
+    public void setReviewUserId (int reviewUserId) {
+        this.reviewUserId = reviewUserId;
     }
 }
