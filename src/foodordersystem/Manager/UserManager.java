@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 
 import foodordersystem.Enum.UserRole;
 import foodordersystem.Model.DataIO;
+import foodordersystem.Model.Dwallet;
 import foodordersystem.Model.User;
 
 public class UserManager {
@@ -26,6 +27,15 @@ public class UserManager {
 
         int number = DataIO.allUsers.size() + 1;
         User newUser = new User(number, username, password, 0, role);
+
+        if (role == UserRole.CUSTOMER) {
+            DataIO.allDwallet.add(new Dwallet(
+                newUser.getId(),
+                newUser.getUsername(),
+                0.0
+            ));
+            DataIO.writeDwallet();
+        }
 
         if (role == UserRole.RUNNER) {
             DataIO.allRunners.add(new Object[] {
@@ -54,6 +64,14 @@ public class UserManager {
             }
         }
         DataIO.writeUser();
+
+        for (Dwallet d : DataIO.allDwallet) {
+            if (d.getId() == id) {
+                d.setUsername(username);
+                break;
+            }
+        }
+        DataIO.writeDwallet();
     }
 
     public static void deleteUser(int id) throws Exception {
@@ -64,6 +82,22 @@ public class UserManager {
             }
         }
         DataIO.writeUser();
+
+        for (Dwallet d : DataIO.allDwallet) {
+            if (d.getId() == id) {
+                DataIO.allDwallet.remove(d);
+                break;
+            }
+        }
+        DataIO.writeDwallet();
+
+        for (Object[] r : DataIO.allRunners) {
+            if ((int) r[0] == id) {
+                DataIO.allRunners.remove(r);
+                break;
+            }
+        }
+        DataIO.writeRunnerAvailable();
     }
 
     public static ArrayList<Object> getUserCredentials() {
