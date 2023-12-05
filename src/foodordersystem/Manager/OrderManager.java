@@ -1,6 +1,9 @@
 package foodordersystem.Manager;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Year;
+import java.time.YearMonth;
 import java.util.ArrayList;
 
 import foodordersystem.FoodOrderSystem;
@@ -141,5 +144,55 @@ public class OrderManager {
 
         storeOrderItems(existingOrder.getOrderItemsWithMenuList());
         addOrder(address, orderType);
+    }
+
+    public static double calculateDailyRevenue (int vendorId, LocalDate date) {
+        double dailyRevenue = 0.0;
+        for (Order order : getAllOrders()) {
+            if (
+                order.getVendorId() == vendorId
+                && order.getDate().toLocalDate().equals(date)
+            ) {
+                dailyRevenue += calculateOrderTotal(order);
+            }
+        }
+        return dailyRevenue;
+    }
+
+    public static double calculateMonthlyRevenue (int vendorId, YearMonth month) {
+        double monthlyRevenue = 0.0;
+        for (Order order : getAllOrders()) {
+            if (
+                order.getVendorId() == vendorId
+                && order.getDate().toLocalDate().getYear() == month.getYear()
+                && order.getDate().toLocalDate().getMonth() == month.getMonth()
+            ) {
+                monthlyRevenue += calculateOrderTotal(order);
+            }
+        }
+        return monthlyRevenue;
+    }
+
+    public static double calculateYearlyRevenue (int vendorId, Year year) {
+        double yearlyRevenue = 0.0;
+        for (Order order : getAllOrders()) {
+            if (
+                order.getVendorId() == vendorId
+                && order.getDate().toLocalDate().getYear() == year.getValue()
+            ) {
+                yearlyRevenue += calculateOrderTotal(order);
+            }
+        }
+        return yearlyRevenue;
+    }
+
+    public static double calculateOrderTotal (Order order) {
+        double total = 0.0;
+        for (OrderItem orderItem : getAllOrderItems()) {
+            if (orderItem.getOrderId() == order.getId()) {
+                total += orderItem.getPrice();
+            }
+        }
+        return total;
     }
 }

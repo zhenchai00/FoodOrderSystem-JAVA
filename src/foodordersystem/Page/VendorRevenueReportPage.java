@@ -1,46 +1,76 @@
 package foodordersystem.Page;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.YearMonth;
+
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JTable;
+import javax.swing.JLabel;
+
+import foodordersystem.FoodOrderSystem;
+import foodordersystem.Manager.OrderManager;
+
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 public class VendorRevenueReportPage implements ActionListener {
     private JFrame VendorRevenueFrame;
     private JButton Backbutton;
-    private JTable VendorRevenueTable;
-    private static VendorRevenueReportPage instance;
+    private JLabel dailyLabel, monthlyLabel, yearlyLabel;
 
     public VendorRevenueReportPage() {
 
-        VendorRevenueFrame = new JFrame();
-        VendorRevenueFrame.setSize(500, 300);
-        VendorRevenueFrame.setVisible(true);
+        VendorRevenueFrame = new JFrame("Vendor Revenue Report");
         VendorRevenueFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        VendorRevenueFrame.setLayout(new BorderLayout());
 
-        String[] Column = { "Date", "Month", "Service", "TotalRevenue" };
-        String[][] data = {
-            { "19/10/2023", "January", "Home cleaning", "RM50" }
-        };
-        VendorRevenueTable = new JTable(data, Column);
-        VendorRevenueTable.setSize(500, 200);
-        VendorRevenueTable.setVisible(true);
+        int vendorId = FoodOrderSystem.currentUser.getId();
+
+        LocalDate currentDate = LocalDate.now();
+        double dailyRevenue = OrderManager.calculateDailyRevenue(vendorId, currentDate);
+
+        YearMonth currentMonth = YearMonth.now();
+        double monthlyRevenue = OrderManager.calculateMonthlyRevenue(vendorId, currentMonth);
+
+        Year currentYear = Year.now();
+        double yearlyRevenue = OrderManager.calculateYearlyRevenue(vendorId, currentYear);
+
+        dailyLabel = new JLabel("Daily Revenue: RM " + dailyRevenue);
+        dailyLabel.setFont(new Font(null, Font.BOLD, 20));
+        dailyLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        monthlyLabel = new JLabel("Monthly Revenue: RM " + monthlyRevenue);
+        monthlyLabel.setFont(new Font(null, Font.BOLD, 20));
+        monthlyLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        yearlyLabel = new JLabel("Yearly Revenue: RM " + yearlyRevenue);
+        yearlyLabel.setFont(new Font(null, Font.BOLD, 20));
+        yearlyLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         Backbutton = new JButton("Back");
-        Backbutton.setPreferredSize(new Dimension(50, 50));
         Backbutton.addActionListener(this);
 
-        VendorRevenueFrame.add(VendorRevenueTable.getTableHeader(), BorderLayout.NORTH);
-        VendorRevenueFrame.add(VendorRevenueTable, BorderLayout.CENTER);
+        JPanel revenuePanel = new JPanel();
+        revenuePanel.setLayout(new BoxLayout(revenuePanel, BoxLayout.Y_AXIS));
+        revenuePanel.add(dailyLabel);
+        revenuePanel.add(monthlyLabel);
+        revenuePanel.add(yearlyLabel);
+
+        VendorRevenueFrame.add(revenuePanel, BorderLayout.CENTER);
         VendorRevenueFrame.add(Backbutton, BorderLayout.SOUTH);
+
+        VendorRevenueFrame.pack();
         VendorRevenueFrame.setLocationRelativeTo(null);
+        VendorRevenueFrame.setVisible(false);
     }
 
-    @Override
     public void actionPerformed(ActionEvent Event) {
         try {
             if (Event.getSource() == Backbutton) {
@@ -48,16 +78,8 @@ public class VendorRevenueReportPage implements ActionListener {
                 VendorRevenueFrame.setVisible(false);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(VendorRevenueFrame, "Error: " + e.getMessage(), "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(VendorRevenueFrame, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    public static VendorRevenueReportPage getVendorRevenueReportPageObj() {
-        if (instance == null) {
-            instance = new VendorRevenueReportPage();
-        }
-        return instance;
     }
 
     public JFrame getVendorRevenueReportPage() {

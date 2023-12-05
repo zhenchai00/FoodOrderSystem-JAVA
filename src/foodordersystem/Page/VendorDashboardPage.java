@@ -42,7 +42,6 @@ public class VendorDashboardPage implements DashboardPage, ActionListener {
         menuBtn.addActionListener(this);
         orderBtn.addActionListener(this);
         revenueBtn.addActionListener(this);
-        revenueBtn.addActionListener(this);
         logoutBtn.addActionListener(this);
         buttonPanel.add(notifyBtn);
         buttonPanel.add(menuBtn);
@@ -77,11 +76,15 @@ public class VendorDashboardPage implements DashboardPage, ActionListener {
                 vendorMenuPage.getMenuPage().setVisible(true);
                 vendorDashboardPage.setVisible(false);
             } else if (event.getSource() == orderBtn) {
-                VendorOrderPage vendorOrderPage = new VendorOrderPage();
-                vendorOrderPage.getOrderPage().setVisible(true);
+                // VendorOrderPage vendorOrderPage = new VendorOrderPage();
+                // vendorOrderPage.getOrderPage().setVisible(true);
+                VendorHistoryOrderPage vendorHistoryOrderPage = new VendorHistoryOrderPage();
+                vendorHistoryOrderPage.getHistoryOrderPage().setVisible(true);
                 vendorDashboardPage.setVisible(false);
             } else if (event.getSource() == revenueBtn) {
-                VendorRevenueReportPage.getVendorRevenueReportPageObj().getVendorRevenueReportPage().setVisible(true);
+                VendorRevenueReportPage vendorRevenueReportPage = new VendorRevenueReportPage();
+                vendorRevenueReportPage.getVendorRevenueReportPage().setVisible(true);
+                vendorDashboardPage.setVisible(false);
             } else if (event.getSource() == reviewBtn) {
 
             } else if (event.getSource() == logoutBtn) {
