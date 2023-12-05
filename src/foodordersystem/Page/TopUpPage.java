@@ -13,7 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import foodordersystem.Manager.TopUpManager;
+import foodordersystem.Manager.DwalletManager;
 import foodordersystem.Model.DataIO;
 import foodordersystem.Model.Dwallet;
 
@@ -33,7 +33,7 @@ public class TopUpPage implements ActionListener {
         userTableModel = new DefaultTableModel(new Object[] {"ID", "Username", "Credit"}, 0);
         userTable = new JTable(userTableModel);
         userScrollPane = new JScrollPane(userTable);
-        for (Dwallet dwallet : TopUpManager.getAllCredits()) {
+        for (Dwallet dwallet : DwalletManager.getAllCredits()) {
             addRowToTable(dwallet);
         }
 
@@ -60,17 +60,17 @@ public class TopUpPage implements ActionListener {
     public void actionPerformed (ActionEvent event) {
         try {
             if (event.getSource() == creditBtn) {
-                ArrayList<Object> creditDetails = TopUpManager.getCreditDetails();
+                ArrayList<Object> creditDetails = DwalletManager.getCreditDetails();
                 if (!creditDetails.isEmpty()) {
-                    TopUpManager.creditBalance(Integer.parseInt(creditDetails.get(0).toString()), Double.parseDouble(creditDetails.get(1).toString()));
+                    DwalletManager.creditBalance(Integer.parseInt(creditDetails.get(0).toString()), Double.parseDouble(creditDetails.get(1).toString()));
                     for (Dwallet dwallet : DataIO.allDwallet) {
                         updateUserTable(dwallet);
                     }
                 }
             } else if (event.getSource() == debitBtn) {
-                ArrayList<Object> debitDetails = TopUpManager.getDebitDetails();
+                ArrayList<Object> debitDetails = DwalletManager.getDebitDetails();
                 if (!debitDetails.isEmpty()) {
-                    TopUpManager.debitBalance(Integer.parseInt(debitDetails.get(0).toString()), Double.parseDouble(debitDetails.get(1).toString()));
+                    DwalletManager.debitBalance(Integer.parseInt(debitDetails.get(0).toString()), Double.parseDouble(debitDetails.get(1).toString()));
                     for (Dwallet dwallet : DataIO.allDwallet) {
                         updateUserTable(dwallet);
                     }

@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 import foodordersystem.Model.DataIO;
 import foodordersystem.Model.Dwallet;
 
-public class TopUpManager {
+public class DwalletManager {
     public static void creditBalance (int id, double amount) {
         for (Dwallet u : DataIO.allDwallet) {
             if (u.getId() == id) {
@@ -76,6 +76,25 @@ public class TopUpManager {
         }
 
         return debitDetails;
+    }
+    
+    public static void paymentBalance (int id, double amount) {
+        for (Dwallet u : DataIO.allDwallet) {
+            if (u.getId() == id) {
+                if ((u.getCredit() - amount) >= 0.0) {
+                    u.setCredit(u.getCredit() - amount);
+                    DataIO.writeDwallet();
+                    JOptionPane.showMessageDialog(null, "Payment Successfully\n You paid RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
+                    NotificationManager.sendNotification(id, "Your balance has been detucted by payment RM" + amount + ". Current total balance is RM" + u.getCredit() + ".");
+                    
+                    break;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Not enough credit balance for payment!", "Failure", JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error Occured!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
     
     public static ArrayList<Dwallet> getAllCredits () {

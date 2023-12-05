@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 import foodordersystem.FoodOrderSystem;
-import foodordersystem.Manager.TopUpManager;
+import foodordersystem.Manager.DwalletManager;
 //import foodordersystem.Page.CustomerDashboardPage;
 import foodordersystem.Model.Dwallet;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class CustomerDwalletPage implements ActionListener {
 
         headerPanel = new JPanel();
         creditLabel = new JLabel("Null");
-        ArrayList<Dwallet> allDwallet = TopUpManager.getAllCredits();
+        ArrayList<Dwallet> allDwallet = DwalletManager.getAllCredits();
         for (Dwallet dwallet : allDwallet) {
             if (dwallet.getId() == FoodOrderSystem.currentUser.getId()) {
                 creditLabel = new JLabel("Credit Balance: " + dwallet.getCredit());

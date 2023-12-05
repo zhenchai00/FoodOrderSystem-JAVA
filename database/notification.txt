@@ -130,3 +130,21 @@ READ
 2023-12-05 12:29:24
 UNREAD
 
+1023
+2
+[OrderID - 909 ] You have a new order from cus.
+2023-12-05 18:52:50
+UNREAD
+
+1024
+2
+[OrderID - 909] Your order has been cancelled.
+2023-12-05 18:53:40
+UNREAD
+
+1025
+2
+[OrderID - 910 ] You have a new order from cus.
+2023-12-05 22:09:04
+UNREAD
+

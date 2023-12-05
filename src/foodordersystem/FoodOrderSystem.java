@@ -22,13 +22,9 @@ public class FoodOrderSystem {
 	public static CustomerOrderPage customerOrderPage;
 
 	public static void main(String[] args) {
-		DataIO.readData();
-
-		loginPage = new LoginPage();
-		registerUserPage = new RegisterUserPage();
-
-		customerOrderPage = new CustomerOrderPage();
-	
-                
+            DataIO.readData();
+            loginPage = new LoginPage();
+            registerUserPage = new RegisterUserPage();
+            customerOrderPage = new CustomerOrderPage();
 	}
 }

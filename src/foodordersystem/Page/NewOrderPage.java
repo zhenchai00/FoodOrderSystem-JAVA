@@ -17,7 +17,7 @@ import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-public class NewOrderPage implements ActionListener{
+public class NewOrderPage implements ActionListener {
     private JFrame newOrderPage;
     private JButton addBtn, editBtn, deleteBtn, cancelBtn, continueBtn;
     private JRadioButton dineInRadio, takeAwayRadio, deliveryRadio;
@@ -196,6 +196,9 @@ public class NewOrderPage implements ActionListener{
                     addressString = addressTextArea.getText();
                 }
 
+                CustomerPaymentPage customerPaymentPage = new CustomerPaymentPage();
+                customerPaymentPage.addRowToTable(orderMenuList, addressString, getOrderType());
+                CustomerPaymentPage.getCustomerPaymentPage().setVisible(true);
                 OrderManager orderManager = new OrderManager();
                 orderManager.storeOrderItems(orderMenuList);
                 orderManager.addOrder(addressString, getOrderType());
