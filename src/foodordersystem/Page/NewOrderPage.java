@@ -198,7 +198,7 @@ public class NewOrderPage implements ActionListener {
 
                 CustomerPaymentPage customerPaymentPage = new CustomerPaymentPage();
                 customerPaymentPage.addRowToTable(orderMenuList, addressString, getOrderType());
-                CustomerPaymentPage.getCustomerPaymentPage().setVisible(true);
+                customerPaymentPage.getCustomerPaymentPage().setVisible(true);
                 OrderManager orderManager = new OrderManager();
                 orderManager.storeOrderItems(orderMenuList);
                 orderManager.addOrder(addressString, getOrderType());
