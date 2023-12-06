@@ -53,6 +53,7 @@ public class CustomerPaymentPage implements ActionListener {
         payBtn.addActionListener(this);
         orderTypePanel = new JPanel();
         addressPanel = new JPanel();
+        deliveryCostPanel = new JPanel();
         totalPanel = new JPanel();
         actionPanel = new JPanel();
         
@@ -66,21 +67,19 @@ public class CustomerPaymentPage implements ActionListener {
         customerPaymentPage.add(scrollPanel);
         customerPaymentPage.add(orderTypePanel);
         customerPaymentPage.add(addressPanel);
-        deliveryCostPanel = new JPanel();
-        deliveryCostLabel = new JLabel("AB");
+        customerPaymentPage.add(deliveryCostPanel);
         if (orderType.equals(OrderType.DELIVERY)) {
             deliveryCost = 5;
             addressLabel = new JLabel(address);
-            //deliveryCostLabel = new JLabel("cost");
+            deliveryCostLabel = new JLabel("Delivery Cost: "+deliveryCost);
             addressPanel.add(addressLabel);
-            //deliveryCostPanel.add(deliveryCostLabel);
+            deliveryCostPanel.add(deliveryCostLabel);
         } else {
-            deliveryCost = 0;
             this.address = "";
+            deliveryCost = 0;
+            customerPaymentPage.remove(deliveryCostPanel);
             customerPaymentPage.remove(addressPanel);
         }
-        deliveryCostPanel.add(deliveryCostLabel);
-        customerPaymentPage.add(deliveryCostPanel);
         customerPaymentPage.add(totalPanel);
         customerPaymentPage.add(actionPanel);
         
