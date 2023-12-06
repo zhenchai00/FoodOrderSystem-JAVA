@@ -1,8 +1,12 @@
 package foodordersystem.Page;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.YearMonth;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -10,8 +14,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import foodordersystem.FoodOrderSystem;
+import foodordersystem.Manager.OrderManager;
 
 public class RunnerRevenueReportPage implements ActionListener {
     private JFrame RunnerRevenueFrame;
@@ -25,7 +31,23 @@ public class RunnerRevenueReportPage implements ActionListener {
 
         int runnerId = FoodOrderSystem.currentUser.getId();
 
-        // get the revenue from order mananer by getting the runner id
+        LocalDate dailyDate = LocalDate.now();
+        double dailyRevenue = OrderManager.calculateDailyDeliveryCost(runnerId, dailyDate);
+        dailyLabel = new JLabel("Daily Revenue: RM " + dailyRevenue);
+        dailyLabel.setFont(new Font(null, Font.BOLD, 20));
+        dailyLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        
+        YearMonth currentMonth = YearMonth.now();
+        double monthlyRevenue = OrderManager.calculateMonthlyDeliveryCost(runnerId, currentMonth);
+        monthlyLabel = new JLabel("Monthly Revenue: RM " + monthlyRevenue);
+        monthlyLabel.setFont(new Font(null, Font.BOLD, 20));
+        monthlyLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        Year currentYear = Year.now();
+        double yearlyRevenue = OrderManager.calculateYearlyDeliveryCost(runnerId, currentYear);
+        yearlyLabel = new JLabel("Yearly Revenue: RM " + yearlyRevenue);
+        yearlyLabel.setFont(new Font(null, Font.BOLD, 20));
+        yearlyLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         Backbutton = new JButton("Back");
         Backbutton.addActionListener(this);

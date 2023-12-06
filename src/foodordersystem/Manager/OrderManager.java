@@ -10,11 +10,13 @@ import foodordersystem.FoodOrderSystem;
 import foodordersystem.Enum.OrderStatus;
 import foodordersystem.Enum.OrderType;
 import foodordersystem.Enum.RefundStatus;
+import foodordersystem.Enum.TaskStatus;
 import foodordersystem.Model.Customer;
 import foodordersystem.Model.DataIO;
 import foodordersystem.Model.Menu;
 import foodordersystem.Model.Order;
 import foodordersystem.Model.OrderItem;
+import foodordersystem.Model.Task;
 
 public class OrderManager {
     private ArrayList<OrderItem> orderItems = new ArrayList<>();
@@ -198,5 +200,51 @@ public class OrderManager {
             }
         }
         return total;
+    }
+
+    public static double calculateDailyDeliveryCost (int runnerId, LocalDate date) {
+        double dailyDeliveryCost = 0.0;
+        for (Task task : TaskManager.getAllTasks()) {
+            if (
+                task.getRunnerId() == runnerId
+                && task.getStatus() == TaskStatus.COMPLETED
+                && task.getDateTime().toLocalDate().equals(date)
+            ) {
+                Order order = getOrderById(task.getOrderId());
+                dailyDeliveryCost += order.getDeliveryCost();
+            }
+        }
+        return dailyDeliveryCost;
+    }
+
+    public static double calculateMonthlyDeliveryCost (int runnerId, YearMonth month) {
+        double monthlyDeliveryCost = 0.0;
+        for (Task task : TaskManager.getAllTasks()) {
+            if (
+                task.getRunnerId() == runnerId
+                && task.getStatus() == TaskStatus.COMPLETED
+                && task.getDateTime().toLocalDate().getYear() == month.getYear()
+                && task.getDateTime().toLocalDate().getMonth() == month.getMonth()
+            ) {
+                Order order = getOrderById(task.getOrderId());
+                monthlyDeliveryCost += order.getDeliveryCost();
+            }
+        }
+        return monthlyDeliveryCost;
+    }
+
+    public static double calculateYearlyDeliveryCost (int runnerId, Year year) {
+        double yearlyDeliveryCost = 0.0;
+        for (Task task : TaskManager.getAllTasks()) {
+            if (
+                task.getRunnerId() == runnerId
+                && task.getStatus() == TaskStatus.COMPLETED
+                && task.getDateTime().toLocalDate().getYear() == year.getValue()
+            ) {
+                Order order = getOrderById(task.getOrderId());
+                yearlyDeliveryCost += order.getDeliveryCost();
+            }
+        }
+        return yearlyDeliveryCost;
     }
 }

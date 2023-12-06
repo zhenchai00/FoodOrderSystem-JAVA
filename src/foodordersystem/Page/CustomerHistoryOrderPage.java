@@ -93,18 +93,20 @@ public class CustomerHistoryOrderPage extends HistoryOrderPage {
     }
 
     public void showHistoryOrderPage () {
-        historyTableModel = new DefaultTableModel(new Object[]{"ID", "Date", "Type", "Status", "Refund"}, 0);
+        historyTableModel = new DefaultTableModel(new Object[]{"ID", "Date", "Type", "Status", "Refund", "Delivery Fee"}, 0);
         historyOrderTable = new JTable(historyTableModel);
         historyOrderScrollPane = new JScrollPane(historyOrderTable);
         ArrayList<Order> allOrders = OrderManager.getAllOrders();
         for (Order order : allOrders) {
             if (order.getCustomerId() == FoodOrderSystem.currentUser.getId()) {
+                String deliveryCost = order.getOrderType() == OrderType.DELIVERY ? String.valueOf(order.getDeliveryCost()) : "-";
                 historyTableModel.addRow(new Object[]{
                     order.getId(),
                     order.getDate(),
                     order.getOrderType(),
                     order.getOrderStatus(),
-                    order.getRefundStatus()
+                    order.getRefundStatus(),
+                    deliveryCost
                 });
             }
         }
@@ -115,12 +117,14 @@ public class CustomerHistoryOrderPage extends HistoryOrderPage {
         ArrayList<Order> allOrders = OrderManager.getAllOrders();
         for (Order order : allOrders) {
             if (order.getCustomerId() == FoodOrderSystem.currentUser.getId()) {
+                String deliveryCost = order.getOrderType() == OrderType.DELIVERY ? String.valueOf(order.getDeliveryCost()) : "-";
                 historyTableModel.addRow(new Object[]{
                     order.getId(),
                     order.getDate(),
                     order.getOrderType(),
                     order.getOrderStatus(),
-                    order.getRefundStatus()
+                    order.getRefundStatus(),
+                    deliveryCost
                 });
             }
         }
