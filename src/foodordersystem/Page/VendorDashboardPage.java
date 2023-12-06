@@ -42,6 +42,7 @@ public class VendorDashboardPage implements DashboardPage, ActionListener {
         menuBtn.addActionListener(this);
         orderBtn.addActionListener(this);
         revenueBtn.addActionListener(this);
+        reviewBtn.addActionListener(this);
         logoutBtn.addActionListener(this);
         buttonPanel.add(notifyBtn);
         buttonPanel.add(menuBtn);
@@ -86,7 +87,9 @@ public class VendorDashboardPage implements DashboardPage, ActionListener {
                 vendorRevenueReportPage.getVendorRevenueReportPage().setVisible(true);
                 vendorDashboardPage.setVisible(false);
             } else if (event.getSource() == reviewBtn) {
-
+                VendorReviewPage vendorReviewPage = new VendorReviewPage();
+                vendorReviewPage.getReviewPage().setVisible(true);
+                vendorDashboardPage.setVisible(false);
             } else if (event.getSource() == logoutBtn) {
                 logout();
             }

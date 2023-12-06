@@ -277,6 +277,7 @@ public class DataIO {
                 String address = sc.nextLine();
                 TaskStatus status  = TaskStatus.valueOf(sc.nextLine().toUpperCase());
                 String review  = sc.nextLine();
+                Rating rating = Rating.valueOf(sc.nextLine().toUpperCase());
                 int reviewUserId  = Integer.parseInt(sc.nextLine());
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime localDateTime = LocalDateTime.parse(sc.nextLine(), formatter);
@@ -290,6 +291,7 @@ public class DataIO {
                     address,
                     status,
                     review,
+                    rating,
                     reviewUserId,
                     localDateTime
                 ));
@@ -314,6 +316,7 @@ public class DataIO {
                 pw.println(task.getAddress());
                 pw.println(task.getStatus());
                 pw.println(task.getReview());
+                pw.println(task.getRating());
                 pw.println(task.getReviewUserId());
                 pw.println(formattedDateTime);
                 pw.println();

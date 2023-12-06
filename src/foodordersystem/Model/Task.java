@@ -2,6 +2,7 @@ package foodordersystem.Model;
 
 import java.time.LocalDateTime;
 
+import foodordersystem.Enum.Rating;
 import foodordersystem.Enum.TaskStatus;
 
 public class Task {
@@ -13,6 +14,7 @@ public class Task {
     private String address;
     private TaskStatus status;
     private String review;
+    private Rating rating;
     private int reviewUserId;
     private LocalDateTime dateTime;
 
@@ -25,6 +27,7 @@ public class Task {
         String address,
         TaskStatus status,
         String review,
+        Rating rating,
         int reviewUserId,
         LocalDateTime dateTime
     ) {
@@ -36,6 +39,7 @@ public class Task {
         this.address = address;
         this.status = status;
         this.review = review;
+        this.rating = rating;
         this.reviewUserId = reviewUserId;
         this.dateTime = dateTime;
     }
@@ -72,6 +76,10 @@ public class Task {
         return review;
     }
 
+    public Rating getRating () {
+        return rating;
+    }
+
     public LocalDateTime getDateTime () {
         return dateTime;
     }
@@ -106,6 +114,10 @@ public class Task {
 
     public void setReview (String review) {
         this.review = review;
+    }
+
+    public void setRating (Rating rating) {
+        this.rating = rating;
     }
 
     public void setDateTime (LocalDateTime dateTime) {

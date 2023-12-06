@@ -93,15 +93,17 @@ public class OrderManager {
                 throw new IllegalArgumentException("You can only order from one vendor at a time.");
             }
 
-            OrderItem orderItem = new OrderItem(
-                newOrderId,
-                menuId,
-                vendorId,
-                menu.getName(),
-                quantity,
-                price
-            );
-            orderItems.add(orderItem);
+            if (firstVendorId != -1) {
+                OrderItem orderItem = new OrderItem(
+                    newOrderId,
+                    menuId,
+                    vendorId,
+                    menu.getName(),
+                    quantity,
+                    price
+                );
+                orderItems.add(orderItem);
+            }
         }
     }
 

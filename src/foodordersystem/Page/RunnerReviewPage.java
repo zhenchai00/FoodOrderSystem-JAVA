@@ -10,26 +10,26 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import foodordersystem.FoodOrderSystem;
-import foodordersystem.Manager.OrderManager;
+import foodordersystem.Manager.TaskManager;
 import foodordersystem.Model.DataIO;
-import foodordersystem.Model.Order;
+import foodordersystem.Model.Task;
 import foodordersystem.Model.User;
 
-public class VendorReviewPage extends ReviewPage {
-    private JTable vendorReviewTable;
-    private DefaultTableModel vendorReviewTableModel;
-    private JScrollPane vendorReviewScrollPane;
+public class RunnerReviewPage extends ReviewPage {
+    private JTable runnerReviewTable;
+    private DefaultTableModel runnerReviewTableModel;
+    private JScrollPane runnerReviewScrollPane;
     private JButton backBtn;
 
-    public VendorReviewPage () {
-        super("Vendor Review Page");
+    public RunnerReviewPage () {
+        super("Runner Review Page");
 
         backBtn = new JButton("Back");
         backBtn.addActionListener(this);
 
         actionBtnPanel = new JPanel();
         actionBtnPanel.add(backBtn);
-        reviewPage.add(vendorReviewScrollPane);
+        reviewPage.add(runnerReviewScrollPane);
         reviewPage.add(actionBtnPanel);
 
         reviewPage.pack();
@@ -41,7 +41,7 @@ public class VendorReviewPage extends ReviewPage {
     public void actionPerformed (ActionEvent event) {
         try {
             if (event.getSource() == backBtn) {
-                VendorDashboardPage.getVendorDashboardPageObj().getVendorDashboardPage().setVisible(true);
+                RunnerDashboardPage.getRunnerDashboardPageObj().getRunnerDashboardPage().setVisible(true);
                 reviewPage.setVisible(false);
             }
         } catch (Exception e) {
@@ -51,24 +51,24 @@ public class VendorReviewPage extends ReviewPage {
     }
 
     public void showVendorReviewPage () {
-        vendorReviewTableModel = new DefaultTableModel(new Object[] {"Order ID", "Customer ID", "Customer Name", "Rating", "Review"}, 0);
-        vendorReviewTable = new JTable(vendorReviewTableModel);
-        vendorReviewScrollPane = new JScrollPane(vendorReviewTable);
+        runnerReviewTableModel = new DefaultTableModel(new Object[] {"Order ID", "Customer ID", "Customer Name", "Rating", "Review"}, 0);
+        runnerReviewTable = new JTable(runnerReviewTableModel);
+        runnerReviewScrollPane = new JScrollPane(runnerReviewTable);
 
-        for (Order order : OrderManager.getAllOrders()) {
-            if (order.getVendorId() == FoodOrderSystem.currentUser.getId()) {
+        for (Task task : TaskManager.getAllTasks()) {
+            if (task.getRunnerId() == FoodOrderSystem.currentUser.getId()) {
                 String customerName = "";
                 for (User user : DataIO.allUsers) {
-                    if (user.getId() == order.getCustomerId()) {
+                    if (user.getId() == task.getCustomerId()) {
                         customerName = user.getUsername();
                     }
                 }
-                vendorReviewTableModel.addRow(new Object[] {
-                    order.getId(),
-                    order.getCustomerId(),
+                runnerReviewTableModel.addRow(new Object[] {
+                    task.getId(),
+                    task.getCustomerId(),
                     customerName,
-                    order.getRating(),
-                    order.getReview()
+                    task.getRating() + "/ FIVE",
+                    task.getReview()
                 });
             }
         }
