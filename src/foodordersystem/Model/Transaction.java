@@ -1,6 +1,5 @@
 package foodordersystem.Model;
 
-import java.time.LocalDateTime;
 import foodordersystem.Enum.TransactionType;
 
 public class Transaction extends User {

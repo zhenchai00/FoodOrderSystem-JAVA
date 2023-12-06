@@ -18,7 +18,6 @@ import foodordersystem.Model.Menu;
 import foodordersystem.Model.Order;
 import foodordersystem.Model.OrderItem;
 import foodordersystem.Model.Task;
-import foodordersystem.Manager.DwalletManager;
 
 public class OrderManager {
     private ArrayList<OrderItem> orderItems = new ArrayList<>();

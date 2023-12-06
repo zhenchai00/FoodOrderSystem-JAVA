@@ -2,7 +2,6 @@ package foodordersystem.Model;
 
 import foodordersystem.Enum.UserRole;
 import foodordersystem.Enum.TransactionType;
-import java.time.LocalDateTime;
 
 public class User {
     private int id;
