@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import foodordersystem.Enum.OrderStatus;
 import foodordersystem.Enum.OrderType;
+import foodordersystem.Enum.Rating;
 import foodordersystem.Enum.TaskStatus;
 import foodordersystem.Model.DataIO;
 import foodordersystem.Model.Order;
@@ -36,6 +37,7 @@ public class TaskManager {
                     order.getAddress(),
                     TaskStatus.PENDING,
                     "",
+                    Rating.NONE,
                     0,
                     LocalDateTime.now()
                 );
