@@ -59,7 +59,6 @@ public class DataIO {
                 int id  = Integer.parseInt(sc.nextLine());
                 String username  = sc.nextLine();
                 int password  = Integer.parseInt(sc.nextLine());
-                double balance  = Double.parseDouble(sc.nextLine());
                 UserRole role  = UserRole.valueOf(sc.nextLine().toUpperCase());
                 allUsers.add(new User(
                     id,
@@ -81,7 +80,6 @@ public class DataIO {
                 pw.println(user.getId());
                 pw.println(user.getUsername());
                 pw.println(user.getPassword());
-                pw.println(user.getBalance());
                 pw.println(user.getRole());
                 pw.println();
             }
