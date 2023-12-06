@@ -1,13 +1,15 @@
 package foodordersystem.Manager;
 
-import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
+import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 import foodordersystem.Enum.OrderType;
+import foodordersystem.Enum.TransactionType;
 import foodordersystem.FoodOrderSystem;
 import foodordersystem.Model.DataIO;
 import foodordersystem.Model.Dwallet;
+import foodordersystem.Model.Transaction;
 import foodordersystem.Page.CustomerPaymentPage;
 
 public class DwalletManager {
@@ -16,8 +18,9 @@ public class DwalletManager {
             if (u.getId() == id) {
                 u.setBalance(u.getBalance() + amount);
                 DataIO.writeDwallet();
-                JOptionPane.showMessageDialog(null, "Successfully top up balance for user " + u.getId() + " with amount RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
+                creditTransaction(id, u.getUsername(), amount);
                 NotificationManager.sendNotification(id, "Your balance has been topped up with amount RM" + amount + ". Current total balance is RM" + u.getBalance() + ".");
+                JOptionPane.showMessageDialog(null, "Successfully top up balance for user " + u.getId() + " with amount RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
                 break;
             } else {
                 JOptionPane.showMessageDialog(null, "User Not Found!", "Failure", JOptionPane.WARNING_MESSAGE);
@@ -31,8 +34,9 @@ public class DwalletManager {
                 if ((u.getBalance() - amount) >= 0.0) {
                     u.setBalance(u.getBalance() - amount);
                     DataIO.writeDwallet();
-                    JOptionPane.showMessageDialog(null, "Successfully debit balance for user " + u.getId() + " with amount RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
+                    debitTransaction(id, u.getUsername(), amount);
                     NotificationManager.sendNotification(id, "Your balance has been debited with amount RM" + amount + ". Current total balance is RM" + u.getBalance() + ".");
+                    JOptionPane.showMessageDialog(null, "Successfully debit balance for user " + u.getId() + " with amount RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
                     break;
                 } else {
                     JOptionPane.showMessageDialog(null, "Not enough credit balance for debit!", "Failure", JOptionPane.WARNING_MESSAGE);
@@ -123,8 +127,18 @@ public class DwalletManager {
         }
     }
 
-    public static void debitTransaction () {
-        
+    public static void debitTransaction (int id, String username, double debitAmount) {
+        TransactionType type = TransactionType.DEBIT;
+        Transaction transaction = new Transaction(id, username, LocalDateTime.now(), debitAmount, 0, type);
+        DataIO.allTransaction.add(transaction);
+        DataIO.writeTransaction();
+    }
+    
+    public static void creditTransaction (int id, String username, double creditAmount) {
+        TransactionType type = TransactionType.CREDIT;
+        Transaction transaction = new Transaction(id, username, LocalDateTime.now(), 0, creditAmount, type);
+        DataIO.allTransaction.add(transaction);
+        DataIO.writeTransaction();
     }
     
     public static ArrayList<Dwallet> getAllCredits () {

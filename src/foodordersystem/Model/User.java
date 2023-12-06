@@ -1,6 +1,8 @@
 package foodordersystem.Model;
 
 import foodordersystem.Enum.UserRole;
+import foodordersystem.Enum.TransactionType;
+import java.time.LocalDateTime;
 
 public class User {
     private int id;
@@ -8,6 +10,10 @@ public class User {
     private int password;
     private UserRole role = UserRole.USER;
     private double balance;
+    private LocalDateTime date;
+    private double debit;
+    private double credit;
+    private TransactionType transactionType;
 
     public User (int id, String username, int password, UserRole role) {
         this.id = id;
@@ -20,6 +26,15 @@ public class User {
         this.id = id;
         this.username = username;
         this.balance = balance;
+    }
+    
+    public User (int id, String username, LocalDateTime date, double debit, double credit, TransactionType transactionType) {
+        this.id = id;
+        this.username = username;
+        this.date = date;
+        this.debit = debit;
+        this.credit = credit;
+        this.transactionType = transactionType;
     }
 
     public String getUsername () {
@@ -60,5 +75,37 @@ public class User {
     
     public void setBalance (double balance) {
         this.balance = balance;
+    }
+    
+    public LocalDateTime getDate () {
+        return date;
+    }
+    
+    public void setDate (LocalDateTime date) {
+        this.date = date;
+    }
+    
+    public double getDebit () {
+        return debit;
+    }
+    
+    public void setDebit (double debit) {
+        this.debit = debit;
+    }
+    
+    public double getCredit () {
+        return credit;
+    }
+    
+    public void setCredit (double credit) {
+        this.credit = credit;
+    }
+    
+    public TransactionType getTransactionType () {
+        return transactionType;
+    }
+    
+    public void setTransactionType (TransactionType transactionType) {
+        this.transactionType = transactionType;
     }
 }

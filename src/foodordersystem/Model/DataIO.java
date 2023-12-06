@@ -15,6 +15,7 @@ import foodordersystem.Enum.Rating;
 import foodordersystem.Enum.RefundStatus;
 import foodordersystem.Enum.TaskStatus;
 import foodordersystem.Enum.UserRole;
+import foodordersystem.Enum.TransactionType;
 
 public class DataIO {
     private static final String USER_FILE_PATH = "database/user.txt";
@@ -23,18 +24,20 @@ public class DataIO {
     private static final String MENU_FILE_PATH = "database/menu.txt";
     private static final String TASK_FILE_PATH = "database/task.txt";
     private static final String RUNNER_AVAILABLE_FILE_PATH = "database/runneravailable.txt";
-    //private static final String INVOICE_FILE_PATH = "database/invoice.txt";
     private static final String DWALLET_FILE_PATH = "database/dwallet.txt";
+    private static final String TRANSACTION_FILE_PATH = "database/transaction.txt";
+    //private static final String INVOICE_FILE_PATH = "database/invoice.txt";
     private static final String NOTIFICATION_FILE_PATH = "database/notification.txt";
 
     public static ArrayList<Order> allOrders = new ArrayList<Order>();
     public static ArrayList<OrderItem> allOrderItems = new ArrayList<OrderItem>();
     public static ArrayList<User> allUsers = new ArrayList<User>();
     public static ArrayList<Menu> allMenus = new ArrayList<Menu>();
-    // public static ArrayList<Invoice> allInvoices = new ArrayList<Invoice>();
     public static ArrayList<Task> allTasks = new ArrayList<Task>();
     public static ArrayList<Object[]> allRunners = new ArrayList<>();
     public static ArrayList<Dwallet> allDwallet = new ArrayList<Dwallet>();
+    public static ArrayList<Transaction> allTransaction = new ArrayList<Transaction>();
+    // public static ArrayList<Invoice> allInvoices = new ArrayList<Invoice>();
     public static ArrayList<Notification> allNotifications = new ArrayList<Notification>();
 
     public static void readData () {
@@ -46,6 +49,7 @@ public class DataIO {
             readTask();
             readRunnerAvailable();
             readDwallet();
+            readTransaction();
             readNotification();
         } catch (Exception e) {
             System.out.println("Error reading data: " + e.getMessage());
@@ -387,6 +391,50 @@ public class DataIO {
             pw.close();
         } catch (Exception e) {
             System.out.println("Error writing " + DWALLET_FILE_PATH + ": " + e);
+        }
+    }
+    
+    public static void readTransaction () {
+        try {
+            Scanner sc = new Scanner(new File(TRANSACTION_FILE_PATH));
+            while (sc.hasNext()) {
+                int id  = Integer.parseInt(sc.nextLine());
+                String username  = sc.nextLine();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime date = LocalDateTime.parse(sc.nextLine(), formatter);
+                double debit  = Double.parseDouble(sc.nextLine());
+                double credit  = Double.parseDouble(sc.nextLine());
+                TransactionType transactionType = TransactionType.valueOf(sc.nextLine());
+                allTransaction.add(new Transaction(
+                    id,
+                    username,
+                    date,
+                    debit,
+                    credit,
+                    transactionType
+                ));
+                sc.nextLine();
+            }
+        } catch (Exception e) {
+            System.out.println("Error reading " + TRANSACTION_FILE_PATH + ": " + e);
+        }
+    }
+    
+    public static void writeTransaction () {
+        try {
+            PrintWriter pw = new PrintWriter(TRANSACTION_FILE_PATH);
+            for (Transaction transaction : allTransaction) {
+                pw.println(transaction.getId());
+                pw.println(transaction.getUsername());
+                pw.println(transaction.getDate());
+                pw.println(transaction.getDebit());
+                pw.println(transaction.getCredit());
+                pw.println(transaction.getTransactionType());
+                pw.println();
+            }
+            pw.close();
+        } catch (Exception e) {
+            System.out.println("Error writing " + TRANSACTION_FILE_PATH + ": " + e);
         }
     }
 
