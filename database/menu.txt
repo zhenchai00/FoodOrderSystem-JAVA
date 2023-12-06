@@ -1,0 +1,136 @@
+1
+Apam Balik
+9.0
+MALAY
+-
+2
+0
+
+2
+Mee Jawa
+12.0
+MALAY
+-
+2
+0
+
+3
+Nasi Goreng USA
+15.0
+MALAY
+-
+2
+0
+
+4
+Kong Pao Chicken
+18.0
+CHINESE
+-
+3
+0
+
+5
+Oden
+16.0
+JAPANESE
+-
+3
+0
+
+6
+Ramen
+19.0
+JAPANESE
+-
+3
+0
+
+7
+Chinese Hot Pot
+25.0
+CHINESE
+-
+3
+0
+
+8
+Spring Roll
+6.0
+CHINESE
+-
+3
+0
+
+9
+Yakitori
+21.0
+JAPANESE
+-
+3
+0
+
+10
+Hamburger
+17.0
+WESTERN
+-
+4
+0
+
+11
+Steak
+30.0
+WESTERN
+-
+4
+0
+
+12
+Butter Chicken
+13.0
+INDIAN
+-
+4
+0
+
+13
+Apple Pie
+11.0
+WESTERN
+-
+4
+0
+
+14
+Tikka Masala
+8.0
+INDIAN
+-
+4
+0
+
+15
+Pad Thai
+12.0
+THAI
+-
+2
+0
+
+16
+Khao Pad
+17.0
+THAI
+-
+2
+0
+
+17
+Nasi Lemak
+6.0
+MALAY
+-
+2
+0
+

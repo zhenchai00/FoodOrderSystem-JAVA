@@ -57,7 +57,7 @@ public class MenuManager {
         String inputName = JOptionPane.showInputDialog("Enter menu name");
         String inputPrice = JOptionPane.showInputDialog("Enter menu price");
 
-        MenuCategory[] categories = {MenuCategory.CHINESE, MenuCategory.INDIAN, MenuCategory.WESTERN, MenuCategory.JAPANESE, MenuCategory.MALAY, MenuCategory.THAI, MenuCategory.WESTERN};
+        MenuCategory[] categories = {MenuCategory.CHINESE, MenuCategory.INDIAN, MenuCategory.WESTERN, MenuCategory.JAPANESE, MenuCategory.MALAY, MenuCategory.THAI};
         Object inputCategory = JOptionPane.showInputDialog(null, "Choose menu category", "Menu Category", JOptionPane.QUESTION_MESSAGE, null, categories, categories[0]);
 
         if (

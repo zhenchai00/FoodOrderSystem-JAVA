@@ -13,7 +13,9 @@ import javax.swing.table.DefaultTableModel;
 
 import foodordersystem.Enum.MenuCategory;
 import foodordersystem.Manager.MenuManager;
+import foodordersystem.Model.DataIO;
 import foodordersystem.Model.Menu;
+import foodordersystem.Model.User;
 
 public class CustomerMenuPage extends MenuPage implements ItemListener {
     private JTable menuTable;
@@ -33,7 +35,7 @@ public class CustomerMenuPage extends MenuPage implements ItemListener {
         });
         categoryComboBox.addItemListener(this);
 
-        menuTableModel = new DefaultTableModel(new Object[]{"Id", "Name","Category", "Price"}, 0);
+        menuTableModel = new DefaultTableModel(new Object[]{"Id", "Name","Category", "Vendor Name", "Price"}, 0);
         menuTable = new JTable(menuTableModel);
         JScrollPane scrollPanel = new JScrollPane(menuTable);
         for (Menu menu : MenuManager.getAllMenus()) {
@@ -83,10 +85,17 @@ public class CustomerMenuPage extends MenuPage implements ItemListener {
     }
 
     public void addRowToTable (Menu menu) {
+        String vendorName = "";
+        for (User user : DataIO.allUsers) {
+            if (user.getId() == menu.getVendorId()) {
+                vendorName = user.getUsername();
+            }
+        }
         menuTableModel.addRow(new Object[]{
             menu.getId(),
             menu.getName(),
             menu.getCategory().toString(),
+            vendorName,
             menu.getPrice() 
         });
     }

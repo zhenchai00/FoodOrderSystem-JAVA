@@ -25,7 +25,7 @@ public class VendorMenuPage extends MenuPage{
         super("Vendor Menu Page");
         menuPage.setLayout(new BoxLayout(menuPage.getContentPane(), BoxLayout.Y_AXIS));
 
-        menuTableModel = new DefaultTableModel(new Object[]{"Id", "Name", "Price"}, 0);
+        menuTableModel = new DefaultTableModel(new Object[]{"Id", "Name", "Price", "Category"}, 0);
         menuTable = new JTable(menuTableModel);
         JScrollPane scrollPanel = new JScrollPane(menuTable);
         for (Menu menu : MenuManager.getAllMenus()) {
@@ -93,7 +93,7 @@ public class VendorMenuPage extends MenuPage{
 
     public void addRowToTable (Menu menu) {
         if (FoodOrderSystem.currentUser.getId() == menu.getVendorId()) {
-            menuTableModel.addRow(new Object[]{menu.getId(), menu.getName(), menu.getPrice()});
+            menuTableModel.addRow(new Object[]{menu.getId(), menu.getName(), menu.getPrice(), menu.getCategory().toString()});
         }
     }
 
