@@ -8,7 +8,6 @@ public class User {
     private int password;
     private UserRole role = UserRole.USER;
     private double balance;
-    private double credit;
 
     public User (int id, String username, int password, double balance, UserRole role) {
         this.id = id;
@@ -18,10 +17,10 @@ public class User {
         this.role = role;
     }
     
-    public User (int id, String username, double credit) {
+    public User (int id, String username, double balance) {
         this.id = id;
         this.username = username;
-        this.credit = credit;
+        this.balance = balance;
     }
 
     public String getUsername () {
@@ -55,20 +54,12 @@ public class User {
     public UserRole setRole (UserRole role) {
         return this.role = role;
     }
-
+    
     public double getBalance () {
         return balance;
     }
-
-    public void setBalance (double balance) {
-        this.balance = balance;
-    }
     
-    public double getCredit () {
-        return credit;
-    }
-    
-    public void setCredit (double credit) {
-        this.credit = credit;
+    public void setBalance (double credit) {
+        this.balance = credit;
     }
 }

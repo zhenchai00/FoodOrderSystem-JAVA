@@ -26,7 +26,7 @@ public class CustomerDwalletPage implements ActionListener {
         ArrayList<Dwallet> allDwallet = DwalletManager.getAllCredits();
         for (Dwallet dwallet : allDwallet) {
             if (dwallet.getId() == FoodOrderSystem.currentUser.getId()) {
-                creditLabel = new JLabel("Credit Balance: " + dwallet.getCredit());
+                creditLabel = new JLabel("Credit Balance: " + dwallet.getBalance());
             }
         }
         creditLabel.setFont(new Font(null, Font.BOLD, 20));

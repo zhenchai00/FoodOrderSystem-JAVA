@@ -381,7 +381,7 @@ public class DataIO {
             for (Dwallet dwallet : allDwallet) {
                 pw.println(dwallet.getId());
                 pw.println(dwallet.getUsername());
-                pw.println(dwallet.getCredit());
+                pw.println(dwallet.getBalance());
                 pw.println();
             }
             pw.close();

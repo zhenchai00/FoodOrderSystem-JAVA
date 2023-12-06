@@ -93,7 +93,7 @@ public class TopUpPage implements ActionListener {
         userTableModel.addRow(new Object[] {
             dwallet.getId(),
             dwallet.getUsername(),
-            dwallet.getCredit()
+            dwallet.getBalance()
         });
     }
 
@@ -102,7 +102,7 @@ public class TopUpPage implements ActionListener {
         userTableModel.addRow(new Object[] {
             dwallet.getId(),
             dwallet.getUsername(),
-            dwallet.getCredit()
+            dwallet.getBalance()
         });
     }
 }
