@@ -169,6 +169,7 @@ public class DataIO {
                 LocalDateTime localDateTime = LocalDateTime.parse(sc.nextLine(), formatter);
 		        OrderType type  = OrderType.valueOf(sc.nextLine());
                 double deliveryCost = Double.parseDouble(sc.nextLine());
+                double totalCost = Double.parseDouble(sc.nextLine());
                 String review  = sc.nextLine();
 		        Rating rating  = Rating.valueOf(sc.nextLine());
 		        RefundStatus refund  = RefundStatus.valueOf(sc.nextLine());
@@ -183,6 +184,7 @@ public class DataIO {
                     localDateTime,
                     type,
                     deliveryCost,
+                    totalCost,
                     review,
                     rating,
                     refund,

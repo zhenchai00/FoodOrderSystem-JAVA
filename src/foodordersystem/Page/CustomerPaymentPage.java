@@ -99,7 +99,7 @@ public class CustomerPaymentPage implements ActionListener {
                 newOrderPage.getNewOrderPage().setVisible(true);
                 customerPaymentPage.setVisible(false);
             } else if (event.getSource() == payBtn) {
-                DwalletManager.paymentBalance(FoodOrderSystem.currentUser.getId(), this.totalPayment, orderMenuList, address, orderType, deliveryCost);
+                DwalletManager.paymentBalance(FoodOrderSystem.currentUser.getId(), totalPayment, orderMenuList, address, orderType, deliveryCost);
             }
         } catch (Exception e) {
             
@@ -119,7 +119,7 @@ public class CustomerPaymentPage implements ActionListener {
             paymentTableModel.addRow(new Object[]{menuId, menu.getName(), quantity, price});
         }
 
-        this.totalPayment = orderItemSum + deliveryCost;
+        totalPayment = orderItemSum + deliveryCost;
         totalLabel = new JLabel(String.valueOf(totalPayment));
         totalPanel.add(totalLabel);
     }

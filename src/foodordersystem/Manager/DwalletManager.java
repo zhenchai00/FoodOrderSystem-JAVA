@@ -84,6 +84,20 @@ public class DwalletManager {
     public static void paymentBalance (int id, double amount, ArrayList<Object[]> orderMenuList, String address, OrderType orderType, double deliveryCost) {
         for (Dwallet u : DataIO.allDwallet) {
             if (u.getId() == id) {
+                u.setCredit(u.getCredit() + amount);
+                DataIO.writeDwallet();
+                JOptionPane.showMessageDialog(null, "Successfully refund balance to user " + u.getId() + " with amount RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
+                NotificationManager.sendNotification(id, "Your balance has been refunded with amount RM" + amount + ". Current total balance is RM" + u.getCredit() + ".");
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error Occured!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
+    public static void refundtBalance (int id, double amount, ArrayList<Object[]> orderMenuList, String address, OrderType orderType, double deliveryCost) {
+        for (Dwallet u : DataIO.allDwallet) {
+            if (u.getId() == id) {
                 if ((u.getCredit() - amount) >= 0.0) {
                     u.setCredit(u.getCredit() - amount);
                     DataIO.writeDwallet();
@@ -92,7 +106,7 @@ public class DwalletManager {
                     OrderManager orderManager = new OrderManager();
                     orderManager.storeOrderItems(orderMenuList);
                     try {
-                        orderManager.addOrder(address, orderType, deliveryCost);
+                        orderManager.addOrder(address, orderType, deliveryCost, amount);
                     } catch (Exception e) {
                         System.out.println("Error Occured: "+e);
                     }
