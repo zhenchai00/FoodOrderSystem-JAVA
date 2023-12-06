@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import foodordersystem.FoodOrderSystem;
 import foodordersystem.Enum.OrderStatus;
 import foodordersystem.Enum.OrderType;
+import foodordersystem.Enum.Rating;
 import foodordersystem.Enum.RefundStatus;
 import foodordersystem.Enum.TaskStatus;
 import foodordersystem.Model.Customer;
@@ -58,6 +59,8 @@ public class OrderManager {
             LocalDateTime.now(),
             type,
             deliveryCost,
+            "",
+            Rating.NONE,
             refund,
             status
         );

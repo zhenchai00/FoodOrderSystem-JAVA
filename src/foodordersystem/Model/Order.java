@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import foodordersystem.Enum.OrderStatus;
 import foodordersystem.Enum.OrderType;
+import foodordersystem.Enum.Rating;
 import foodordersystem.Enum.RefundStatus;
 
 public class Order {
@@ -16,6 +17,9 @@ public class Order {
 	private LocalDateTime date;
 	private OrderType type;
     private double deliveryCost;
+	private double totalCost;
+	private String review;
+	private Rating rating;
 	private RefundStatus refund;
 	private OrderStatus status;
 
@@ -28,6 +32,8 @@ public class Order {
 		LocalDateTime date,
 		OrderType type,
         double deliveryCost,
+		String review,
+		Rating rating,
 		RefundStatus refund,
 		OrderStatus status
 	) {
@@ -39,6 +45,8 @@ public class Order {
 		this.date = date;
 		this.type = type;
         this.deliveryCost = deliveryCost;
+		this.review = review;
+		this.rating = rating;
 		this.refund = refund;
 		this.status = status;
 	}
@@ -124,6 +132,26 @@ public class Order {
 
 	public OrderStatus getOrderStatus() {
 		return status;
+	}
+
+	public String getReview() {
+		return review;
+	}
+	
+	public void setReview(String review) {
+		this.review = review;
+	}
+
+	public Rating getRating() {
+		return rating;
+	}
+
+	public void setRating(Rating rating) {
+		this.rating = rating;
+	}
+		
+	public void setOrderItems(ArrayList<OrderItem> orderItems) {
+		DataIO.allOrderItems = orderItems;
 	}
 
 	public ArrayList<Object[]> getOrderItemsWithMenuList() {
