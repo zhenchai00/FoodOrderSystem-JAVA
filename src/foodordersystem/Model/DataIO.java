@@ -362,11 +362,11 @@ public class DataIO {
             while (sc.hasNext()) {
                 int id  = Integer.parseInt(sc.nextLine());
                 String username  = sc.nextLine();
-                double credit  = Double.parseDouble(sc.nextLine());
+                double balance  = Double.parseDouble(sc.nextLine());
                 allDwallet.add(new Dwallet(
                     id,
                     username,
-                    credit
+                    balance
                 ));
                 sc.nextLine();
             }
