@@ -1,24 +1,39 @@
 package foodordersystem.Page;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import foodordersystem.Enum.MenuCategory;
 import foodordersystem.Manager.MenuManager;
 import foodordersystem.Model.Menu;
 
-public class CustomerMenuPage extends MenuPage {
+public class CustomerMenuPage extends MenuPage implements ItemListener {
     private JTable menuTable;
+    private JComboBox<String> categoryComboBox;
     private DefaultTableModel menuTableModel;
     public CustomerMenuPage () {
         super("Customer Menu Page");
         menuPage.setLayout(new BoxLayout(menuPage.getContentPane(), BoxLayout.Y_AXIS));
 
-        menuTableModel = new DefaultTableModel(new Object[]{"Id", "Name", "Price", "Review"}, 0);
+        categoryComboBox = new JComboBox<>(new String[]{
+            "ALL",
+            MenuCategory.CHINESE.toString(),
+            MenuCategory.WESTERN.toString(),
+            MenuCategory.INDIAN.toString(),
+            MenuCategory.JAPANESE.toString(),
+            MenuCategory.THAI.toString()
+        });
+        categoryComboBox.addItemListener(this);
+
+        menuTableModel = new DefaultTableModel(new Object[]{"Id", "Name","Category", "Price", "Review"}, 0);
         menuTable = new JTable(menuTableModel);
         JScrollPane scrollPanel = new JScrollPane(menuTable);
         for (Menu menu : MenuManager.getAllMenus()) {
@@ -27,6 +42,7 @@ public class CustomerMenuPage extends MenuPage {
 
         buttonPanel.add(backBtn);
 
+        menuPage.add(categoryComboBox);
         menuPage.add(scrollPanel);
         menuPage.add(buttonPanel);
 
@@ -47,6 +63,21 @@ public class CustomerMenuPage extends MenuPage {
     }
 
     @Override
+    public void itemStateChanged (ItemEvent event) {
+        if (event.getSource() == categoryComboBox) {
+            String selectedCategory = (String) event.getItem();
+            menuTableModel.setRowCount(0);
+            for (Menu menu : MenuManager.getAllMenus()) {
+                if (menu.getCategory().toString().equals(selectedCategory)) {
+                    addRowToTable(menu);
+                } else if (selectedCategory == "ALL") {
+                    addRowToTable(menu);
+                }
+            }
+        }
+    }
+
+    @Override
     public JFrame getMenuPage() {
         return menuPage;
     }
@@ -55,6 +86,7 @@ public class CustomerMenuPage extends MenuPage {
         menuTableModel.addRow(new Object[]{
             menu.getId(),
             menu.getName(),
+            menu.getCategory().toString(),
             menu.getPrice(), 
             menu.getReview()
         });
