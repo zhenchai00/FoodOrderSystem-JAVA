@@ -18,6 +18,7 @@ import foodordersystem.Model.Menu;
 import foodordersystem.Model.Order;
 import foodordersystem.Model.OrderItem;
 import foodordersystem.Model.Task;
+import foodordersystem.Manager.DwalletManager;
 
 public class OrderManager {
     private ArrayList<OrderItem> orderItems = new ArrayList<>();
@@ -123,7 +124,7 @@ public class OrderManager {
                     if (orderStatus == OrderStatus.CANCELLED) {
                         NotificationManager.sendNotification(order.getVendorId(), "[OrderID - " + order.getId() + "] Your order has been cancelled.");
                     }
-                    // TODO: wenqing - debit balance account
+                    DwalletManager.refundBalance(order.getCustomerId(), order.getTotalCost());
                     order.setRefundStatus(RefundStatus.YES);
                     order.setOrderStatus(orderStatus);
                 }

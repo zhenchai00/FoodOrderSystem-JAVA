@@ -166,3 +166,15 @@ UNREAD
 2023-12-06 00:18:38
 UNREAD
 
+1029
+-1
+[OrderID - 909] Your order has been cancelled.
+2023-12-06 15:05:36
+UNREAD
+
+1030
+3
+Your balance has been refunded with amount RM17.0. Current total balance is RM21.0.
+2023-12-06 15:05:42
+UNREAD
+
