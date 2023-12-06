@@ -35,8 +35,8 @@ public class DataIO {
     public static ArrayList<Menu> allMenus = new ArrayList<Menu>();
     public static ArrayList<Task> allTasks = new ArrayList<Task>();
     public static ArrayList<Object[]> allRunners = new ArrayList<>();
-    public static ArrayList<Dwallet> allDwallet = new ArrayList<Dwallet>();
-    public static ArrayList<Transaction> allTransaction = new ArrayList<Transaction>();
+    public static ArrayList<Dwallet> allDwallets = new ArrayList<Dwallet>();
+    public static ArrayList<Transaction> allTransactions = new ArrayList<Transaction>();
     // public static ArrayList<Invoice> allInvoices = new ArrayList<Invoice>();
     public static ArrayList<Notification> allNotifications = new ArrayList<Notification>();
 
@@ -367,7 +367,7 @@ public class DataIO {
                 int id  = Integer.parseInt(sc.nextLine());
                 String username  = sc.nextLine();
                 double balance  = Double.parseDouble(sc.nextLine());
-                allDwallet.add(new Dwallet(
+                allDwallets.add(new Dwallet(
                     id,
                     username,
                     balance
@@ -382,7 +382,7 @@ public class DataIO {
     public static void writeDwallet () {
         try {
             PrintWriter pw = new PrintWriter(DWALLET_FILE_PATH);
-            for (Dwallet dwallet : allDwallet) {
+            for (Dwallet dwallet : allDwallets) {
                 pw.println(dwallet.getId());
                 pw.println(dwallet.getUsername());
                 pw.println(dwallet.getBalance());
@@ -400,12 +400,11 @@ public class DataIO {
             while (sc.hasNext()) {
                 int id  = Integer.parseInt(sc.nextLine());
                 String username  = sc.nextLine();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                LocalDateTime date = LocalDateTime.parse(sc.nextLine(), formatter);
+                String date = sc.nextLine();
                 double debit  = Double.parseDouble(sc.nextLine());
                 double credit  = Double.parseDouble(sc.nextLine());
                 TransactionType transactionType = TransactionType.valueOf(sc.nextLine());
-                allTransaction.add(new Transaction(
+                allTransactions.add(new Transaction(
                     id,
                     username,
                     date,
@@ -423,7 +422,7 @@ public class DataIO {
     public static void writeTransaction () {
         try {
             PrintWriter pw = new PrintWriter(TRANSACTION_FILE_PATH);
-            for (Transaction transaction : allTransaction) {
+            for (Transaction transaction : allTransactions) {
                 pw.println(transaction.getId());
                 pw.println(transaction.getUsername());
                 pw.println(transaction.getDate());

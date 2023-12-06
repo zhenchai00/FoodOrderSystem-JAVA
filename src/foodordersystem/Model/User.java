@@ -10,7 +10,7 @@ public class User {
     private int password;
     private UserRole role = UserRole.USER;
     private double balance;
-    private LocalDateTime date;
+    private String date;
     private double debit;
     private double credit;
     private TransactionType transactionType;
@@ -28,7 +28,7 @@ public class User {
         this.balance = balance;
     }
     
-    public User (int id, String username, LocalDateTime date, double debit, double credit, TransactionType transactionType) {
+    public User (int id, String username, String date, double debit, double credit, TransactionType transactionType) {
         this.id = id;
         this.username = username;
         this.date = date;
@@ -77,11 +77,11 @@ public class User {
         this.balance = balance;
     }
     
-    public LocalDateTime getDate () {
+    public String getDate () {
         return date;
     }
     
-    public void setDate (LocalDateTime date) {
+    public void setDate (String date) {
         this.date = date;
     }
     

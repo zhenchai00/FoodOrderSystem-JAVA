@@ -29,7 +29,7 @@ public class UserManager {
         User newUser = new User(number, username, password, role);
 
         if (role == UserRole.CUSTOMER) {
-            DataIO.allDwallet.add(new Dwallet(
+            DataIO.allDwallets.add(new Dwallet(
                 newUser.getId(),
                 newUser.getUsername(),
                 0.0
@@ -65,7 +65,7 @@ public class UserManager {
         }
         DataIO.writeUser();
 
-        for (Dwallet d : DataIO.allDwallet) {
+        for (Dwallet d : DataIO.allDwallets) {
             if (d.getId() == id) {
                 d.setUsername(username);
                 break;
@@ -83,9 +83,9 @@ public class UserManager {
         }
         DataIO.writeUser();
 
-        for (Dwallet d : DataIO.allDwallet) {
+        for (Dwallet d : DataIO.allDwallets) {
             if (d.getId() == id) {
-                DataIO.allDwallet.remove(d);
+                DataIO.allDwallets.remove(d);
                 break;
             }
         }

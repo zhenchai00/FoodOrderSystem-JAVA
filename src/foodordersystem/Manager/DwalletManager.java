@@ -3,6 +3,7 @@ package foodordersystem.Manager;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import foodordersystem.Enum.OrderType;
 import foodordersystem.Enum.TransactionType;
@@ -14,7 +15,7 @@ import foodordersystem.Page.CustomerPaymentPage;
 
 public class DwalletManager {
     public static void creditBalance (int id, double amount) {
-        for (Dwallet u : DataIO.allDwallet) {
+        for (Dwallet u : DataIO.allDwallets) {
             if (u.getId() == id) {
                 u.setBalance(u.getBalance() + amount);
                 DataIO.writeDwallet();
@@ -29,7 +30,7 @@ public class DwalletManager {
     }
 
     public static void debitBalance (int id, double amount) {
-        for (Dwallet u : DataIO.allDwallet) {
+        for (Dwallet u : DataIO.allDwallets) {
             if (u.getId() == id) {
                 if ((u.getBalance() - amount) >= 0.0) {
                     u.setBalance(u.getBalance() - amount);
@@ -86,15 +87,16 @@ public class DwalletManager {
     }
     
     public static void paymentBalance (int id, double amount, ArrayList<Object[]> orderMenuList, String address, OrderType orderType, double deliveryCost) {
-        for (Dwallet u : DataIO.allDwallet) {
+        for (Dwallet u : DataIO.allDwallets) {
             if (u.getId() == id) {
                 if ((u.getBalance() - amount) >= 0.0) {
                     u.setBalance(u.getBalance() - amount);
                     DataIO.writeDwallet();
-                    JOptionPane.showMessageDialog(null, "Payment Successfully\n You paid RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
-                    NotificationManager.sendNotification(id, "Your balance has been detucted by payment RM" + amount + ". Current total balance is RM" + u.getBalance() + ".");
+                    debitTransaction(id, u.getUsername(), amount);
                     OrderManager orderManager = new OrderManager();
                     orderManager.storeOrderItems(orderMenuList);
+                    NotificationManager.sendNotification(id, "Your balance has been detucted by payment RM" + amount + ". Current total balance is RM" + u.getBalance() + ".");
+                    JOptionPane.showMessageDialog(null, "Payment Successfully\n You paid RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
                     try {
                         orderManager.addOrder(address, orderType, deliveryCost, amount);
                     } catch (Exception e) {
@@ -114,12 +116,13 @@ public class DwalletManager {
     }
     
     public static void refundBalance (int id, double amount) {
-        for (Dwallet u : DataIO.allDwallet) {
+        for (Dwallet u : DataIO.allDwallets) {
             if (u.getId() == id) {
                 u.setBalance(u.getBalance() + amount);
                 DataIO.writeDwallet();
-                JOptionPane.showMessageDialog(null, "Successfully refund balance to user " + u.getId() + " with amount RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
+                creditTransaction(id, u.getUsername(), amount);
                 NotificationManager.sendNotification(id, "Your balance has been refunded with amount RM" + amount + ". Current total balance is RM" + u.getBalance() + ".");
+                JOptionPane.showMessageDialog(null, "Successfully refund balance to user " + u.getId() + " with amount RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
                 break;
             } else {
                 JOptionPane.showMessageDialog(null, "Error Occured!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -128,20 +131,28 @@ public class DwalletManager {
     }
 
     public static void debitTransaction (int id, String username, double debitAmount) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String date = LocalDateTime.now().format(formatter);
         TransactionType type = TransactionType.DEBIT;
-        Transaction transaction = new Transaction(id, username, LocalDateTime.now(), debitAmount, 0, type);
-        DataIO.allTransaction.add(transaction);
+        Transaction transaction = new Transaction(id, username, date, debitAmount, 0, type);
+        DataIO.allTransactions.add(transaction);
         DataIO.writeTransaction();
     }
     
     public static void creditTransaction (int id, String username, double creditAmount) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String date = LocalDateTime.now().format(formatter);
         TransactionType type = TransactionType.CREDIT;
-        Transaction transaction = new Transaction(id, username, LocalDateTime.now(), 0, creditAmount, type);
-        DataIO.allTransaction.add(transaction);
+        Transaction transaction = new Transaction(id, username, date, 0, creditAmount, type);
+        DataIO.allTransactions.add(transaction);
         DataIO.writeTransaction();
     }
     
-    public static ArrayList<Dwallet> getAllCredits () {
-        return DataIO.allDwallet;
+    public static ArrayList<Dwallet> getAllDwallet () {
+        return DataIO.allDwallets;
+    }
+    
+    public static ArrayList<Transaction> getAllTransaction () {
+        return DataIO.allTransactions;
     }
 }

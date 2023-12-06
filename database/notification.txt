@@ -178,3 +178,15 @@ Your balance has been refunded with amount RM17.0. Current total balance is RM21
 2023-12-06 15:05:42
 UNREAD
 
+1031
+3
+Your balance has been topped up with amount RM10.0. Current total balance is RM31.0.
+2023-12-06 20:06:07
+UNREAD
+
+1032
+3
+Your balance has been debited with amount RM5.0. Current total balance is RM26.0.
+2023-12-06 20:41:03
+UNREAD
+

@@ -1,43 +1,69 @@
 package foodordersystem.Page;
 
 import java.awt.Font;
-import javax.swing.*;
 import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
+import foodordersystem.Enum.TransactionType;
 import foodordersystem.FoodOrderSystem;
 import foodordersystem.Manager.DwalletManager;
-//import foodordersystem.Page.CustomerDashboardPage;
 import foodordersystem.Model.Dwallet;
-import java.util.ArrayList;
+import foodordersystem.Model.Transaction;
 
 public class CustomerDwalletPage implements ActionListener {
     public JFrame customerDwalletPage;
-    private JPanel headerPanel, buttonPanel;
-    private JLabel creditLabel;
+    private JPanel balancePanel, buttonPanel;
+    private JLabel balanceLabel;
     private JButton backBtn;
+    private JTable transactionTable;
+    private DefaultTableModel transactionTableModel;
+    private JScrollPane transactionScrollPane;
 
     public CustomerDwalletPage() {
         customerDwalletPage = new JFrame("Digital Wallet");
         customerDwalletPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         customerDwalletPage.setLayout(new BoxLayout(customerDwalletPage.getContentPane(), BoxLayout.Y_AXIS));
 
-        headerPanel = new JPanel();
-        creditLabel = new JLabel("Null");
-        ArrayList<Dwallet> allDwallet = DwalletManager.getAllCredits();
-        for (Dwallet dwallet : allDwallet) {
-            if (dwallet.getId() == FoodOrderSystem.currentUser.getId()) {
-                creditLabel = new JLabel("Credit Balance: " + dwallet.getBalance());
+        transactionTableModel = new DefaultTableModel(new Object[]{"Date", "Type", "Amount"}, 0);
+        transactionTable = new JTable(transactionTableModel);
+        ArrayList<Transaction> allTransaction = DwalletManager.getAllTransaction();
+        for (Transaction transaction : allTransaction) {
+            if (transaction.getId() == FoodOrderSystem.currentUser.getId()) {
+                String type;
+                String amount;
+                if (transaction.getTransactionType().equals(TransactionType.DEBIT)) {
+                    type = String.valueOf(TransactionType.DEBIT);
+                    amount = "- "+String.valueOf(transaction.getDebit());
+                } else {
+                    type = String.valueOf(TransactionType.CREDIT);
+                    amount = "+ "+String.valueOf(transaction.getCredit());
+                }
+                transactionTableModel.addRow(new Object[] {transaction.getDate(), type, amount});
             }
         }
-        creditLabel.setFont(new Font(null, Font.BOLD, 20));
-        headerPanel.add(creditLabel);
+        //transactionScrollPane = new JScrollPane();
+        transactionScrollPane = new JScrollPane(transactionTable);
         
-        buttonPanel = new JPanel();
+        balanceLabel = new JLabel("Null");
+        ArrayList<Dwallet> allDwallet = DwalletManager.getAllDwallet();
+        for (Dwallet dwallet : allDwallet) {
+            if (dwallet.getId() == FoodOrderSystem.currentUser.getId()) {
+                balanceLabel = new JLabel("Balance: " + dwallet.getBalance());
+            }
+        }
+        balanceLabel.setFont(new Font(null, Font.BOLD, 20));
+        balancePanel = new JPanel();
+        balancePanel.add(balanceLabel);
+        
         backBtn = new JButton("Back");
         backBtn.addActionListener(this);
+        buttonPanel = new JPanel();
         buttonPanel.add(backBtn);
         
-        customerDwalletPage.add(headerPanel);
+        customerDwalletPage.add(transactionScrollPane);
+        customerDwalletPage.add(balancePanel);
         customerDwalletPage.add(buttonPanel);
 
         customerDwalletPage.pack();

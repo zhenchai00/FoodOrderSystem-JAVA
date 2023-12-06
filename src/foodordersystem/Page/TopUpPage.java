@@ -33,7 +33,7 @@ public class TopUpPage implements ActionListener {
         userTableModel = new DefaultTableModel(new Object[] {"ID", "Username", "Credit"}, 0);
         userTable = new JTable(userTableModel);
         userScrollPane = new JScrollPane(userTable);
-        for (Dwallet dwallet : DwalletManager.getAllCredits()) {
+        for (Dwallet dwallet : DwalletManager.getAllDwallet()) {
             addRowToTable(dwallet);
         }
 
@@ -63,7 +63,7 @@ public class TopUpPage implements ActionListener {
                 ArrayList<Object> creditDetails = DwalletManager.getCreditDetails();
                 if (!creditDetails.isEmpty()) {
                     DwalletManager.creditBalance(Integer.parseInt(creditDetails.get(0).toString()), Double.parseDouble(creditDetails.get(1).toString()));
-                    for (Dwallet dwallet : DataIO.allDwallet) {
+                    for (Dwallet dwallet : DataIO.allDwallets) {
                         updateUserTable(dwallet);
                     }
                 }
@@ -71,7 +71,7 @@ public class TopUpPage implements ActionListener {
                 ArrayList<Object> debitDetails = DwalletManager.getDebitDetails();
                 if (!debitDetails.isEmpty()) {
                     DwalletManager.debitBalance(Integer.parseInt(debitDetails.get(0).toString()), Double.parseDouble(debitDetails.get(1).toString()));
-                    for (Dwallet dwallet : DataIO.allDwallet) {
+                    for (Dwallet dwallet : DataIO.allDwallets) {
                         updateUserTable(dwallet);
                     }
                 }
