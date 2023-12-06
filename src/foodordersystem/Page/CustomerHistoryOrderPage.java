@@ -68,7 +68,7 @@ public class CustomerHistoryOrderPage extends HistoryOrderPage {
 
                 OrderStatus orderStatus = OrderManager.getOrderById(orderId).getOrderStatus();
                 if (orderStatus == OrderStatus.COMPLETED) {
-                    ReviewManager.addMenuReview(orderId);
+                    ReviewManager.addOrderReview(orderId);
                 } else {
                     throw new Exception("Order is not completed");
                 }

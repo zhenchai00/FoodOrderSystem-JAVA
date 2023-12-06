@@ -50,7 +50,7 @@ public class RunnerReviewPage extends ReviewPage {
         }
     }
 
-    public void showVendorReviewPage () {
+    public void showReviewTableData () {
         runnerReviewTableModel = new DefaultTableModel(new Object[] {"Order ID", "Customer ID", "Customer Name", "Rating", "Review"}, 0);
         runnerReviewTable = new JTable(runnerReviewTableModel);
         runnerReviewScrollPane = new JScrollPane(runnerReviewTable);

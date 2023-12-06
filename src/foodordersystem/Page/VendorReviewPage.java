@@ -50,7 +50,7 @@ public class VendorReviewPage extends ReviewPage {
         }
     }
 
-    public void showVendorReviewPage () {
+    public void showReviewTableData () {
         vendorReviewTableModel = new DefaultTableModel(new Object[] {"Order ID", "Customer ID", "Customer Name", "Rating", "Review"}, 0);
         vendorReviewTable = new JTable(vendorReviewTableModel);
         vendorReviewScrollPane = new JScrollPane(vendorReviewTable);
@@ -67,7 +67,7 @@ public class VendorReviewPage extends ReviewPage {
                     order.getId(),
                     order.getCustomerId(),
                     customerName,
-                    order.getRating(),
+                    order.getRating() + "/ FIVE",
                     order.getReview()
                 });
             }

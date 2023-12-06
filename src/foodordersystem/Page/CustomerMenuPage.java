@@ -33,7 +33,7 @@ public class CustomerMenuPage extends MenuPage implements ItemListener {
         });
         categoryComboBox.addItemListener(this);
 
-        menuTableModel = new DefaultTableModel(new Object[]{"Id", "Name","Category", "Price", "Review"}, 0);
+        menuTableModel = new DefaultTableModel(new Object[]{"Id", "Name","Category", "Price"}, 0);
         menuTable = new JTable(menuTableModel);
         JScrollPane scrollPanel = new JScrollPane(menuTable);
         for (Menu menu : MenuManager.getAllMenus()) {
@@ -87,8 +87,7 @@ public class CustomerMenuPage extends MenuPage implements ItemListener {
             menu.getId(),
             menu.getName(),
             menu.getCategory().toString(),
-            menu.getPrice(), 
-            menu.getReview()
+            menu.getPrice() 
         });
     }
 }

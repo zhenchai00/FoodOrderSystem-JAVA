@@ -15,7 +15,7 @@ public abstract class ReviewPage implements ActionListener {
         reviewPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         reviewPage.setLayout(new BoxLayout(reviewPage.getContentPane(), BoxLayout.Y_AXIS));
 
-        showVendorReviewPage();
+        showReviewTableData();
 
         reviewPage.pack();
         reviewPage.setLocationRelativeTo(null);
@@ -26,6 +26,6 @@ public abstract class ReviewPage implements ActionListener {
         return reviewPage;
     }
     
-    public abstract void showVendorReviewPage ();
+    public abstract void showReviewTableData ();
 
 }

@@ -17,7 +17,7 @@ import foodordersystem.Interface.DashboardPage;
 public class CustomerDashboardPage implements DashboardPage, ActionListener {
     public CustomerOrderPage customerOrderPage;
     public static JFrame customerDashboardPage;
-    private JButton notifyBtn, orderBtn, menuBtn, dwalletBtn, logoutBtn;
+    private JButton notifyBtn, orderBtn, menuBtn, reivewBtn, dwalletBtn, logoutBtn;
     private JLabel welcomeLabel;
 
     private static CustomerDashboardPage instance;
@@ -29,7 +29,6 @@ public class CustomerDashboardPage implements DashboardPage, ActionListener {
         customerDashboardPage = new JFrame("Customer Dashboard");
         customerDashboardPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         customerDashboardPage.setLayout(new BoxLayout(customerDashboardPage.getContentPane(), BoxLayout.Y_AXIS));
-        System.out.println("cusomter dashboard page: " + FoodOrderSystem.currentUser.getUsername());
 
         JPanel headerPanel = new JPanel();
         welcomeLabel = new JLabel("Welcome, " + FoodOrderSystem.currentUser.getUsername().toUpperCase() + "!");
@@ -39,12 +38,14 @@ public class CustomerDashboardPage implements DashboardPage, ActionListener {
         notifyBtn = new JButton("Notification");
         orderBtn = new JButton("Order");
         menuBtn = new JButton("Menu");
+        reivewBtn = new JButton("Review");
         dwalletBtn = new JButton("Digital Wallet");
         logoutBtn = new JButton("Logout");
 
         notifyBtn.addActionListener(this);
         orderBtn.addActionListener(this);
         menuBtn.addActionListener(this);
+        reivewBtn.addActionListener(this);
         dwalletBtn.addActionListener(this);
         logoutBtn.addActionListener(this);
 
@@ -52,6 +53,7 @@ public class CustomerDashboardPage implements DashboardPage, ActionListener {
         buttonPanel.add(notifyBtn);
         buttonPanel.add(orderBtn);
         buttonPanel.add(menuBtn);
+        buttonPanel.add(reivewBtn);
         buttonPanel.add(dwalletBtn);
         buttonPanel.add(logoutBtn);
 
@@ -84,6 +86,10 @@ public class CustomerDashboardPage implements DashboardPage, ActionListener {
             } else if (event.getSource() == menuBtn) {
                 CustomerMenuPage customerMenuPage = new CustomerMenuPage();
                 customerMenuPage.getMenuPage().setVisible(true);
+                customerDashboardPage.setVisible(false);
+            } else if (event.getSource() == reivewBtn) {
+                CustomerReviewPage customerReviewPage = new CustomerReviewPage();
+                customerReviewPage.getReviewPage().setVisible(true);
                 customerDashboardPage.setVisible(false);
             } else if (event.getSource() == dwalletBtn) {
                 CustomerDwalletPage customerDwalletPage = new CustomerDwalletPage();

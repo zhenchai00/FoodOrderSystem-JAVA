@@ -3,8 +3,10 @@ package foodordersystem.Manager;
 import javax.swing.JOptionPane;
 
 import foodordersystem.FoodOrderSystem;
+import foodordersystem.Enum.Rating;
 import foodordersystem.Model.DataIO;
 import foodordersystem.Model.Menu;
+import foodordersystem.Model.Order;
 import foodordersystem.Model.OrderItem;
 import foodordersystem.Model.Task;
 
@@ -39,19 +41,48 @@ public class ReviewManager {
 
     public static void addDeliveryReview (int orderId) {
         String inputReview = JOptionPane.showInputDialog("Enter your review for this delivery:");
-        for (Task task : TaskManager.getAllTasks()) {
-            if (task.getOrderId() != orderId) {
-                JOptionPane.showMessageDialog(null, "No such delivery record", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
+        
+        Rating[] values = {Rating.NONE, Rating.ONE, Rating.TWO, Rating.THREE, Rating.FOUR, Rating.FIVE};
+        Object ratingObject = JOptionPane.showInputDialog(null, "Select rating: ", "Rating", JOptionPane.QUESTION_MESSAGE, null, values, values[0]);
+        
+        if (
+            inputReview != null
+            && !inputReview.isEmpty()
+            && ratingObject != null
+        ) {
+            Rating rating = (Rating) ratingObject;
+            for (Task task : TaskManager.getAllTasks()) {
+                if (task.getOrderId() == orderId) {
+                    task.setReview(inputReview);
+                    task.setReviewUserId(FoodOrderSystem.currentUser.getId());
+                    task.setRating(rating);
+                    DataIO.writeTask();
+                    break;
+                }
             }
-            if (!task.getReview().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "You have already reviewed this delivery", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
+        }
+    }
+
+    public static void addOrderReview (int orderId) {
+        String inputReview = JOptionPane.showInputDialog("Enter your review for this order:");
+
+        Rating[] values = {Rating.NONE, Rating.ONE, Rating.TWO, Rating.THREE, Rating.FOUR, Rating.FIVE};
+        Object ratingObject = JOptionPane.showInputDialog(null, "Select rating: ", "Rating", JOptionPane.QUESTION_MESSAGE, null, values, values[0]);
+
+        if (
+            inputReview != null
+            && !inputReview.isEmpty()
+            && ratingObject != null
+        ) {
+            Rating rating = (Rating) ratingObject;
+            for (Order order : OrderManager.getAllOrders()) {
+                if (order.getId() == orderId) {
+                    order.setReview(inputReview);
+                    order.setRating(rating);
+                    DataIO.writeOrder();
+                    break;
+                }
             }
-            task.setReview(inputReview);
-            task.setReviewUserId(FoodOrderSystem.currentUser.getId());
-            DataIO.writeTask();
-            break;
         }
     }
 }
