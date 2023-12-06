@@ -1,36 +1,30 @@
 1
 admin
 123
-0.0
 ADMIN
 
 2
 ven
 123
-0.0
 VENDOR
 
 3
 cus
 123
-3.0
 CUSTOMER
 
 4
 run
 123
-0.0
 RUNNER
 
 5
 run1
 123
-0.0
 RUNNER
 
 6
 ven1
 123
-0.0
 VENDOR
 

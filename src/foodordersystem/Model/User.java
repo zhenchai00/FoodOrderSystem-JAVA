@@ -9,11 +9,10 @@ public class User {
     private UserRole role = UserRole.USER;
     private double balance;
 
-    public User (int id, String username, int password, double balance, UserRole role) {
+    public User (int id, String username, int password, UserRole role) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.balance = balance;
         this.role = role;
     }
     
@@ -59,7 +58,7 @@ public class User {
         return balance;
     }
     
-    public void setBalance (double credit) {
-        this.balance = credit;
+    public void setBalance (double balance) {
+        this.balance = balance;
     }
 }

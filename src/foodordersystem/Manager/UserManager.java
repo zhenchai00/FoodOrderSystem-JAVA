@@ -26,7 +26,7 @@ public class UserManager {
         }
 
         int number = DataIO.allUsers.size() + 1;
-        User newUser = new User(number, username, password, 0, role);
+        User newUser = new User(number, username, password, role);
 
         if (role == UserRole.CUSTOMER) {
             DataIO.allDwallet.add(new Dwallet(

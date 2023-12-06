@@ -65,7 +65,6 @@ public class DataIO {
                     id,
                     username,
                     password,
-                    balance,
                     role
                 ));
                 sc.nextLine();
