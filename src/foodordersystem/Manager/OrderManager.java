@@ -117,6 +117,7 @@ public class OrderManager {
                     if (orderStatus == OrderStatus.CANCELLED) {
                         NotificationManager.sendNotification(order.getVendorId(), "[OrderID - " + order.getId() + "] Your order has been cancelled.");
                     }
+                    // TODO: wenqing - debit balance account
                     order.setRefundStatus(RefundStatus.YES);
                     order.setOrderStatus(orderStatus);
                 }
