@@ -100,9 +100,12 @@ public class CustomerPaymentPage implements ActionListener {
                 getCustomerPaymentPage().setVisible(false);
             } else if (event.getSource() == payBtn) {
                 DwalletManager.paymentBalance(FoodOrderSystem.currentUser.getId(), totalPayment, orderMenuList, address, orderType, deliveryCost);
+                CustomerDashboardPage.getCustomerDashboardPageObj().getCustomerDashboardPage().setVisible(true);
+                customerPaymentPage.setVisible(false);
             }
         } catch (Exception e) {
-            
+            System.out.println("Error" + e);
+            JOptionPane.showMessageDialog(customerPaymentPage, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -112,7 +115,6 @@ public class CustomerPaymentPage implements ActionListener {
             Object[] itemDetails = orderMenuList.get(i);
             Menu menu = (Menu) itemDetails[0];
             int menuId = menu.getId();
-            //int vendorId = menu.getVendorId();
             int quantity = (int) itemDetails[1];
             double price = menu.getPrice() * quantity;
             orderItemSum += price;
@@ -129,7 +131,6 @@ public class CustomerPaymentPage implements ActionListener {
             Object[] itemDetails = orderMenuList.get(i);
             Menu menu = (Menu) itemDetails[0];
             int menuId = menu.getId();
-            //int vendorId = menu.getVendorId();
             int quantity = (int) itemDetails[1];
             double price = menu.getPrice() * quantity;
             orderItemSum += price;
