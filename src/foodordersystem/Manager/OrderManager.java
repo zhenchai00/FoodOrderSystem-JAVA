@@ -83,7 +83,7 @@ public class OrderManager {
         NotificationManager.sendNotification(firstVendorId, "[OrderID - " + order.getId() + " ] You have a new order from " + customer.getUsername() + ".");
     }
 
-    public void storeOrderItems(ArrayList<Object[]> orderMenuList) {
+    public void storeOrderItems(ArrayList<Object[]> orderMenuList) throws Exception {
         orderItems.clear();
         firstVendorId = -1;
 
@@ -98,7 +98,7 @@ public class OrderManager {
             if (i == 0) {
                 firstVendorId = vendorId;
             } else if (vendorId != firstVendorId) {
-                throw new IllegalArgumentException("You can only order from one vendor at a time.");
+                throw new Exception("You can only order from one vendor at a time.");
             }
 
             if (firstVendorId != -1) {
