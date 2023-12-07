@@ -15,6 +15,7 @@ import foodordersystem.Enum.OrderType;
 import foodordersystem.Manager.OrderManager;
 import foodordersystem.Manager.ReviewManager;
 import foodordersystem.Model.Order;
+import foodordersystem.Model.OrderItem;
 
 public class CustomerHistoryOrderPage extends HistoryOrderPage {
     private JButton cancelOrderBtn, reOrderBtn, foodReviewBtn, deliveryReviewBtn;
@@ -53,16 +54,15 @@ public class CustomerHistoryOrderPage extends HistoryOrderPage {
                 int selectedRow = historyOrderTable.getSelectedRow();
                 int orderId = (int) historyTableModel.getValueAt(selectedRow, 0);
                 Order existingOrder = OrderManager.getOrderById(orderId);
-                ArrayList<Object[]> orderMenuList = new ArrayList<>();
-                //for () {
-                    
-                //}
+                ArrayList<OrderItem> existingOrderMenuList = new ArrayList<>();
+                existingOrderMenuList = OrderManager.getAllOrderItems();
 
                 if (existingOrder == null) {
                     throw new Exception("Order not found");
-                } else if (existingOrder.getOrderType().equals(OrderType.DELIVERY)) {
-                    //CustomerPaymentPage customerPaymentPage = new CustomerPaymentPage(existingOrder, "a", OrderType.DELIVERY);
-                    
+                } 
+                
+                if (existingOrder.getOrderType().equals(OrderType.DELIVERY)) {
+                    //CustomerPaymentPage customerPaymentPage = new CustomerPaymentPage(existingOrderMenuList, existingOrder.getAddress(), OrderType.DELIVERY);
                 }
                 //OrderManager orderManager = new OrderManager();
                 //orderManager.reOrder(existingOrder);

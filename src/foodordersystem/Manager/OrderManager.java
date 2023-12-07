@@ -42,6 +42,15 @@ public class OrderManager {
         }
         return null;
     }
+    
+    public static OrderItem getOrderItemById (int orderId) {
+        for (OrderItem orderItem : getAllOrderItems()) {
+            if (orderItem.getOrderId() == orderId) {
+                return orderItem;
+            }
+        }
+        return null;
+    }
 
     public void addOrder (String address, OrderType orderType, double deliveryCost, double totalCost) throws Exception {
         this.deliveryCost = deliveryCost;

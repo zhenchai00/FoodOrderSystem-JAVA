@@ -97,7 +97,7 @@ public class CustomerPaymentPage implements ActionListener {
             if (event.getSource() == cancelBtn) {
                 NewOrderPage newOrderPage = new NewOrderPage();
                 newOrderPage.getNewOrderPage().setVisible(true);
-                customerPaymentPage.setVisible(false);
+                getCustomerPaymentPage().setVisible(false);
             } else if (event.getSource() == payBtn) {
                 DwalletManager.paymentBalance(FoodOrderSystem.currentUser.getId(), totalPayment, orderMenuList, address, orderType, deliveryCost);
             }
@@ -118,7 +118,23 @@ public class CustomerPaymentPage implements ActionListener {
             orderItemSum += price;
             paymentTableModel.addRow(new Object[]{menuId, menu.getName(), quantity, price});
         }
-
+        totalPayment = orderItemSum + deliveryCost;
+        totalLabel = new JLabel(String.valueOf(totalPayment));
+        totalPanel.add(totalLabel);
+    }
+    
+    public void addReorderRowToTable () {
+        double orderItemSum = 0;
+        for (int i = 0; i < orderMenuList.size(); i++) {
+            Object[] itemDetails = orderMenuList.get(i);
+            Menu menu = (Menu) itemDetails[0];
+            int menuId = menu.getId();
+            //int vendorId = menu.getVendorId();
+            int quantity = (int) itemDetails[1];
+            double price = menu.getPrice() * quantity;
+            orderItemSum += price;
+            paymentTableModel.addRow(new Object[]{menuId, menu.getName(), quantity, price});
+        }
         totalPayment = orderItemSum + deliveryCost;
         totalLabel = new JLabel(String.valueOf(totalPayment));
         totalPanel.add(totalLabel);

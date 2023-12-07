@@ -104,12 +104,12 @@ public class DwalletManager {
                     OrderManager orderManager = new OrderManager();
                     orderManager.storeOrderItems(orderMenuList);
                     NotificationManager.sendNotification(id, "Your balance has been detucted by payment RM" + amount + ". Current total balance is RM" + u.getBalance() + ".");
-                    JOptionPane.showMessageDialog(null, "Payment Successfully\n You paid RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
                     try {
                         orderManager.addOrder(address, orderType, deliveryCost, amount);
                     } catch (Exception e) {
                         System.out.println("Error Occured: "+e);
                     }
+                    JOptionPane.showMessageDialog(null, "Payment Successfully\n You paid RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
                     FoodOrderSystem.customerOrderPage.getOrderPage().setVisible(true);
                     CustomerPaymentPage customerPaymentPage = new CustomerPaymentPage();
                     customerPaymentPage.getCustomerPaymentPage().setVisible(false);

@@ -16,3 +16,15 @@ Your balance has been topped up with amount RM2.0. Current total balance is RM27
 2023-12-07 20:31:57
 UNREAD
 
+1004
+10
+Your balance has been detucted by payment RM20.0. Current total balance is RM7.0.
+2023-12-07 20:35:07
+UNREAD
+
+1005
+-1
+[OrderID - 901 ] You have a new order from cus1.
+2023-12-07 20:35:08
+UNREAD
+
