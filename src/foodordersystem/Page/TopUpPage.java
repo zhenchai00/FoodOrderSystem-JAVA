@@ -63,7 +63,8 @@ public class TopUpPage implements ActionListener {
                 ArrayList<Object> creditDetails = DwalletManager.getCreditDetails();
                 if (!creditDetails.isEmpty()) {
                     DwalletManager.creditBalance(Integer.parseInt(creditDetails.get(0).toString()), Double.parseDouble(creditDetails.get(1).toString()));
-                    for (Dwallet dwallet : DataIO.allDwallets) {
+                    userTableModel.setRowCount(0);
+                    for (Dwallet dwallet : DwalletManager.getAllDwallet()) {
                         updateUserTable(dwallet);
                     }
                 }
@@ -71,7 +72,8 @@ public class TopUpPage implements ActionListener {
                 ArrayList<Object> debitDetails = DwalletManager.getDebitDetails();
                 if (!debitDetails.isEmpty()) {
                     DwalletManager.debitBalance(Integer.parseInt(debitDetails.get(0).toString()), Double.parseDouble(debitDetails.get(1).toString()));
-                    for (Dwallet dwallet : DataIO.allDwallets) {
+                    userTableModel.setRowCount(0);
+                    for (Dwallet dwallet : DwalletManager.getAllDwallet()) {
                         updateUserTable(dwallet);
                     }
                 }
@@ -98,7 +100,6 @@ public class TopUpPage implements ActionListener {
     }
 
     public void updateUserTable (Dwallet dwallet) {
-        userTableModel.setRowCount(0);
         userTableModel.addRow(new Object[] {
             dwallet.getId(),
             dwallet.getUsername(),

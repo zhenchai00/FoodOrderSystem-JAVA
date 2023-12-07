@@ -1,0 +1,18 @@
+1001
+10
+Your balance has been topped up with amount RM20.0. Current total balance is RM20.0.
+2023-12-07 20:17:03
+UNREAD
+
+1002
+10
+Your balance has been topped up with amount RM5.0. Current total balance is RM25.0.
+2023-12-07 20:19:49
+UNREAD
+
+1003
+10
+Your balance has been topped up with amount RM2.0. Current total balance is RM27.0.
+2023-12-07 20:31:57
+UNREAD
+

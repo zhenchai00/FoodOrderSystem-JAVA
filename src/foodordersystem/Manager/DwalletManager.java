@@ -15,6 +15,7 @@ import foodordersystem.Page.CustomerPaymentPage;
 
 public class DwalletManager {
     public static void creditBalance (int id, double amount) {
+        Boolean userFound = false;
         for (Dwallet u : DataIO.allDwallets) {
             if (u.getId() == id) {
                 u.setBalance(u.getBalance() + amount);
@@ -22,14 +23,17 @@ public class DwalletManager {
                 creditTransaction(id, u.getUsername(), amount);
                 NotificationManager.sendNotification(id, "Your balance has been topped up with amount RM" + amount + ". Current total balance is RM" + u.getBalance() + ".");
                 JOptionPane.showMessageDialog(null, "Successfully top up balance for user " + u.getId() + " with amount RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
+                userFound = true;
                 break;
-            } else {
-                JOptionPane.showMessageDialog(null, "User Not Found!", "Failure", JOptionPane.WARNING_MESSAGE);
             }
+        }
+        if (userFound == false) {
+            JOptionPane.showMessageDialog(null, "User Not Found!", "Failure", JOptionPane.WARNING_MESSAGE);
         }
     }
 
     public static void debitBalance (int id, double amount) {
+        Boolean userFound = false;
         for (Dwallet u : DataIO.allDwallets) {
             if (u.getId() == id) {
                 if ((u.getBalance() - amount) >= 0.0) {
@@ -38,13 +42,17 @@ public class DwalletManager {
                     debitTransaction(id, u.getUsername(), amount);
                     NotificationManager.sendNotification(id, "Your balance has been debited with amount RM" + amount + ". Current total balance is RM" + u.getBalance() + ".");
                     JOptionPane.showMessageDialog(null, "Successfully debit balance for user " + u.getId() + " with amount RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
+                    userFound = true;
                     break;
                 } else {
                     JOptionPane.showMessageDialog(null, "Not enough credit balance for debit!", "Failure", JOptionPane.WARNING_MESSAGE);
+                    userFound = true;
+                    break;
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "User Not Found!", "Failure", JOptionPane.WARNING_MESSAGE);
             }
+        }
+        if (userFound == false) {
+            JOptionPane.showMessageDialog(null, "User Not Found!", "Failure", JOptionPane.WARNING_MESSAGE);
         }
     }
 

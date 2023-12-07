@@ -24,7 +24,7 @@ public class CustomerHistoryOrderPage extends HistoryOrderPage {
 
         cancelOrderBtn = new JButton("Cancel Order");
         reOrderBtn = new JButton("Re-Order");
-        foodReviewBtn = new JButton("Review Food");
+        foodReviewBtn = new JButton("Review Order");
         deliveryReviewBtn = new JButton("Review Delivery");
         cancelOrderBtn.addActionListener(this);
         reOrderBtn.addActionListener(this);
@@ -53,15 +53,21 @@ public class CustomerHistoryOrderPage extends HistoryOrderPage {
                 int selectedRow = historyOrderTable.getSelectedRow();
                 int orderId = (int) historyTableModel.getValueAt(selectedRow, 0);
                 Order existingOrder = OrderManager.getOrderById(orderId);
+                ArrayList<Object[]> orderMenuList = new ArrayList<>();
+                //for () {
+                    
+                //}
 
                 if (existingOrder == null) {
                     throw new Exception("Order not found");
+                } else if (existingOrder.getOrderType().equals(OrderType.DELIVERY)) {
+                    //CustomerPaymentPage customerPaymentPage = new CustomerPaymentPage(existingOrder, "a", OrderType.DELIVERY);
+                    
                 }
-
-                OrderManager orderManager = new OrderManager();
-                orderManager.reOrder(existingOrder);
-                JOptionPane.showMessageDialog(historyOrderPage, "Order has been re-ordered", "Success", JOptionPane.INFORMATION_MESSAGE);
-                updateHistoryOrderPage();
+                //OrderManager orderManager = new OrderManager();
+                //orderManager.reOrder(existingOrder);
+                //JOptionPane.showMessageDialog(historyOrderPage, "Order has been re-ordered", "Success", JOptionPane.INFORMATION_MESSAGE);
+                //updateHistoryOrderPage();
             } else if (event.getSource() == foodReviewBtn) {
                 int selectedRow = historyOrderTable.getSelectedRow();
                 int orderId = (int) historyTableModel.getValueAt(selectedRow, 0);
