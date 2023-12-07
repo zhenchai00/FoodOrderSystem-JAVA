@@ -7,11 +7,9 @@ import java.time.format.DateTimeFormatter;
 
 import foodordersystem.Enum.OrderType;
 import foodordersystem.Enum.TransactionType;
-import foodordersystem.FoodOrderSystem;
 import foodordersystem.Model.DataIO;
 import foodordersystem.Model.Dwallet;
 import foodordersystem.Model.Transaction;
-import foodordersystem.Page.CustomerPaymentPage;
 
 public class DwalletManager {
     public static void creditBalance (int id, double amount) {
@@ -94,31 +92,37 @@ public class DwalletManager {
         return debitDetails;
     }
     
-    public static void paymentBalance (int id, double amount, ArrayList<Object[]> orderMenuList, String address, OrderType orderType, double deliveryCost) {
+    public static void paymentBalance (
+        int id,
+        double amount,
+        ArrayList<Object[]> orderMenuList,
+        String address,
+        OrderType orderType, 
+        double deliveryCost
+    ) throws Exception {
+                for (Object[] itemDetails : orderMenuList) {
+                    for (Object itemDetail : itemDetails) {
+                        System.out.println("Dwallet Manager" + itemDetail);
+                    }
+                }
         for (Dwallet u : DataIO.allDwallets) {
             if (u.getId() == id) {
                 if ((u.getBalance() - amount) >= 0.0) {
                     u.setBalance(u.getBalance() - amount);
                     DataIO.writeDwallet();
                     debitTransaction(id, u.getUsername(), amount);
+
                     OrderManager orderManager = new OrderManager();
                     orderManager.storeOrderItems(orderMenuList);
+                    orderManager.addOrder(address, orderType, deliveryCost, amount);
                     NotificationManager.sendNotification(id, "Your balance has been detucted by payment RM" + amount + ". Current total balance is RM" + u.getBalance() + ".");
-                    try {
-                        orderManager.addOrder(address, orderType, deliveryCost, amount);
-                    } catch (Exception e) {
-                        System.out.println("Error Occured: "+e);
-                    }
                     JOptionPane.showMessageDialog(null, "Payment Successfully\n You paid RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
-                    FoodOrderSystem.customerOrderPage.getOrderPage().setVisible(true);
-                    CustomerPaymentPage customerPaymentPage = new CustomerPaymentPage();
-                    customerPaymentPage.getCustomerPaymentPage().setVisible(false);
                     break;
                 } else {
-                    JOptionPane.showMessageDialog(null, "Not enough credit balance for payment!", "Failure", JOptionPane.WARNING_MESSAGE);
+                    throw new Exception("Not enough credit balance for payment!");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Error Occured!", "Error", JOptionPane.ERROR_MESSAGE);
+                throw new Exception("User Not Found!");
             }
         }
     }
