@@ -399,6 +399,7 @@ public class DataIO {
             Scanner sc = new Scanner(new File(TRANSACTION_FILE_PATH));
             while (sc.hasNext()) {
                 int id  = Integer.parseInt(sc.nextLine());
+                int customerId  = Integer.parseInt(sc.nextLine());
                 String username  = sc.nextLine();
                 String date = sc.nextLine();
                 double debit  = Double.parseDouble(sc.nextLine());
@@ -406,6 +407,7 @@ public class DataIO {
                 TransactionType transactionType = TransactionType.valueOf(sc.nextLine());
                 allTransactions.add(new Transaction(
                     id,
+                    customerId,
                     username,
                     date,
                     debit,

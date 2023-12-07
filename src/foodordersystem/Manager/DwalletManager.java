@@ -138,20 +138,22 @@ public class DwalletManager {
         }
     }
 
-    public static void debitTransaction (int id, String username, double debitAmount) {
+    public static void debitTransaction (int customerId, String username, double debitAmount) {
+        int newTransactionId = 700 + DataIO.allTransactions.size() + 1;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String date = LocalDateTime.now().format(formatter);
         TransactionType type = TransactionType.DEBIT;
-        Transaction transaction = new Transaction(id, username, date, debitAmount, 0, type);
+        Transaction transaction = new Transaction(newTransactionId, customerId, username, date, debitAmount, 0, type);
         DataIO.allTransactions.add(transaction);
         DataIO.writeTransaction();
     }
     
-    public static void creditTransaction (int id, String username, double creditAmount) {
+    public static void creditTransaction (int customerId, String username, double creditAmount) {
+        int newTransactionId = 700 + DataIO.allTransactions.size() + 1;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String date = LocalDateTime.now().format(formatter);
         TransactionType type = TransactionType.CREDIT;
-        Transaction transaction = new Transaction(id, username, date, 0, creditAmount, type);
+        Transaction transaction = new Transaction(newTransactionId, customerId, username, date, 0, creditAmount, type);
         DataIO.allTransactions.add(transaction);
         DataIO.writeTransaction();
     }

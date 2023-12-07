@@ -9,6 +9,7 @@ public class User {
     private int password;
     private UserRole role = UserRole.USER;
     private double balance;
+    private int transactionId;
     private String date;
     private double debit;
     private double credit;
@@ -27,8 +28,9 @@ public class User {
         this.balance = balance;
     }
     
-    public User (int id, String username, String date, double debit, double credit, TransactionType transactionType) {
-        this.id = id;
+    public User (int transactionId, int customerID, String username, String date, double debit, double credit, TransactionType transactionType) {
+        this.transactionId = transactionId;
+        this.id = customerID;
         this.username = username;
         this.date = date;
         this.debit = debit;
@@ -82,6 +84,14 @@ public class User {
     
     public void setDate (String date) {
         this.date = date;
+    }
+    
+    public void setTransactionId (int transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public int getTransactionId () {
+        return transactionId;
     }
     
     public double getDebit () {
