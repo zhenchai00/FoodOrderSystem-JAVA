@@ -100,11 +100,6 @@ public class DwalletManager {
         OrderType orderType, 
         double deliveryCost
     ) throws Exception {
-                for (Object[] itemDetails : orderMenuList) {
-                    for (Object itemDetail : itemDetails) {
-                        System.out.println("Dwallet Manager" + itemDetail);
-                    }
-                }
         for (Dwallet u : DataIO.allDwallets) {
             if (u.getId() == id) {
                 if ((u.getBalance() - amount) >= 0.0) {
