@@ -122,9 +122,7 @@ public class OrderManager {
                 if (orderStatus == OrderStatus.ACCEPT && order.getOrderStatus() == OrderStatus.PENDING) {
                     NotificationManager.sendNotification(order.getCustomerId(), "[OrderID - " + order.getId() + "] Your order has been accepted by Vendor.");
                     order.setOrderStatus(orderStatus);
-                }
-
-                if (
+                } else if (
                     (orderStatus == OrderStatus.REJECT || orderStatus == OrderStatus.CANCELLED)
                     && order.getOrderStatus() == OrderStatus.PENDING
                 ) {
@@ -137,9 +135,7 @@ public class OrderManager {
                     DwalletManager.refundBalance(order.getCustomerId(), order.getTotalCost());
                     order.setRefundStatus(RefundStatus.YES);
                     order.setOrderStatus(orderStatus);
-                }
-
-                if (
+                } else if (
                     orderStatus == OrderStatus.HANDOVER
                     && order.getOrderType() == OrderType.DELIVERY
                     && order.getOrderStatus() == OrderStatus.ACCEPT
@@ -152,9 +148,20 @@ public class OrderManager {
                         NotificationManager.sendNotification(orderId, "[OrderID - " + order.getId() + "] Runner not available. Please change to dine in or takeaway.");
                         throw new Exception("Runner not available.");
                     }
-                }
-
-                if (orderStatus == OrderStatus.COMPLETED && order.getOrderStatus() == OrderStatus.HANDOVER) {
+                } else if (
+                    orderStatus == OrderStatus.PROCESSING
+                    && order.getOrderType() != OrderType.DELIVERY
+                    && order.getOrderStatus() == OrderStatus.ACCEPT
+                ) {
+                    order.setOrderStatus(orderStatus);
+                } else if (
+                    orderStatus == OrderStatus.COMPLETED
+                    && (
+                        order.getOrderStatus() == OrderStatus.HANDOVER
+                        || order.getOrderStatus() == OrderStatus.PROCESSING
+                        || order.getOrderStatus() == OrderStatus.ACCEPT
+                    )
+                ) {
                     order.setOrderStatus(orderStatus);
                 }
             }
