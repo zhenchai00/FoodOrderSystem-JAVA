@@ -33,11 +33,11 @@ public class CustomerDwalletPage implements ActionListener {
             if (transaction.getCustomerId() == FoodOrderSystem.currentUser.getId()) {
                 String type;
                 String amount;
-                if (transaction.getTransactionType().equals(TransactionType.DEBIT)) {
-                    type = String.valueOf(TransactionType.DEBIT);
+                if (transaction.getTransactionType().equals(TransactionType.DEBIT) || transaction.getTransactionType().equals(TransactionType.PAYMENT)) {
+                    type = String.valueOf(transaction.getTransactionType());
                     amount = "- "+String.valueOf(transaction.getDebit());
                 } else {
-                    type = String.valueOf(TransactionType.CREDIT);
+                    type = String.valueOf(transaction.getTransactionType());
                     amount = "+ "+String.valueOf(transaction.getCredit());
                 }
                 transactionTableModel.addRow(new Object[] {transaction.getDate(), type, amount});

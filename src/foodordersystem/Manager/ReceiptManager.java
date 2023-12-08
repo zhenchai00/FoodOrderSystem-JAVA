@@ -19,9 +19,9 @@ public class ReceiptManager {
                 receipt.setReceiptStatus(ReceiptStatus.GENERATED);
                 DataIO.writeReceipt();
                 if (transactionType.equals(TransactionType.DEBIT)) {
-                    NotificationManager.sendNotification(customerId, "Your balance has been debited with amount RM" + debit + ".");
+                    NotificationManager.sendNotification(customerId, "[ReceiptID - " + receipt.getReceiptId() + "] Your balance has been debited with amount RM" + debit + ".");
                 } else if (transactionType.equals(TransactionType.CREDIT)) {
-                    NotificationManager.sendNotification(customerId, "Your balance has been topped up with amount RM" + credit + ".");
+                    NotificationManager.sendNotification(customerId, "[ReceiptID - " + receipt.getReceiptId() + "] Your balance has been topped up with amount RM" + credit + ".");
                 }
                 JOptionPane.showMessageDialog(null, "Successfully generate receipt to " + customerId, "Success", JOptionPane.INFORMATION_MESSAGE);
             }

@@ -41,13 +41,18 @@ public class OrderManager {
         return null;
     }
     
-    public static OrderItem getOrderItemById (int orderId) {
+    public static ArrayList<Object[]> getOrderItemById (int orderId) {
+        ArrayList<Object[]> orderItemList = new ArrayList<>();
         for (OrderItem orderItem : getAllOrderItems()) {
             if (orderItem.getOrderId() == orderId) {
-                return orderItem;
+                Menu menu = MenuManager.getMenuById(orderItem.getMenuId());
+                int quantity = orderItem.getQuantity();
+                double price = menu.getPrice() * quantity;
+                Object[] row = {menu, quantity, price};
+                orderItemList.add(row);
             }
         }
-        return null;
+        return orderItemList;
     }
 
     public void addOrder (int invoiceId, String address, OrderType orderType, double deliveryCost, double totalCost) throws Exception {
@@ -164,7 +169,7 @@ public class OrderManager {
         Double totalCost = existingOrder.getTotalCost();
 
         storeOrderItems(existingOrder.getOrderItemsWithMenuList());
-        addOrder(address, orderType, deliveryCost, totalCost);
+        //addOrder(address, orderType, deliveryCost, totalCost);
     }
 
     public static double calculateDailyRevenue (int vendorId, LocalDate date) {

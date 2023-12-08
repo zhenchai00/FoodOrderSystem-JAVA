@@ -58,3 +58,45 @@ Your balance has been topped up with amount RM10.0.
 2023-12-08 13:31:08
 UNREAD
 
+1011
+2
+[OrderID - 901 ] You have a new order from cus1.
+2023-12-08 15:57:34
+UNREAD
+
+1012
+10
+Your balance has been detucted by payment RM26.0. Current total balance is RM67.0.
+2023-12-08 15:57:34
+UNREAD
+
+1013
+2
+[OrderID - 902 ] You have a new order from cus1.
+2023-12-08 16:19:02
+UNREAD
+
+1014
+10
+Your balance has been detucted by payment RM26.0. Current total balance is RM41.0.
+2023-12-08 16:19:02
+UNREAD
+
+1015
+10
+[OrderID - 902] Your order has been rejected by Vendor.
+2023-12-08 16:20:05
+UNREAD
+
+1016
+10
+Your balance has been refunded with amount RM26.0. Current total balance is RM67.0.
+2023-12-08 16:20:05
+UNREAD
+
+1017
+10
+[ReceiptID - 805Your balance has been topped up with amount RM100.0.
+2023-12-08 16:24:54
+UNREAD
+

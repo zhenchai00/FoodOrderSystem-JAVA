@@ -31,7 +31,6 @@ public class CustomerPaymentPage implements ActionListener {
     
     public CustomerPaymentPage (ArrayList<Object[]> orderItemList, String address, OrderType orderType) {
         this.orderItemList = orderItemList;
-        //this.reorderItem = reorderItem;
         this.address = address;
         this.orderType = orderType;
         
@@ -43,11 +42,6 @@ public class CustomerPaymentPage implements ActionListener {
         paymentTableModel = new DefaultTableModel(new Object[]{"ID", "Item Name", "Quantity", "Price"}, 0);
         paymentTable = new JTable(paymentTableModel);
         JScrollPane scrollPanel = new JScrollPane(paymentTable);
-        if (orderItemList.size() > 0) {
-            addRowToTable();
-        } else {
-            //addReorderRowToTable();
-        }
         
         // add label and button
         orderTypeTxLabel = new JLabel("Order Type: ");
@@ -106,8 +100,8 @@ public class CustomerPaymentPage implements ActionListener {
     public void actionPerformed (ActionEvent event) {
         try {
             if (event.getSource() == cancelBtn) {
-                NewOrderPage newOrderPage = new NewOrderPage();
-                newOrderPage.getNewOrderPage().setVisible(true);
+                CustomerOrderPage customerOrderPage = new CustomerOrderPage();
+                customerOrderPage.getOrderPage().setVisible(true);
                 getCustomerPaymentPage().setVisible(false);
             } else if (event.getSource() == payBtn) {
                 DwalletManager.paymentBalance(FoodOrderSystem.currentUser.getId(), totalPayment, itemList, address, orderType, deliveryCost);
