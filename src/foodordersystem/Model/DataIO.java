@@ -211,6 +211,7 @@ public class DataIO {
                 pw.println(formattedDateTime);
                 pw.println(order.getOrderType());
                 pw.println(order.getDeliveryCost());
+                pw.println(order.getTotalCost());
                 pw.println(order.getReview());
                 pw.println(order.getRating());
                 pw.println(order.getRefundStatus());
@@ -404,7 +405,7 @@ public class DataIO {
                 String date = sc.nextLine();
                 double debit  = Double.parseDouble(sc.nextLine());
                 double credit  = Double.parseDouble(sc.nextLine());
-                TransactionType transactionType = TransactionType.valueOf(sc.nextLine());
+                TransactionType transactionType = TransactionType.valueOf(sc.nextLine().toUpperCase());
                 allTransactions.add(new Transaction(
                     id,
                     customerId,
@@ -426,11 +427,11 @@ public class DataIO {
             PrintWriter pw = new PrintWriter(TRANSACTION_FILE_PATH);
             for (Transaction transaction : allTransactions) {
                 pw.println(transaction.getId());
-                pw.println(transaction.getUsername());
+                pw.println(transaction.getCustomerId());
                 pw.println(transaction.getDate());
                 pw.println(transaction.getDebit());
                 pw.println(transaction.getCredit());
-                pw.println(transaction.getTransactionType());
+                pw.println(transaction.getTransactionType().toString());
                 pw.println();
             }
             pw.close();

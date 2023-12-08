@@ -21,8 +21,6 @@ import foodordersystem.Model.Task;
 
 public class OrderManager {
     private ArrayList<OrderItem> orderItems = new ArrayList<>();
-    private double deliveryCost;
-    private double totalCost;
     public int newOrderId = 900 + DataIO.allOrders.size() + 1;
     public int firstVendorId;
 
@@ -53,8 +51,6 @@ public class OrderManager {
     }
 
     public void addOrder (String address, OrderType orderType, double deliveryCost, double totalCost) throws Exception {
-        this.deliveryCost = deliveryCost;
-        this.totalCost = totalCost;
         
         Customer customer = (Customer) FoodOrderSystem.currentUser;
         OrderType type = orderType;
@@ -165,6 +161,8 @@ public class OrderManager {
     public void reOrder (Order existingOrder) throws Exception {
         String address = existingOrder.getAddress();
         OrderType orderType = existingOrder.getOrderType();
+        Double deliveryCost = existingOrder.getDeliveryCost();
+        Double totalCost = existingOrder.getTotalCost();
 
         storeOrderItems(existingOrder.getOrderItemsWithMenuList());
         addOrder(address, orderType, deliveryCost, totalCost);
