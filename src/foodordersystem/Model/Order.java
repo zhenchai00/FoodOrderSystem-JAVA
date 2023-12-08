@@ -31,8 +31,8 @@ public class Order {
 		String address,
 		LocalDateTime date,
 		OrderType type,
-                double deliveryCost,
-                double totalCost,
+		double deliveryCost,
+		double totalCost,
 		String review,
 		Rating rating,
 		RefundStatus refund,
@@ -45,8 +45,8 @@ public class Order {
 		this.address = address;
 		this.date = date;
 		this.type = type;
-                this.deliveryCost = deliveryCost;
-                this.totalCost = totalCost;
+		this.deliveryCost = deliveryCost;
+		this.totalCost = totalCost;
 		this.review = review;
 		this.rating = rating;
 		this.refund = refund;
