@@ -76,3 +76,57 @@ READ
 2023-12-08 20:59:25
 UNREAD
 
+1014
+10
+[OrderID - 902] Your order has been accepted by Vendor.
+2023-12-08 21:43:25
+UNREAD
+
+1015
+10
+[OrderID - 903] Your order has been accepted by Vendor.
+2023-12-08 21:43:38
+UNREAD
+
+1016
+10
+[OrderID - 904] Your order has been accepted by Vendor.
+2023-12-08 21:44:16
+UNREAD
+
+1017
+10
+[OrderID - 905] Your order has been accepted by Vendor.
+2023-12-08 21:44:21
+UNREAD
+
+1018
+5
+[TaskID - 601] You have a new task from Vendor
+2023-12-08 21:44:28
+UNREAD
+
+1019
+10
+[OrderID - 903] You have been processed by Vendor
+2023-12-08 21:44:28
+UNREAD
+
+1020
+10
+[OrderID - 903] Your order is finding Runner.
+2023-12-08 21:44:28
+UNREAD
+
+1021
+10
+[OrderID - 903] Your order has been accepted by Runner.
+2023-12-08 21:45:42
+UNREAD
+
+1022
+3
+[OrderID - 903] Your order has been accepted by Runner.
+2023-12-08 21:45:42
+UNREAD
+
