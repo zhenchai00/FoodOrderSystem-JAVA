@@ -30,7 +30,7 @@ public class CustomerDwalletPage implements ActionListener {
         transactionTable = new JTable(transactionTableModel);
         ArrayList<Transaction> allTransaction = DwalletManager.getAllTransaction();
         for (Transaction transaction : allTransaction) {
-            if (transaction.getId() == FoodOrderSystem.currentUser.getId()) {
+            if (transaction.getCustomerId() == FoodOrderSystem.currentUser.getId()) {
                 String type;
                 String amount;
                 if (transaction.getTransactionType().equals(TransactionType.DEBIT)) {
@@ -43,7 +43,6 @@ public class CustomerDwalletPage implements ActionListener {
                 transactionTableModel.addRow(new Object[] {transaction.getDate(), type, amount});
             }
         }
-        //transactionScrollPane = new JScrollPane();
         transactionScrollPane = new JScrollPane(transactionTable);
         
         balanceLabel = new JLabel("Null");

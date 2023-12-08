@@ -405,7 +405,7 @@ public class DataIO {
                 String date = sc.nextLine();
                 double debit  = Double.parseDouble(sc.nextLine());
                 double credit  = Double.parseDouble(sc.nextLine());
-                TransactionType transactionType = TransactionType.valueOf(sc.nextLine().toUpperCase());
+                TransactionType transactionType = TransactionType.valueOf(sc.nextLine());
                 allTransactions.add(new Transaction(
                     id,
                     customerId,
@@ -426,8 +426,9 @@ public class DataIO {
         try {
             PrintWriter pw = new PrintWriter(TRANSACTION_FILE_PATH);
             for (Transaction transaction : allTransactions) {
-                pw.println(transaction.getId());
+                pw.println(transaction.getTransactionId());
                 pw.println(transaction.getCustomerId());
+                pw.println(transaction.getUsername());
                 pw.println(transaction.getDate());
                 pw.println(transaction.getDebit());
                 pw.println(transaction.getCredit());
