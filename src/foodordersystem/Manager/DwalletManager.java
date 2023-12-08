@@ -14,8 +14,8 @@ import foodordersystem.Model.Transaction;
 import foodordersystem.Model.Receipt;
 
 public class DwalletManager {
-    private static int newReceiptId = 800 + DataIO.allReceipts.size() + 1;
-    
+    private static int newReceiptId;
+
     public static void creditBalance (int id, double amount) {
         Boolean userFound = false;
         for (Dwallet u : DataIO.allDwallets) {
@@ -145,6 +145,7 @@ public class DwalletManager {
 
     public static void debitTransaction (int customerId, String username, double debitAmount, TransactionType type) {
         int newTransactionId = 700 + DataIO.allTransactions.size() + 1;
+        newReceiptId = 800 + DataIO.allReceipts.size() + 1;
         ReceiptStatus status = ReceiptStatus.UNGENERATED;
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -160,6 +161,7 @@ public class DwalletManager {
     
     public static void creditTransaction (int customerId, String username, double creditAmount, TransactionType type) {
         int newTransactionId = 700 + DataIO.allTransactions.size() + 1;
+        newReceiptId = 800 + DataIO.allReceipts.size() + 1;
         ReceiptStatus status = ReceiptStatus.UNGENERATED;
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

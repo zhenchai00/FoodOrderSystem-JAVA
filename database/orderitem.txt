@@ -13,16 +13,37 @@ Mee Jawa
 12.0
 
 902
+4
+3
+Kong Pao Chicken
 1
-2
-Apam Balik
-1
-9.0
+18.0
 
-902
-2
-2
-Mee Jawa
+903
+5
+3
+Oden
 1
-12.0
+16.0
+
+903
+6
+3
+Ramen
+1
+19.0
+
+904
+8
+3
+Spring Roll
+1
+6.0
+
+905
+9
+3
+Yakitori
+1
+21.0
 

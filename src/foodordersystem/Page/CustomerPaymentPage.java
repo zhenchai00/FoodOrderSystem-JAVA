@@ -131,28 +131,4 @@ public class CustomerPaymentPage implements ActionListener {
         totalLabel = new JLabel(String.valueOf(totalPayment));
         totalPanel.add(totalLabel);
     }
-    
-//    public void addReorderRowToTable () {
-//        ArrayList<Object[]> reorderItemList = new ArrayList<>();
-//        for (OrderItem reoderItem : ) {
-//            reorderItem.
-//        }
-//        
-//        double orderItemSum = 0;
-//        for (int i = 0; i < reorderItemList.size(); i++) {
-//            OrderItem itemDetails = reorderItemList.get(i);
-//            int menuId = itemDetails[1];
-//            OrderItem reorderItem = (OrderItem) itemDetails[0];
-//            int menuId = menu.getId();
-//            int quantity = (int) itemDetails[1];
-//            double price = menu.getPrice() * quantity;
-//            orderItemSum += price;
-//            paymentTableModel.addRow(new Object[]{menuId, menu.getName(), quantity, price});
-//            Object[] row = {menu, quantity, price};
-//            this.itemList.add(row);
-//        }
-//        totalPayment = orderItemSum + deliveryCost;
-//        totalLabel = new JLabel(String.valueOf(totalPayment));
-//        totalPanel.add(totalLabel);
-//    }
 }
