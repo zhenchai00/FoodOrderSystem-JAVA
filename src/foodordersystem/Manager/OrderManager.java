@@ -50,8 +50,7 @@ public class OrderManager {
         return null;
     }
 
-    public void addOrder (String address, OrderType orderType, double deliveryCost, double totalCost) throws Exception {
-        
+    public void addOrder (int invoiceId, String address, OrderType orderType, double deliveryCost, double totalCost) throws Exception {
         Customer customer = (Customer) FoodOrderSystem.currentUser;
         OrderType type = orderType;
         RefundStatus refund = RefundStatus.NO;
@@ -59,7 +58,7 @@ public class OrderManager {
 
         Order order = new Order(
             newOrderId,
-            800 + DataIO.allOrders.size() + 1,
+            invoiceId,
             customer.getId(),
             firstVendorId,
             address,

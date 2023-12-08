@@ -16,6 +16,7 @@ import foodordersystem.Enum.RefundStatus;
 import foodordersystem.Enum.TaskStatus;
 import foodordersystem.Enum.UserRole;
 import foodordersystem.Enum.TransactionType;
+import foodordersystem.Enum.ReceiptStatus;
 
 public class DataIO {
     private static final String USER_FILE_PATH = "database/user.txt";
@@ -26,7 +27,7 @@ public class DataIO {
     private static final String RUNNER_AVAILABLE_FILE_PATH = "database/runneravailable.txt";
     private static final String DWALLET_FILE_PATH = "database/dwallet.txt";
     private static final String TRANSACTION_FILE_PATH = "database/transaction.txt";
-    //private static final String INVOICE_FILE_PATH = "database/invoice.txt";
+    private static final String RECEIPT_FILE_PATH = "database/receipt.txt";
     private static final String NOTIFICATION_FILE_PATH = "database/notification.txt";
 
     public static ArrayList<Order> allOrders = new ArrayList<Order>();
@@ -37,7 +38,7 @@ public class DataIO {
     public static ArrayList<Object[]> allRunners = new ArrayList<>();
     public static ArrayList<Dwallet> allDwallets = new ArrayList<Dwallet>();
     public static ArrayList<Transaction> allTransactions = new ArrayList<Transaction>();
-    // public static ArrayList<Invoice> allInvoices = new ArrayList<Invoice>();
+    public static ArrayList<Receipt> allReceipts = new ArrayList<Receipt>();
     public static ArrayList<Notification> allNotifications = new ArrayList<Notification>();
 
     public static void readData () {
@@ -50,6 +51,7 @@ public class DataIO {
             readRunnerAvailable();
             readDwallet();
             readTransaction();
+            readReceipt();
             readNotification();
         } catch (Exception e) {
             System.out.println("Error reading data: " + e.getMessage());
@@ -441,6 +443,55 @@ public class DataIO {
         }
     }
 
+    public static void readReceipt () {
+        try {
+            Scanner sc = new Scanner(new File(RECEIPT_FILE_PATH));
+            while (sc.hasNext()) {
+                int id  = Integer.parseInt(sc.nextLine());
+                int customerId  = Integer.parseInt(sc.nextLine());
+                String username  = sc.nextLine();
+                String date = sc.nextLine();
+                double debit  = Double.parseDouble(sc.nextLine());
+                double credit  = Double.parseDouble(sc.nextLine());
+                TransactionType transactionType = TransactionType.valueOf(sc.nextLine());
+                ReceiptStatus receiptStatus = ReceiptStatus.valueOf(sc.nextLine());
+                allReceipts.add(new Receipt(
+                    id,
+                    customerId,
+                    username,
+                    date,
+                    debit,
+                    credit,
+                    transactionType,
+                    receiptStatus
+                ));
+                sc.nextLine();
+            }
+        } catch (Exception e) {
+            System.out.println("Error reading " + RECEIPT_FILE_PATH + ": " + e);
+        }
+    }
+    
+    public static void writeReceipt () {
+        try {
+            PrintWriter pw = new PrintWriter(RECEIPT_FILE_PATH);
+            for (Receipt receipt : allReceipts) {
+                pw.println(receipt.getReceiptId());
+                pw.println(receipt.getCustomerId());
+                pw.println(receipt.getUsername());
+                pw.println(receipt.getDate());
+                pw.println(receipt.getDebit());
+                pw.println(receipt.getCredit());
+                pw.println(receipt.getTransactionType().toString());
+                pw.println(receipt.getReceiptStatus().toString());
+                pw.println();
+            }
+            pw.close();
+        } catch (Exception e) {
+            System.out.println("Error writing " + RECEIPT_FILE_PATH + ": " + e);
+        }
+    }
+    
     public static void readNotification () {
         try {
             Scanner sc = new Scanner(new File(NOTIFICATION_FILE_PATH));

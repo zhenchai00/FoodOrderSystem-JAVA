@@ -52,3 +52,9 @@ Your balance has been detucted by payment RM14.0. Current total balance is RM83.
 2023-12-08 10:05:13
 UNREAD
 
+1010
+10
+Your balance has been topped up with amount RM10.0.
+2023-12-08 13:31:08
+UNREAD
+

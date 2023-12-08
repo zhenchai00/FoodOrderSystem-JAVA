@@ -21,6 +21,15 @@ public class Transaction {
         this.transactionType = transactionType;
     }
     
+    public Transaction(int customerId, String username, String date, double debit, double credit, TransactionType transactionType) {
+        this.customerId = customerId;
+        this.username = username;
+        this.date = date;
+        this.debit = debit;
+        this.credit = credit;
+        this.transactionType = transactionType;
+    }
+    
     public int getTransactionId () {
         return transactionId;
     }

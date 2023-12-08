@@ -2,5 +2,7 @@ package foodordersystem.Enum;
 
 public enum TransactionType {
     DEBIT,
-    CREDIT
+    CREDIT,
+    PAYMENT,
+    REFUND
 }

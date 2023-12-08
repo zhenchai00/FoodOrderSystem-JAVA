@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import foodordersystem.Enum.OrderType;
 import foodordersystem.Manager.DwalletManager;
 import foodordersystem.Model.Menu;
+import foodordersystem.Model.OrderItem;
 
 public class CustomerPaymentPage implements ActionListener {
     private JFrame customerPaymentPage;
@@ -22,6 +23,7 @@ public class CustomerPaymentPage implements ActionListener {
     
     private ArrayList<Object[]> orderItemList = new ArrayList<>();
     private ArrayList<Object[]> itemList = new ArrayList<>();
+    //private OrderItem reorderItem;
     private String address;
     private OrderType orderType;
     private double deliveryCost;
@@ -29,6 +31,7 @@ public class CustomerPaymentPage implements ActionListener {
     
     public CustomerPaymentPage (ArrayList<Object[]> orderItemList, String address, OrderType orderType) {
         this.orderItemList = orderItemList;
+        //this.reorderItem = reorderItem;
         this.address = address;
         this.orderType = orderType;
         
@@ -40,6 +43,11 @@ public class CustomerPaymentPage implements ActionListener {
         paymentTableModel = new DefaultTableModel(new Object[]{"ID", "Item Name", "Quantity", "Price"}, 0);
         paymentTable = new JTable(paymentTableModel);
         JScrollPane scrollPanel = new JScrollPane(paymentTable);
+        if (orderItemList.size() > 0) {
+            addRowToTable();
+        } else {
+            //addReorderRowToTable();
+        }
         
         // add label and button
         orderTypeTxLabel = new JLabel("Order Type: ");
@@ -130,21 +138,27 @@ public class CustomerPaymentPage implements ActionListener {
         totalPanel.add(totalLabel);
     }
     
-    public void addReorderRowToTable () {
-        double orderItemSum = 0;
-        for (int i = 0; i < orderItemList.size(); i++) {
-            Object[] itemDetails = orderItemList.get(i);
-            Menu menu = (Menu) itemDetails[0];
-            int menuId = menu.getId();
-            int quantity = (int) itemDetails[1];
-            double price = menu.getPrice() * quantity;
-            orderItemSum += price;
-            paymentTableModel.addRow(new Object[]{menuId, menu.getName(), quantity, price});
-            Object[] row = {menu, quantity, price};
-            this.itemList.add(row);
-        }
-        totalPayment = orderItemSum + deliveryCost;
-        totalLabel = new JLabel(String.valueOf(totalPayment));
-        totalPanel.add(totalLabel);
-    }
+//    public void addReorderRowToTable () {
+//        ArrayList<Object[]> reorderItemList = new ArrayList<>();
+//        for (OrderItem reoderItem : ) {
+//            reorderItem.
+//        }
+//        
+//        double orderItemSum = 0;
+//        for (int i = 0; i < reorderItemList.size(); i++) {
+//            OrderItem itemDetails = reorderItemList.get(i);
+//            int menuId = itemDetails[1];
+//            OrderItem reorderItem = (OrderItem) itemDetails[0];
+//            int menuId = menu.getId();
+//            int quantity = (int) itemDetails[1];
+//            double price = menu.getPrice() * quantity;
+//            orderItemSum += price;
+//            paymentTableModel.addRow(new Object[]{menuId, menu.getName(), quantity, price});
+//            Object[] row = {menu, quantity, price};
+//            this.itemList.add(row);
+//        }
+//        totalPayment = orderItemSum + deliveryCost;
+//        totalLabel = new JLabel(String.valueOf(totalPayment));
+//        totalPanel.add(totalLabel);
+//    }
 }

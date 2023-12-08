@@ -54,16 +54,19 @@ public class CustomerHistoryOrderPage extends HistoryOrderPage {
                 int selectedRow = historyOrderTable.getSelectedRow();
                 int orderId = (int) historyTableModel.getValueAt(selectedRow, 0);
                 Order existingOrder = OrderManager.getOrderById(orderId);
-                ArrayList<OrderItem> existingOrderMenuList = new ArrayList<>();
-                existingOrderMenuList = OrderManager.getAllOrderItems();
+                //ArrayList<OrderItem> existingOrderItemList = new ArrayList<>();
+                OrderItem existingOrderItem = OrderManager.getOrderItemById(orderId);
+                ArrayList<Object[]> emptyItemList = new ArrayList<>();
 
                 if (existingOrder == null) {
                     throw new Exception("Order not found");
-                } 
-                
-                if (existingOrder.getOrderType().equals(OrderType.DELIVERY)) {
-                    //CustomerPaymentPage customerPaymentPage = new CustomerPaymentPage(existingOrderMenuList, existingOrder.getAddress(), OrderType.DELIVERY);
                 }
+                
+//                if (existingOrder.getOrderType().equals(OrderType.DELIVERY)) {
+//                    CustomerPaymentPage customerPaymentPage = new CustomerPaymentPage(emptyItemList,existingOrderItem, existingOrder.getAddress(), OrderType.DELIVERY);
+//                    customerPaymentPage.getCustomerPaymentPage().setVisible(true);
+//                    historyOrderPage.setVisible(false);
+//                }
                 //OrderManager orderManager = new OrderManager();
                 //orderManager.reOrder(existingOrder);
                 //JOptionPane.showMessageDialog(historyOrderPage, "Order has been re-ordered", "Success", JOptionPane.INFORMATION_MESSAGE);

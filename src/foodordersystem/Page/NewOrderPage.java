@@ -7,7 +7,9 @@ import javax.swing.text.NumberFormatter;
 import foodordersystem.FoodOrderSystem;
 import foodordersystem.Enum.OrderType;
 import foodordersystem.Manager.MenuManager;
+import foodordersystem.Manager.OrderManager;
 import foodordersystem.Model.Menu;
+import foodordersystem.Model.OrderItem;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -194,7 +196,7 @@ public class NewOrderPage implements ActionListener {
                     }
                     addressString = addressTextArea.getText();
                 }
-
+                
                 CustomerPaymentPage customerPaymentPage = new CustomerPaymentPage(orderMenuList, addressString, getOrderType());
                 customerPaymentPage.addRowToTable();
                 customerPaymentPage.getCustomerPaymentPage().setVisible(true);

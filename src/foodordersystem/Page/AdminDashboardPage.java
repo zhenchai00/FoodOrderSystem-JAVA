@@ -70,8 +70,9 @@ public class AdminDashboardPage implements DashboardPage, ActionListener {
                 topUpPage.getTopUpPage().setVisible(true);
                 adminDashboardPage.setVisible(false);
             } else if (event.getSource() == generateReceiptBtn) {
-                // GenerateReceiptPage.getGenerateReceiptPage().setVisible(true);
-                // adminDashboardPage.setVisible(false);
+                GenerateReceiptPage generateReceiptPage = new GenerateReceiptPage();
+                generateReceiptPage.getGenerateReceiptPage().setVisible(true);
+                adminDashboardPage.setVisible(false);
             } else if (event.getSource() == logoutBtn) {
                 logout();
             }
