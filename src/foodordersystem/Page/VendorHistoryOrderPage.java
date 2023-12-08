@@ -46,11 +46,11 @@ public class VendorHistoryOrderPage extends HistoryOrderPage {
     public void actionPerformed (ActionEvent event) {
         // super.actionPerformed(event);
         try {
-            int selectedRow = historyOrderTable.getSelectedRow();
-            int orderId = (int) historyTableModel.getValueAt(selectedRow, 0);
-            Order order = OrderManager.getOrderById(orderId);
-            OrderStatus status = order.getOrderStatus();
             if (event.getSource() == acceptBtn) {
+                int selectedRow = historyOrderTable.getSelectedRow();
+                int orderId = (int) historyTableModel.getValueAt(selectedRow, 0);
+                Order order = OrderManager.getOrderById(orderId);
+                OrderStatus status = order.getOrderStatus();
                 if (status == OrderStatus.PENDING) {
                     OrderManager.updateOrderStatus(orderId, OrderStatus.ACCEPT);
                     historyTableModel.setValueAt(OrderStatus.ACCEPT.toString(), selectedRow, 3);
@@ -58,6 +58,10 @@ public class VendorHistoryOrderPage extends HistoryOrderPage {
                     throw new Exception("Order status is not pending");
                 }
             } else if (event.getSource() == rejectBtn) {
+                int selectedRow = historyOrderTable.getSelectedRow();
+                int orderId = (int) historyTableModel.getValueAt(selectedRow, 0);
+                Order order = OrderManager.getOrderById(orderId);
+                OrderStatus status = order.getOrderStatus();
                 if (status == OrderStatus.PENDING) {
                     OrderManager.updateOrderStatus(orderId, OrderStatus.REJECT);
                     historyTableModel.setValueAt(OrderStatus.REJECT.toString(), selectedRow, 3);
@@ -65,6 +69,10 @@ public class VendorHistoryOrderPage extends HistoryOrderPage {
                     throw new Exception("Order status is not pending");
                 }
             } else if (event.getSource() == handOverBtn) {
+                int selectedRow = historyOrderTable.getSelectedRow();
+                int orderId = (int) historyTableModel.getValueAt(selectedRow, 0);
+                Order order = OrderManager.getOrderById(orderId);
+                OrderStatus status = order.getOrderStatus();
                 if (status == OrderStatus.ACCEPT) {
                     OrderManager.updateOrderStatus(orderId, OrderStatus.HANDOVER);
                     historyTableModel.setValueAt(OrderStatus.HANDOVER.toString(), selectedRow, 3);
@@ -72,6 +80,10 @@ public class VendorHistoryOrderPage extends HistoryOrderPage {
                     throw new Exception("Order status is not accept");
                 }
             } else if (event.getSource() == processBtn) {
+                int selectedRow = historyOrderTable.getSelectedRow();
+                int orderId = (int) historyTableModel.getValueAt(selectedRow, 0);
+                Order order = OrderManager.getOrderById(orderId);
+                OrderStatus status = order.getOrderStatus();
                 if (status == OrderStatus.ACCEPT) {
                     OrderManager.updateOrderStatus(orderId, OrderStatus.PROCESSING);
                     historyTableModel.setValueAt(OrderStatus.PROCESSING.toString(), selectedRow, 3);
@@ -79,6 +91,10 @@ public class VendorHistoryOrderPage extends HistoryOrderPage {
                     throw new Exception("Order status is not accept");
                 }
             } else if (event.getSource() == completeBtn) {
+                int selectedRow = historyOrderTable.getSelectedRow();
+                int orderId = (int) historyTableModel.getValueAt(selectedRow, 0);
+                Order order = OrderManager.getOrderById(orderId);
+                OrderStatus status = order.getOrderStatus();
                 if (status == OrderStatus.PROCESSING) {
                     OrderManager.updateOrderStatus(orderId, OrderStatus.COMPLETED);
                     historyTableModel.setValueAt(OrderStatus.COMPLETED.toString(), selectedRow, 3);
