@@ -1,7 +1,6 @@
 package foodordersystem.Model;
 
 import foodordersystem.Enum.UserRole;
-import foodordersystem.Enum.TransactionType;
 
 public class User {
     private int id;

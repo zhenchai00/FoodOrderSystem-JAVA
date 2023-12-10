@@ -15,7 +15,6 @@ import foodordersystem.Enum.OrderType;
 import foodordersystem.Manager.OrderManager;
 import foodordersystem.Manager.ReviewManager;
 import foodordersystem.Model.Order;
-import foodordersystem.Model.OrderItem;
 
 public class CustomerHistoryOrderPage extends HistoryOrderPage {
     private JButton cancelOrderBtn, reOrderBtn, foodReviewBtn, deliveryReviewBtn;

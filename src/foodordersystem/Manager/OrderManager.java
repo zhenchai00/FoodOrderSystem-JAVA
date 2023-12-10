@@ -169,15 +169,15 @@ public class OrderManager {
         DataIO.writeOrder();
     }
 
-    public void reOrder (Order existingOrder) throws Exception {
-        String address = existingOrder.getAddress();
-        OrderType orderType = existingOrder.getOrderType();
-        Double deliveryCost = existingOrder.getDeliveryCost();
-        Double totalCost = existingOrder.getTotalCost();
+    // public void reOrder (Order existingOrder) throws Exception {
+    //     String address = existingOrder.getAddress();
+    //     OrderType orderType = existingOrder.getOrderType();
+    //     Double deliveryCost = existingOrder.getDeliveryCost();
+    //     Double totalCost = existingOrder.getTotalCost();
 
-        storeOrderItems(existingOrder.getOrderItemsWithMenuList());
-        //addOrder(address, orderType, deliveryCost, totalCost);
-    }
+    //     storeOrderItems(existingOrder.getOrderItemsWithMenuList());
+    //     //addOrder(address, orderType, deliveryCost, totalCost);
+    // }
 
     public static double calculateDailyRevenue (int vendorId, LocalDate date) {
         double dailyRevenue = 0.0;

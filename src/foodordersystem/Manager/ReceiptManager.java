@@ -2,7 +2,6 @@ package foodordersystem.Manager;
 
 import foodordersystem.Enum.TransactionType;
 import foodordersystem.Enum.ReceiptStatus;
-import foodordersystem.FoodOrderSystem;
 import foodordersystem.Model.DataIO;
 import foodordersystem.Model.Receipt;
 import java.util.ArrayList;

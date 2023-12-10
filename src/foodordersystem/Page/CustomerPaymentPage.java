@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import foodordersystem.Enum.OrderType;
 import foodordersystem.Manager.DwalletManager;
 import foodordersystem.Model.Menu;
-import foodordersystem.Model.OrderItem;
 
 public class CustomerPaymentPage implements ActionListener {
     private JFrame customerPaymentPage;

@@ -2,7 +2,6 @@ package foodordersystem.Page;
 
 import foodordersystem.Enum.ReceiptStatus;
 import foodordersystem.Enum.TransactionType;
-import foodordersystem.FoodOrderSystem;
 import foodordersystem.Manager.ReceiptManager;
 import foodordersystem.Model.Receipt;
 import java.awt.event.ActionEvent;

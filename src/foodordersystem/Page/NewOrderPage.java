@@ -7,9 +7,7 @@ import javax.swing.text.NumberFormatter;
 import foodordersystem.FoodOrderSystem;
 import foodordersystem.Enum.OrderType;
 import foodordersystem.Manager.MenuManager;
-import foodordersystem.Manager.OrderManager;
 import foodordersystem.Model.Menu;
-import foodordersystem.Model.OrderItem;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
