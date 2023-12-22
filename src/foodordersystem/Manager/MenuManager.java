@@ -14,6 +14,9 @@ public class MenuManager {
         if (DataIO.checkMenuName(name) != null) {
             throw new Exception("Menu name already exists");
         }
+        if (price < 0.0) {
+            throw new Exception("Price cannot be negative");
+        }
 
         int number = DataIO.allMenus.size() + 1;
         Menu newMenu = new Menu(number, name, price, category, "-", FoodOrderSystem.currentUser.getId(), 0);
@@ -25,6 +28,9 @@ public class MenuManager {
         Menu menu = getMenuById(id);
         if (menu == null) {
             throw new Exception("Menu not found");
+        }
+        if (price < 0.0) {
+            throw new Exception("Price cannot be negative");
         }
 
         Menu existingMenu = DataIO.checkMenuName(name);

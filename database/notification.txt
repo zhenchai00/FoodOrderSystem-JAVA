@@ -298,3 +298,69 @@ UNREAD
 2023-12-08 22:26:54
 UNREAD
 
+1051
+25
+[ReceiptID - 815] Your balance has been topped up with amount RM100.0.
+2023-12-20 18:46:43
+UNREAD
+
+1052
+21
+[OrderID - 911 ] You have a new order from 666.
+2023-12-22 09:01:55
+READ
+
+1053
+25
+Your balance has been detucted by payment RM-15.0. Current total balance is RM110.0.
+2023-12-22 09:01:55
+UNREAD
+
+1054
+25
+[OrderID - 911] Your order has been accepted by Vendor.
+2023-12-22 09:03:01
+UNREAD
+
+1055
+7
+[TaskID - 604] You have a new task from Vendor
+2023-12-22 09:03:06
+UNREAD
+
+1056
+25
+[OrderID - 911] You have been processed by Vendor
+2023-12-22 09:03:06
+UNREAD
+
+1057
+25
+[OrderID - 911] Your order is finding Runner.
+2023-12-22 09:03:06
+UNREAD
+
+1058
+25
+[OrderID - 911] Your order has been accepted by Runner.
+2023-12-22 09:06:45
+UNREAD
+
+1059
+21
+[OrderID - 911] Your order has been accepted by Runner.
+2023-12-22 09:06:45
+READ
+
+1060
+25
+[OrderID - 911] Your order has been delivered by Runner.
+2023-12-22 09:07:30
+UNREAD
+
+1061
+21
+[OrderID - 911] Your order has been delivered by Runner.
+2023-12-22 09:07:30
+READ
+

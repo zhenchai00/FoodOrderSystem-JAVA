@@ -16,8 +16,11 @@ import foodordersystem.Model.Receipt;
 public class DwalletManager {
     private static int newReceiptId;
 
-    public static void creditBalance (int id, double amount) {
+    public static void creditBalance (int id, double amount) throws Exception {
         Boolean userFound = false;
+        if (amount < 0.0) {
+            throw new Exception("Amount cannot be negative");
+        }
         for (Dwallet u : DataIO.allDwallets) {
             if (u.getId() == id) {
                 u.setBalance(u.getBalance() + amount);
@@ -34,8 +37,11 @@ public class DwalletManager {
         }
     }
 
-    public static void debitBalance (int id, double amount) {
+    public static void debitBalance (int id, double amount) throws Exception {
         Boolean userFound = false;
+        if (amount < 0.0) {
+            throw new Exception("Amount cannot be negative");
+        }
         for (Dwallet u : DataIO.allDwallets) {
             if (u.getId() == id) {
                 if ((u.getBalance() - amount) >= 0.0) {
@@ -121,8 +127,6 @@ public class DwalletManager {
                 } else {
                     throw new Exception("Not enough credit balance for payment!");
                 }
-            } else {
-                throw new Exception("User Not Found!");
             }
         }
     }
@@ -137,8 +141,6 @@ public class DwalletManager {
                 NotificationManager.sendNotification(id, "Your balance has been refunded with amount RM" + amount + ". Current total balance is RM" + u.getBalance() + ".");
                 JOptionPane.showMessageDialog(null, "Successfully refund balance to user " + u.getId() + " with amount RM" + amount, "Success", JOptionPane.INFORMATION_MESSAGE);
                 break;
-            } else {
-                JOptionPane.showMessageDialog(null, "Error Occured!", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

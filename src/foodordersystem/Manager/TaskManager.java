@@ -63,6 +63,7 @@ public class TaskManager {
                 if (task.getStatus() == TaskStatus.PENDING && status == TaskStatus.REJECT) {
                     ArrayList<Object> runnerAvailable = getRunnerAvailable(task.getRunnerId());
                     if (runnerAvailable.get(1).equals(true)) {
+                        updateRunnerAvailable(task.getRunnerId(), false);
                         task.setRunnerId((int) runnerAvailable.get(0));
                         task.setStatus(TaskStatus.PENDING);
                         NotificationManager.sendNotification(task.getVendorId(), "[OrderID - " + task.getOrderId() + "] Your order has been to a Runner.");
